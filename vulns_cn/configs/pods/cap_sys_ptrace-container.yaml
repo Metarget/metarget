@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: privileged-container
+  name: cap-sys-ptrace-container
 spec:
   containers:
   - name: ubuntu
