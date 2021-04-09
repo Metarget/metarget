@@ -36,6 +36,16 @@ Furthermore, we expect that:
 - `metarget appv install dvwa` will install a [DVWA](https://github.com/digininja/DVWA) target onto our vulnerable infrastructure
 - `metarget appv install thinkphp-5-0-23-rce` will install a ThinkPHP RCE vulnerability onto our vulnerable infrastructure
 
+You can just run 5 commands below after installing a new Ubunntu and obtain a multi-layer vulnerable scene:
+
+```bash
+./metarget cnv install cve-2016-5195 # container escape with dirtyCoW
+./metarget cnv install cve-2019-5736 # container escape with docker
+./metarget cnv install cve-2018-1002105 # kubernetes single-node cluster with cve-2018-1002105
+./metarget cnv install privileged-container # deploy a privileged container
+./metarget appv install dvwa # deploy dvwa target
+```
+
 RCE, container escape, lateral movement, persistence, they are yours now.
 
 More awesome functions are coming! Stay tuned :)

@@ -36,6 +36,16 @@ Metarget的名称来源于`meta-`（元）加`target`（目标，靶机），是
 - 执行`metarget appv install dvwa`直接安装一个[DVWA](https://github.com/digininja/DVWA)靶机到脆弱的底层基础设施上
 - 执行`metarget appv install thinkphp-5-0-23-rce`直接安装一个ThinkPHP RCE漏洞环境到脆弱的底层基础设施上
 
+在一个刚刚装好的Ubuntu操作系统上，安装Metarget，然后简单执行五条指令就能完成一个多层次脆弱靶机场景搭建：
+
+```bash
+./metarget cnv install cve-2016-5195 # 内核漏洞层面容器逃逸
+./metarget cnv install cve-2019-5736 # Docker层面容器逃逸
+./metarget cnv install cve-2018-1002105 --domestic # Kubernetes单节点集群（包含权限提升漏洞）
+./metarget cnv install privileged-container # 部署一个特权容器
+./metarget appv install dvwa # 部署一个DVWA靶机
+```
+
 RCE、容器逃逸、横向移动、隐蔽持久化，统统打包送给你。
 
 在这个基础上，我们还希望......
