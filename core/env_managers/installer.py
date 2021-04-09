@@ -78,6 +78,8 @@ class Installer:
             if mappings:
                 mappings[name] = complete_version
             return True
+        color_print.warning('warning: no candidate version for %s' % name)
+        return False
 
     @classmethod
     def _add_apt_repository(cls, repo_entry, gpg_url=None):
