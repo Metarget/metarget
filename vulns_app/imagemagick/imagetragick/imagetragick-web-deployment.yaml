@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./imagemagick/imagetragick/docker-compose.yml -o RCE-FOR-K8S-4/imagemagick/imagetragick/
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: imagetragick-web
+  name: imagetragick-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: imagetragick-web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ./imagemagick/imagetragick/docker-compose.yml -o RCE-FOR-K8S-4/imagemagick/imagetragick/
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: imagetragick-web
+    spec:
+      containers:
+        - args:
+            - php
+            - -t
+            - /var/www/html
+            - -S
+            - 0.0.0.0:8080
+          image: vulhub/imagemagick:6.9.2-10-php
+          name: imagetragick-web
+          ports:
+            - containerPort: 8080
+          resources: {}
+          volumeMounts:
+            - mountPath: /var/www/html/index.php
+              name: imagetragick-web-claim0
+      restartPolicy: Always
+      volumes:
+        - name: imagetragick-web-claim0
+          persistentVolumeClaim:
+            claimName: imagetragick-web-claim0
+status: {}

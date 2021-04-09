@@ -1,0 +1,6 @@
+name: privileged-container
+class: config
+type: container_escape
+dependencies:
+  yamls:
+    - pods/privileged-container.yaml

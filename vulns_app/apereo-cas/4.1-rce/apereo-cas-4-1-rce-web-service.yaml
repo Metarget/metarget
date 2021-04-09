@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./apereo-cas/4.1-rce/docker-compose.yml -o RCE-FOR-K8S-4/apereo-cas/4.1-rce/
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: apereo-cas-4-1-rce-web
+  name: apereo-cas-4-1-rce-web
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+  selector:
+    io.kompose.service: apereo-cas-4-1-rce-web
+status:
+  loadBalancer: {}

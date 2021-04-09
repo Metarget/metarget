@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    io.kompose.service: dvwa
+  name: dvwa-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: dvwa
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: dvwa
+    spec:
+      containers:
+        - image: vulnerables/web-dvwa:latest
+          name: dvwa-web
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+status: {}

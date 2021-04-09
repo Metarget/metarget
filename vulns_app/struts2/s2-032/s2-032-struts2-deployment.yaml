@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./struts2/s2-032/docker-compose.yml -o RCE-FOR-K8S-4/struts2/s2-032/
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: s2-032-struts2
+  name: s2-032-struts2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: s2-032-struts2
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ./struts2/s2-032/docker-compose.yml -o RCE-FOR-K8S-4/struts2/s2-032/
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: s2-032-struts2
+    spec:
+      containers:
+        - image: vulhub/struts2:2.3.28
+          name: s2-032-struts2
+          ports:
+            - containerPort: 8080
+          resources: {}
+      restartPolicy: Always
+status: {}

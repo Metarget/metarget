@@ -1,0 +1,12 @@
+name: ecshop-xianzhi-2017-02-82239600
+class: ecshop
+type: rce
+dependencies:
+  yamls:
+    - xianzhi-2017-02-82239600-ecshop27-deployment.yaml
+    - xianzhi-2017-02-82239600-ecshop27-service.yaml
+    - xianzhi-2017-02-82239600-ecshop36-deployment.yaml
+    - xianzhi-2017-02-82239600-ecshop36-service.yaml
+    - xianzhi-2017-02-82239600-mysql-deployment.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/ecshop/xianzhi-2017-02-82239600

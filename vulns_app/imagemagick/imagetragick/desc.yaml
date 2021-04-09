@@ -1,0 +1,10 @@
+name: imagemagick-imagetragick
+class: imagemagick
+type: rce
+dependencies:
+  yamls:
+    - imagetragick-web-claim0-persistentvolumeclaim.yaml
+    - imagetragick-web-deployment.yaml
+    - imagetragick-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/imagemagick/imagetragick

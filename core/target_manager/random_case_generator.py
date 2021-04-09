@@ -1,0 +1,6 @@
+"""
+
+"""
+
+class RandomCaseGenerator:
+    pass

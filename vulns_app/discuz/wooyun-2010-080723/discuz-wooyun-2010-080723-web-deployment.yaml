@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./discuz/wooyun-2010-080723/docker-compose.yml -o RCE-FOR-K8S-4/discuz/wooyun-2010-080723/
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: discuz-wooyun-2010-080723-web
+  name: discuz-wooyun-2010-080723-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: discuz-wooyun-2010-080723-web
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ./discuz/wooyun-2010-080723/docker-compose.yml -o RCE-FOR-K8S-4/discuz/wooyun-2010-080723/
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: discuz-wooyun-2010-080723-web
+    spec:
+      containers:
+        - image: vulhub/discuz:7.2
+          name: discuz-wooyun-2010-080723-web
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+status: {}

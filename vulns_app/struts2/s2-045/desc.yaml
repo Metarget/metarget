@@ -1,0 +1,9 @@
+name: struts2-s2-045
+class: struts2
+type: rce
+dependencies:
+  yamls:
+    - s2-045-struts2-deployment.yaml
+    - s2-045-struts2-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/struts2/s2-045

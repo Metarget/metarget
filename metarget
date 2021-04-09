@@ -1,0 +1,154 @@
+#!python3
+
+"""
+Metarget - Automatic Constructions of Vulnerable Infrastructures
+"""
+
+import argparse
+import sys
+
+import cmds.gadget
+import cmds.cnv
+import cmds.appv
+import config
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        prog='metarget',
+        description='automatic constructions of vulnerable infrastructures')
+    parser.add_argument(
+        '-v',
+        '--version',
+        action='version',
+        version='metarget {ver}'.format(ver=config.VERSION))
+
+    parser.set_defaults(func=lambda x: parser.print_help())
+    # add subparsers
+    subparsers = parser.add_subparsers(
+        help='description', metavar='subcommand')
+
+    # subcommand `gadget`
+    parser_gadget = subparsers.add_parser(
+        'gadget', help='cloud native gadgets (docker/k8s/...) management')
+    # add subparsers for `gadget`
+    subparsers_gadget = parser_gadget.add_subparsers(
+        help='description', metavar='subcommand')
+    # sub-subcommand `gadget list`
+    parser_gadget_list = subparsers_gadget.add_parser(
+        'list', help='list supported gadgets')
+    parser_gadget_list.set_defaults(func=cmds.gadget.retrieve)
+    # sub-subcommand `gadget install`
+    parser_gadget_install = subparsers_gadget.add_parser(
+        'install', help='install gadgets')
+    parser_gadget_install.add_argument(
+        'gadget', help='gadget name, run `metarget gadget list` to retrieve gadgets supported')
+    parser_gadget_install.add_argument(
+        '-v', '--version', dest='version', required=True, help='gadget version')
+    parser_gadget_install.add_argument(
+        '--cni',
+        default=config.DEFAULT_CNI_PLUGIN,
+        help='cni plugin, {default_cni_plugin} by default'.format(default_cni_plugin=config.DEFAULT_CNI_PLUGIN))
+    parser_gadget_install.add_argument(
+        '--pod-network-cidr',
+        dest='pod_network_cidr',
+        default='',  # determined later by cni plugin
+        help='pod network cidr, default cidr for each plugin by default')
+    parser_gadget_install.add_argument(
+        '--taint-master',
+        action='store_true',
+        help='taint master node or not')
+    parser_gadget_install.add_argument(
+        '--domestic', action='store_true', help='magic')
+    parser_gadget_install.add_argument(
+        '--http-proxy', action='store', help='set proxy', default='')
+    parser_gadget_install.add_argument(
+        '--no-proxy', action='store', help='do not proxy for some sites', default='')
+    parser_gadget_install.set_defaults(func=cmds.gadget.install)
+    # sub-subcommand `gadget remove`
+    parser_gadget_remove = subparsers_gadget.add_parser(
+        'remove', help='uninstall gadgets')
+    parser_gadget_remove.add_argument(
+        'gadget',
+        help='installed gadget name, run `metarget gadget list` to retrieve gadget supported')
+    parser_gadget_remove.set_defaults(func=cmds.gadget.remove)
+
+    # subcommand `cnv`
+    parser_cnv = subparsers.add_parser(
+        'cnv', help='cloud native vulnerabilities management')
+    # add subparsers for `cnv`
+    subparsers_cnv = parser_cnv.add_subparsers(
+        help='description', metavar='subcommand')
+    # sub-subcommand `cnv list`
+    parser_cnv_list = subparsers_cnv.add_parser(
+        'list', help='list supported cloud native vulnerabilities')
+    parser_cnv_list.set_defaults(func=cmds.cnv.retrieve)
+    # sub-subcommand `cnv install`
+    parser_cnv_install = subparsers_cnv.add_parser(
+        'install', help='install cloud native vulnerabilities')
+    parser_cnv_install.add_argument(
+        'cnv',
+        help='cnv name, run `metarget cnv list` to retrieve cnvs supported')
+    parser_cnv_install.add_argument(
+        '--domestic', action='store_true', help='magic')
+    parser_cnv_install.add_argument(
+        '--http-proxy', action='store', help='set proxy', default='')
+    parser_cnv_install.add_argument(
+        '--no-proxy', action='store', help='do not proxy for some sites', default='')
+    parser_cnv_install.add_argument(
+        '--cni',
+        default=config.DEFAULT_CNI_PLUGIN,
+        help='cni plugin, {default_cni_plugin} by default'.format(default_cni_plugin=config.DEFAULT_CNI_PLUGIN))
+    parser_cnv_install.add_argument(
+        '--pod-network-cidr',
+        dest='pod_network_cidr',
+        default='10.244.0.0/16',
+        help='pod network cidr, {default_cidr} by default'.format(default_cidr=config.cni_plugin_cidrs['flannel']))
+    parser_cnv_install.add_argument(
+        '--taint-master',
+        action='store_true',
+        help='taint master node or not')
+    parser_cnv_install.set_defaults(func=cmds.cnv.install)
+    # sub-subcommand `cnv remove`
+    parser_cnv_remove = subparsers_cnv.add_parser(
+        'remove', help='uninstall cloud native vulnerabilities')
+    parser_cnv_remove.add_argument(
+        'cnv',
+        help='installed cnv name, run `metarget cnv list` to retrieve cnv supported')
+    parser_cnv_remove.set_defaults(func=cmds.cnv.remove)
+
+    # subcommand `appv`
+    parser_appv = subparsers.add_parser(
+        'appv', help='application vulnerabilities management')
+    # add subparsers for `appv`
+    subparsers_appv = parser_appv.add_subparsers(
+        help='description', metavar='subcommand')
+    # sub-subcommand `appv list`
+    parser_appv_list = subparsers_appv.add_parser(
+        'list', help='list supported application vulnerabilities')
+    parser_appv_list.set_defaults(func=cmds.appv.retrieve)
+    # sub-subcommand `appv install`
+    parser_appv_install = subparsers_appv.add_parser(
+        'install', help='install application vulnerabilities')
+    parser_appv_install.add_argument(
+        'appv',
+        help='appv name, run `metarget appv list` to retrieve appv supported')
+    parser_appv_install.set_defaults(func=cmds.appv.install)
+    # sub-subcommand `appv remove`
+    parser_appv_remove = subparsers_appv.add_parser(
+        'remove', help='uninstall application vulnerabilities')
+    parser_appv_remove.add_argument(
+        'appv',
+        help='running appv name, run `metarget appv list` to retrieve appv supported')
+    parser_appv_remove.set_defaults(func=cmds.appv.remove)
+
+    args = parser.parse_args()
+    try:
+        args.func(args)
+    except (KeyboardInterrupt, AttributeError):
+        print("Bye.")
+        sys.exit(1)
+
+
+if __name__ == '__main__':
+    main()

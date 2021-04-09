@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./thinkphp/5-rce/docker-compose.yml -o RCE-FOR-K8S-4/thinkphp/5-rce/
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: thinkphp-5-rce-web
+  name: thinkphp-5-rce-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: thinkphp-5-rce-web
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ./thinkphp/5-rce/docker-compose.yml -o RCE-FOR-K8S-4/thinkphp/5-rce/
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: thinkphp-5-rce-web
+    spec:
+      containers:
+        - image: vulhub/thinkphp:5.0.20
+          name: thinkphp-5-rce-web
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+status: {}

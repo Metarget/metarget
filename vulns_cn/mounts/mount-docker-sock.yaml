@@ -1,0 +1,6 @@
+name: mount-docker-sock
+class: mount
+type: container_escape
+dependencies:
+  yamls:
+    - pods/mount-docker-sock.yaml

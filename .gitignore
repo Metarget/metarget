@@ -1,0 +1,25 @@
+# useless data
+*.log
+
+# vim
+*.swp
+*.swn
+*.swo
+*.swm
+
+# runtime data
+*.pid
+
+# dir
+.idea/
+venv/
+
+# os
+.DS_Store
+
+# programming languages
+*.pyc
+*.o
+
+tools/install_k8s_worker.sh
+tools/install_kata.sh

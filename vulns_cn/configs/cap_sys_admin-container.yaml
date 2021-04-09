@@ -1,0 +1,6 @@
+name: cap_sys_admin-container
+class: config
+type: container_escape
+dependencies:
+  yamls:
+    - pods/cap_sys_admin-container.yaml

@@ -1,0 +1,10 @@
+name: discuz-wooyun-2010-080723
+class: discuz
+type: rce
+dependencies:
+  yamls:
+    - discuz-wooyun-2010-080723-db-deployment.yaml
+    - discuz-wooyun-2010-080723-web-deployment.yaml
+    - discuz-wooyun-2010-080723-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/discuz/wooyun-2010-080723

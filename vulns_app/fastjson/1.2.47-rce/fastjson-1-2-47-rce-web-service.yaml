@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./fastjson/1.2.47-rce/docker-compose.yml -o RCE-FOR-K8S-4/fastjson/1.2.47-rce/
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: fastjson-1-2-47-rce-web
+  name: fastjson-1-2-47-rce-web
+spec:
+  ports:
+    - name: "8090"
+      port: 8090
+      targetPort: 8090
+  selector:
+    io.kompose.service: fastjson-1-2-47-rce-web
+status:
+  loadBalancer: {}

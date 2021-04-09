@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./gitea/1.4-rce/docker-compose.yml -o RCE-FOR-K8S-4/gitea/1.4-rce/
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: gitea-1-4-rce-web
+  name: gitea-1-4-rce-web
+spec:
+  ports:
+    - name: "3000"
+      port: 3000
+      targetPort: 3000
+    - name: "20022"
+      port: 20022
+      targetPort: 22
+  selector:
+    io.kompose.service: gitea-1-4-rce-web
+status:
+  loadBalancer: {}

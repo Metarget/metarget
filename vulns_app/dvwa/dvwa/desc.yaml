@@ -1,0 +1,9 @@
+name: dvwa
+class: dvwa
+type: comprehensive
+dependencies:
+  yamls:
+    - dvwa-deployment.yaml
+    - dvwa-service.yaml
+links:
+  - https://github.com/digininja/DVWA

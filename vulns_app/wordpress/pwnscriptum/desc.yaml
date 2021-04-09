@@ -1,0 +1,10 @@
+name: wordpress-pwnscriptum
+class: wordpress
+type: rce
+dependencies:
+  yamls:
+    - wordpress-pwnscriptum-mysql-deployment.yaml
+    - wordpress-pwnscriptum-web-deployment.yaml
+    - wordpress-pwnscriptum-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/wordpress/pwnscriptum

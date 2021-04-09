@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./thinkphp/5.0.23-rce/docker-compose.yml -o RCE-FOR-K8S-4/thinkphp/5.0.23-rce/
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: thinkphp-5-0-23-rce-web
+  name: thinkphp-5-0-23-rce-web
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 80
+  selector:
+    io.kompose.service: thinkphp-5-0-23-rce-web
+status:
+  loadBalancer: {}

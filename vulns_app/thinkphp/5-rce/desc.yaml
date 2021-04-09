@@ -1,0 +1,9 @@
+name: thinkphp-5-rce
+class: thinkphp
+type: rce
+dependencies:
+  yamls:
+    - thinkphp-5-rce-web-deployment.yaml
+    - thinkphp-5-rce-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/thinkphp/5-rce

@@ -1,0 +1,6 @@
+name: mount-host-etc
+class: mount
+type: container_escape
+dependencies:
+  yamls:
+    - pods/mount-host-etc.yaml

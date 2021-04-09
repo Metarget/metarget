@@ -1,0 +1,9 @@
+name: struts2-s2-048
+class: struts2
+type: rce
+dependencies:
+  yamls:
+    - s2-048-struts2-deployment.yaml
+    - s2-048-struts2-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/struts2/s2-048

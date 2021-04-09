@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./ecshop/xianzhi-2017-02-82239600/docker-compose.yml -o RCE-FOR-K8S-4/ecshop/xianzhi-2017-02-82239600/
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: xianzhi-2017-02-82239600-ecshop36
+  name: xianzhi-2017-02-82239600-ecshop36
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: xianzhi-2017-02-82239600-ecshop36
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ./ecshop/xianzhi-2017-02-82239600/docker-compose.yml -o RCE-FOR-K8S-4/ecshop/xianzhi-2017-02-82239600/
+        kompose.version: 1.22.0 (955b78124)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: xianzhi-2017-02-82239600-ecshop36
+    spec:
+      containers:
+        - image: vulhub/ecshop:3.6.0
+          name: xianzhi-2017-02-82239600-ecshop36
+          ports:
+            - containerPort: 80
+          resources: {}
+      restartPolicy: Always
+status: {}

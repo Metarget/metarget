@@ -1,0 +1,6 @@
+name: cap_dac_read_search-container
+class: config
+type: container_escape
+dependencies:
+  yamls:
+    - pods/cap_dac_read_search-container.yaml

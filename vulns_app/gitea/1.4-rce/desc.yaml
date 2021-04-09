@@ -1,0 +1,9 @@
+name: gitea-1-4-rce
+class: gitea
+type: rce
+dependencies:
+  yamls:
+    - gitea-1-4-rce-web-deployment.yaml
+    - gitea-1-4-rce-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/gitea/1.4-rce

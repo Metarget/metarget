@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mount-host-procfs
+spec:
+  containers:
+  - name: ubuntu
+    image: ubuntu:latest
+    imagePullPolicy: IfNotPresent
+    # Just spin & wait forever
+    command: [ "/bin/bash", "-c", "--" ]
+    args: [ "while true; do sleep 30; done;" ]
+    volumeMounts:
+    - name: host-procfs
+      mountPath: /host-proc
+  volumes:
+    - name: host-procfs
+      hostPath:
+        path: /proc

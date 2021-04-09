@@ -1,0 +1,7 @@
+PyYaml
+docker
+packaging
+requests
+beautifulsoup4
+tqdm
+prettytable==1.0.1

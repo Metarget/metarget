@@ -1,0 +1,6 @@
+name: cap_sys_ptrace-container
+class: config
+type: container_escape
+dependencies:
+  yamls:
+    - pods/cap_sys_ptrace-container.yaml

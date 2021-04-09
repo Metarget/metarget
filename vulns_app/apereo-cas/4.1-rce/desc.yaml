@@ -1,0 +1,9 @@
+name: apereo-cas-4-1-rce
+class: apereo-cas
+type: rce
+dependencies:
+  yamls:
+    - apereo-cas-4-1-rce-web-deployment.yaml
+    - apereo-cas-4-1-rce-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/apereo-cas/4.1-rce

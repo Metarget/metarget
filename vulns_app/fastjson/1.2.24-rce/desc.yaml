@@ -1,0 +1,9 @@
+name: fastjson-1-2-24-rce
+class: fastjson
+type: rce
+dependencies:
+  yamls:
+    - fastjson-1-2-24-rce-web-deployment.yaml
+    - fastjson-1-2-24-rce-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/fastjson/1.2.24-rce

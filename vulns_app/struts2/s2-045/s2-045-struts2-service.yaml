@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./struts2/s2-045/docker-compose.yml -o RCE-FOR-K8S-4/struts2/s2-045/
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: s2-045-struts2
+  name: s2-045-struts2
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+  selector:
+    io.kompose.service: s2-045-struts2
+status:
+  loadBalancer: {}

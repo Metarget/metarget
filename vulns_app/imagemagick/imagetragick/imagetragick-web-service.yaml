@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./imagemagick/imagetragick/docker-compose.yml -o RCE-FOR-K8S-4/imagemagick/imagetragick/
+    kompose.version: 1.22.0 (955b78124)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: imagetragick-web
+  name: imagetragick-web
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
+  selector:
+    io.kompose.service: imagetragick-web
+status:
+  loadBalancer: {}
