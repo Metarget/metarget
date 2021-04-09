@@ -4,6 +4,7 @@ Docker Installer
 
 import subprocess
 
+import utils.color_print as color_print
 import config
 from core.env_managers.installer import Installer
 
@@ -36,8 +37,13 @@ class DockerInstaller(Installer):
     def install_by_version(cls, gadgets, context=None):
         cls._pre_install()
         for gadget in gadgets:
-            if not cls._install_one_gadget_by_version(gadget['name'], gadget['version']):
-                return False
+            if not cls._install_one_gadget_by_version(
+                    gadget['name'], gadget['version']):
+                color_print.warning(
+                    'warning: docker seems to be installed, but some errors happened during installation')
+                # sometimes docker is installed but error occurs during installation
+                # so currently we just return true for it
+                return True
         return True
 
     @classmethod
