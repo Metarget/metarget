@@ -186,6 +186,13 @@ optional arguments:
 
 执行成功后，存在CVE-2018-1002105漏洞的Kubernetes单节点集群将被安装在当前Linux系统上。
 
+**考虑到特殊的网络环境，国内的朋友需要指定以下两个参数之一，以顺利完成Kubernetes相关脆弱环境的部署：**
+
+- http-proxy：用于从官方源下载Kubernetes系统组件镜像的代理
+- domestic：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理
+
+如果主机能够直接访问Kubernetes官方源，则不必指定这些参数。
+
 #### 2.3.3 示例：CVE-2016-5195
 
 执行以下命令：
