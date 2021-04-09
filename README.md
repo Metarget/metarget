@@ -225,13 +225,13 @@ Developing, currently not supported.
 
 ## 3 Installation
 
-### Requirements
+### 3.1 Requirements
 
 - Ubuntu 16.04 or 18.04 (not tested)
 - Python >= 3.5
 - pip3
 
-### 3.1 From Source
+### 3.2 From Source
 
 Clone the repository and install requirements:
 
@@ -247,7 +247,7 @@ Begin to use Metarget and construct vulnerable scenes. For example:
 ./metarget cnv install cve-2019-5736
 ```
 
-### 3.2 From PyPI
+### 3.3 From PyPI
 
 Currently unsupported.
 

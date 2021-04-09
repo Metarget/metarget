@@ -234,13 +234,13 @@ optional arguments:
 
 ## 3 安装方法
 
-### 依赖项
+### 3.1 依赖项
 
 - Ubuntu 16.04或18.04（未测试）
 - Python >= 3.5
 - pip3
 
-### 3.1 从源码安装
+### 3.2 从源码安装
 
 拉取仓库，安装必要库文件：
 
@@ -256,7 +256,7 @@ pip install -r requirements.txt
 ./metarget cnv install cve-2019-5736
 ```
 
-### 3.2 从PyPI安装
+### 3.3 从PyPI安装
 
 暂不支持。
 
