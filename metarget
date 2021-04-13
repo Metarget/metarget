@@ -143,36 +143,6 @@ def main():
         help='running appv name, run `metarget appv list` to retrieve appv supported')
     parser_appv_remove.set_defaults(func=cmds.appv.remove)
 
-    # subcommand `target`
-    parser_target = subparsers.add_parser('target', help='targets management')
-    # add subparsers for `target`
-    subparsers_target = parser_target.add_subparsers(
-        help='description', metavar='subcommand')
-    # sub-subcommand `target list`
-    parser_target_list = subparsers_target.add_parser(
-        'list', help='list targets')
-    parser_target_list.set_defaults(func=cmds.target.retrieve)
-    # sub-subcommand `target create`
-    parser_target_create = subparsers_target.add_parser(
-        'create', help='create target(s)')
-    # TODO
-    parser_target_create.set_defaults(func=cmds.target.create)
-    # sub-subcommand `target start`
-    parser_target_start = subparsers_target.add_parser(
-        'start', help='start target(s)')
-    # TODO
-    parser_target_start.set_defaults(func=cmds.target.start)
-    # sub-subcommand `target stop`
-    parser_target_stop = subparsers_target.add_parser(
-        'stop', help='stop target(s)')
-    # TODO
-    parser_target_stop.set_defaults(func=cmds.target.stop)
-    # sub-subcommand `target delete`
-    parser_target_delete = subparsers_target.add_parser(
-        'delete', help='delete target(s)')
-    # TODO
-    parser_target_delete.set_defaults(func=cmds.target.delete)
-
     args = parser.parse_args()
     try:
         args.func(args)

@@ -60,7 +60,6 @@ positional arguments:
     gadget       cloud native gadgets (docker/k8s/...) management
     cnv          cloud native vulnerabilities management
     appv         application vulnerabilities management
-    target       targets management
 
 optional arguments:
   -h, --help     show this help message and exit
