@@ -20,15 +20,15 @@ def install(args):
                 '{gadget} with version {version} already installed'.format(
                     gadget=args.gadget, version=args.version))
             return
-        DockerInstaller.uninstall()
-        if not DockerInstaller.install_by_version(temp_gadgets):
+        DockerInstaller.uninstall(verbose=args.verbose)
+        if not DockerInstaller.install_by_version(temp_gadgets, verbose=args.verbose):
             color_print.error(
                 'error: failed to install {gadget}'.format(
                     gadget=args.gadget))
         else:
             color_print.debug(
-                '{gadget} successfully installed'.format(
-                    gadget=args.gadget))
+                '{gadget} with version {version} successfully installed'.format(
+                    gadget=args.gadget, version=args.version))
     if args.gadget == 'k8s':
         temp_gadgets = [
             {'name': 'kubelet', 'version': args.version},

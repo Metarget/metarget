@@ -42,6 +42,11 @@ def main():
     parser_gadget_install = subparsers_gadget.add_parser(
         'install', help='install gadgets')
     parser_gadget_install.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
+    parser_gadget_install.add_argument(
         'gadget', help='gadget name, run `metarget gadget list` to retrieve gadgets supported')
     parser_gadget_install.add_argument(
         '-v', '--version', dest='version', required=True, help='gadget version')
@@ -69,6 +74,11 @@ def main():
     parser_gadget_remove = subparsers_gadget.add_parser(
         'remove', help='uninstall gadgets')
     parser_gadget_remove.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
+    parser_gadget_remove.add_argument(
         'gadget',
         help='installed gadget name, run `metarget gadget list` to retrieve gadget supported')
     parser_gadget_remove.set_defaults(func=cmds.gadget.remove)
@@ -86,6 +96,11 @@ def main():
     # sub-subcommand `cnv install`
     parser_cnv_install = subparsers_cnv.add_parser(
         'install', help='install cloud native vulnerabilities')
+    parser_cnv_install.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
     parser_cnv_install.add_argument(
         'cnv',
         help='cnv name, run `metarget cnv list` to retrieve cnvs supported')
@@ -112,6 +127,11 @@ def main():
     # sub-subcommand `cnv remove`
     parser_cnv_remove = subparsers_cnv.add_parser(
         'remove', help='uninstall cloud native vulnerabilities')
+    parser_cnv_remove.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
     parser_cnv_remove.add_argument(
         'cnv',
         help='installed cnv name, run `metarget cnv list` to retrieve cnv supported')

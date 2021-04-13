@@ -27,14 +27,24 @@ class DockerInstaller(Installer):
     ]
 
     @classmethod
-    def uninstall(cls):
+    def uninstall(cls, verbose=False):
+        color_print.debug('uninstall current docker if applicable')
+        if verbose:
+            stdout = sys.stdout
+            stderr = sys.stderr
+        else:
+            stdout = subprocess.DEVNULL
+            stderr = subprocess.DEVNULL
         subprocess.run(
             cls.cmd_apt_uninstall +
             cls._docker_gadgets,
-            check=False)
+            stdout=stdout,
+            stderr=stderr,
+            check=False
+        )
 
     @classmethod
-    def install_by_version(cls, gadgets, context=None):
+    def install_by_version(cls, gadgets, context=None, verbose=False):
         cls._pre_install()
         for gadget in gadgets:
             if not cls._install_one_gadget_by_version(
@@ -47,7 +57,7 @@ class DockerInstaller(Installer):
         return True
 
     @classmethod
-    def _pre_install(cls):
+    def _pre_install(cls, verbose=False):
         # install requirements
         subprocess.run(cls.cmd_apt_update, check=True)
         subprocess.run(
