@@ -16,7 +16,7 @@ import utils.verbose as verbose_func
 import utils.color_print as color_print
 
 
-class Installer:
+class Installer(object):
     cmd_apt_uninstall = "apt-get -y remove".split()
     cmd_apt_update = "apt-get update".split()
     cmd_apt_install = 'apt-get -y --allow-downgrades install'.split()
@@ -268,6 +268,17 @@ class Installer:
 
     @staticmethod
     def download_file(url, save_dir):
+        """Downlaod file from URL.
+
+        Downlload file from URL and save it locally.
+
+        Args:
+            url: File's URL.
+            save_dir: Download destination.
+
+        Returns:
+            None.
+        """
         # refer to
         # https://zhuanlan.zhihu.com/p/106309634
         color_print.debug(

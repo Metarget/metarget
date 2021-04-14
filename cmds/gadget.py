@@ -13,6 +13,22 @@ from core.env_managers.kata_containers_installer import KataContainersInstaller
 
 
 def install(args):
+    """Install a cloud native gadget with specified version.
+
+    Args:
+        args.gadget: Name of the specified cloud native gadget.
+        args.verbose: Verbose or not.
+      Args below only used when installing Kubernetes:
+        args.cni: Name of CNI plugin.
+        args.pod_network_cidr: CIDR of pod network.
+        args.domestic: Pull Kubernetes images from domestic source or not.
+        args.taint_master: Taint the master node or not.
+        args.http_proxy: HTTP proxy used when pulling official images.
+        args.no_proxy: Domains which should be visited without proxy.
+
+    Returns:
+        None.
+    """
     if args.gadget == 'docker':
         temp_gadgets = [{'name': 'docker-ce', 'version': args.version}]
         if checkers.docker_specified_installed(temp_gadgets):
@@ -88,6 +104,15 @@ def install(args):
 
 
 def remove(args):
+    """Remove an installed cloud native gadget.
+
+    Args:
+        args.gadget: Name of the specified cloud native gadget.
+        args.verbose: Verbose or not.
+
+    Returns:
+        None.
+    """
     if args.gadget == 'docker':
         DockerInstaller.uninstall(verbose=args.verbose)
         color_print.debug(

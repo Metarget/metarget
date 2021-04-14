@@ -7,6 +7,18 @@ from core.env_managers.kubernetes_resource_deployer import KubernetesResourceDep
 
 
 def deploy_vuln_resources_in_k8s(vuln, verbose=False):
+    """Deploy resources related to one vulnerability.
+
+     Deploy resources related to one vulnerability specified by args.vuln
+     in the current Kubernetes cluster.
+
+    Args:
+        vuln: Information dict about one vulnerability and its resources' locations.
+        verbose: Verbose or not.
+
+    Returns:
+        None.
+    """
     color_print.debug(
         '{vuln} is going to be installed'.format(
             vuln=vuln['name']))
@@ -24,6 +36,18 @@ def deploy_vuln_resources_in_k8s(vuln, verbose=False):
 
 
 def delete_vuln_resources_in_k8s(vuln, verbose=False):
+    """Delete resources related to one vulnerability.
+
+    Delete resources related to one vulnerability specified by args.vuln
+    from the current Kubernetes cluster.
+
+    Args:
+        vuln: Information dict about one vulnerability and its resources' locations.
+        verbose: Verbose or not.
+
+    Returns:
+        None.
+    """
     color_print.debug(
         '{vuln} is going to be removed'.format(
             vuln=vuln['name']))

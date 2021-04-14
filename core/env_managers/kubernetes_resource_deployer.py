@@ -12,14 +12,32 @@ import utils.verbose as verbose_func
 import utils.color_print as color_print
 
 
-class KubernetesResourceDeployer:
+class KubernetesResourceDeployer(object):
     @classmethod
     def apply(cls, resources_list, verbose=False):
+        """Apply resources.
+
+        Args:
+            resources_list: Resources to be applied.
+            verbose: Verbose or not.
+
+        Returns:
+            Boolean indicating whether resources is successfully applied or not.
+        """
         return cls._act(resources_list=resources_list,
                         action='apply', verbose=verbose)
 
     @classmethod
     def delete(cls, resources_list, verbose=False):
+        """Delete Resources.
+
+        Args:
+            resources_list: Resources to be deleted.
+            verbose: Verbose or not.
+
+        Returns:
+            Boolean indicating whether resources is successfully deleted or not.
+        """
         return cls._act(resources_list=resources_list,
                         action='delete', verbose=verbose)
 

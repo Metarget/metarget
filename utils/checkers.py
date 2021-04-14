@@ -10,6 +10,14 @@ import utils.verbose as verbose_func
 
 
 def docker_kubernetes_installed(verbose=False):
+    """Check whether Docker AND Kubernetes have been installed.
+
+    Args:
+        verbose: Verbose or not.
+
+    Returns:
+        If Docker and Kubernetes have been both installed, return True, else False.
+    """
     if not docker_installed(verbose=verbose):
         color_print.error(
             'error: it seems docker is not installed or correctly configured')
@@ -26,6 +34,14 @@ def docker_kubernetes_installed(verbose=False):
 
 
 def kubernetes_installed(verbose=False):
+    """Check whether Kubernetes has been installed.
+
+    Args:
+        verbose: Verbose or not.
+
+    Returns:
+        If Kubernetes has been installed, return True, else False.
+    """
     _, stderr = verbose_func.verbose_output(verbose)
     try:
         temp_cmd = 'kubectl version'.split()
@@ -41,6 +57,14 @@ def kubernetes_installed(verbose=False):
 
 
 def docker_installed(verbose=False):
+    """Check whether Docker has been installed.
+
+    Args:
+        verbose: Verbose or not.
+
+    Returns:
+        If Docker has been installed, return True, else False.
+    """
     _, stderr = verbose_func.verbose_output(verbose)
     try:
         temp_cmd = 'docker version'.split()
@@ -56,6 +80,16 @@ def docker_installed(verbose=False):
 
 
 def kubernetes_specified_installed(temp_gadget, verbose=False):
+    """Check whether Kubernetes with specified version has been installed.
+
+    Args:
+        temp_gadget: Kubernetes gadgets (e.g. kubelet, kubeadm).
+        verbose: Verbose or not.
+
+    Returns:
+        If Kubernetes with specified version has been installed, return True,
+        else False.
+    """
     _, stderr = verbose_func.verbose_output(verbose)
     try:
         temp_cmd = 'kubectl version'.split()
@@ -76,6 +110,16 @@ def kubernetes_specified_installed(temp_gadget, verbose=False):
 
 
 def docker_specified_installed(temp_gadget, verbose=False):
+    """Check whether Docker with specified version has been installed.
+
+    Args:
+        temp_gadget: Docker gadgets (e.g. docker-ce).
+        verbose: Verbose or not.
+
+    Returns:
+        If Docker with specified version has been installed, return True,
+        else False.
+    """
     _, stderr = verbose_func.verbose_output(verbose)
     try:
         temp_cmd = 'docker version'.split()
@@ -96,6 +140,16 @@ def docker_specified_installed(temp_gadget, verbose=False):
 
 
 def kernel_specified_installed(temp_gadget, verbose=False):
+    """Check whether Linux kernel with specified version has been installed.
+
+    Args:
+        temp_gadget: Kernel gadgets (e.g. kernel).
+        verbose: Verbose or not.
+
+    Returns:
+        If kernel with specified version has been installed, return True,
+        else False.
+    """
     try:
         _, stderr = verbose_func.verbose_output(verbose)
         temp_cmd = 'uname -r'.split()

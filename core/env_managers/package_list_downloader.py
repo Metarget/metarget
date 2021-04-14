@@ -30,6 +30,15 @@ def filter_name_by_regex(name):
 
 
 def download_package_list():
+    """Download Ubuntu kernels packages list.
+
+    This function will download package list of Ubuntu kernel from
+    kernel repository (e.g. https://kernel.ubuntu.com/~kernel-ppa/mainline/)
+    and store package names and URLs locally for further usage.
+
+    Returns:
+        None.
+    """
     color_print.debug('downloading kernel package list')
     r = requests.get(config.ubuntu_kernel_repo)
     soup = BeautifulSoup(r.text, 'html.parser')

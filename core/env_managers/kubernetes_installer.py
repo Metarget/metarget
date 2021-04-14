@@ -38,6 +38,14 @@ class KubernetesInstaller(Installer):
 
     @classmethod
     def uninstall(cls, verbose=False):
+        """Uninstall Kubernetes.
+
+        Args:
+            verbose: Verbose or not.
+
+        Returns:
+            None.
+        """
         stdout, stderr = verbose_func.verbose_output(verbose)
         try:
             subprocess.run(
@@ -58,6 +66,21 @@ class KubernetesInstaller(Installer):
     @classmethod
     def install_by_version(cls, gadgets, cni_plugin, pod_network_cidr,
                            taint_master=False, domestic=False, http_proxy='', no_proxy='', verbose=False):
+        """Install Kubernetes with specified version.
+
+        Args:
+            gadgets: Kubernetes gadgets (e.g. kubeadm, kubelet).
+            cni_plugin: Name of CNI plugin.
+            pod_network_cidr: CIDR of pod network.
+            taint_master: Taint the master node or not.
+            domestic: Pull Kubernetes images from domestic source or not.
+            http_proxy: HTTP proxy used when pulling official images.
+            no_proxy: Domains which should be visited without proxy.
+            verbose: Verbose or not.
+
+        Returns:
+            Boolean indicating whether Kubernetes is successfully installed or not.
+        """
         temp_envs = copy.copy(dict(os.environ))
         temp_envs['http_proxy'] = http_proxy
         temp_envs['no_proxy'] = no_proxy

@@ -3,10 +3,17 @@ import logging
 import glob
 import re
 
-import config
-
 
 def load_vuln(filename):
+    """Load information about one vulnerability from one file.
+
+    Args:
+        filename: File storing information of specific vulnerability.
+
+    Returns:
+        If loading succeeds, return information dict about the vulnerability,
+        else, return None.
+    """
     try:
         with open(filename, 'r') as f:
             # for SafeLoader, see

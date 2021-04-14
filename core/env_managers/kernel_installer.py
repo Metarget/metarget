@@ -22,6 +22,16 @@ class KernelInstaller(Installer):
 
     @classmethod
     def install_by_version(cls, gadgets, context=None, verbose=False):
+        """Install Linux kernel with specified version.
+
+        Args:
+            gadgets: Kernel gadgets (e.g. kernel).
+            context: Currently not used.
+            verbose: Verbose or not.
+
+        Returns:
+            Boolean indicating whether kernel is successfully installed or not.
+        """
         # refer to
         # https://blog.csdn.net/u013431916/article/details/82530523
         # https://wiki.ubuntu.com/KernelTeam/KernelMaintenance

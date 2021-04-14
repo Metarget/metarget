@@ -13,6 +13,19 @@ class CNIPluginInstaller(Installer):
     @classmethod
     def install_cni_plugin(cls, k8s_version, context,
                            mappings=None, verbose=False):
+        """Install CNI plugin.
+
+        Install a CNI plugin specified in context for the current Kubernetes cluster.
+
+        Args:
+            k8s_version: Version of the current Kubernetes cluster.
+            context: Context of installation process.
+            mappings: Dict used to store info which will be used to generate worker script later.
+            verbose: Verbose or not.
+
+        Returns:
+            None.
+        """
         color_print.debug('installing cni plugin')
         if context.get('cni_plugin', None) == 'flannel':
             CNIPluginInstaller._install_flannel(

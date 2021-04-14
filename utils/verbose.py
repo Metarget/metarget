@@ -1,5 +1,5 @@
 """
-deal with verbose information
+Deal with verbose information
 """
 
 import sys
