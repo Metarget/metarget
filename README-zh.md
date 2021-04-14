@@ -321,7 +321,11 @@ Metarget将以上项目中的靶机统一转化为Kubernetes中的Deployment和S
 ./metarget appv list
 ```
 
-## 5 开发计划
+## 5 DEMO
+
+[![asciicast](https://asciinema.org/a/407107.svg)](https://asciinema.org/a/407107)
+
+## 6 开发计划
 
 - [x] 实现基本云原生组件安装部署
 - [x] 实现经典云原生漏洞场景集成
@@ -329,6 +333,6 @@ Metarget将以上项目中的靶机统一转化为Kubernetes中的Deployment和S
 - [ ] 实现其他云原生脆弱场景集成
 - [ ] 实现多节点云原生靶场集群自动化生成
 
-## 6 关于Logo
+## 7 关于Logo
 
 Metarget logo的灵感来源于Kubernetes的logo，我们将Kubernetes的舵作为齿轮，三个齿轮组成一个正在运转的基础设施系统。然而，如果仔细观察，会发现齿轮的方向是矛盾的，系统无法正常运转（vulnerable）。

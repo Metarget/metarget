@@ -27,21 +27,13 @@ def install(args):
             'error: no cloud native vulnerability named {cnv}'.format(
                 cnv=args.cnv))
     # deploy vulnerability
-    if vuln['class'] == 'config' or vuln['class'] == 'mount':
-        vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
-        vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
-        if not vuln:
-            color_print.error_and_exit(
-                'error: no cloud native vulnerability named {cnv}'.format(
-                    cnv=args.cnv))
-        if not checkers.docker_kubernetes_installed(
-        ):  # should install docker or k8s firstly
+    if vuln['class'] == 'config' or vuln['class'] == 'mount' or vuln['class'] == 'no-vuln':
+        if not checkers.docker_kubernetes_installed(verbose=args.verbose):  # should install docker or k8s firstly
             return
-
-        internal_cmds.deploy_vuln_resources_in_k8s(vuln)
+        internal_cmds.deploy_vuln_resources_in_k8s(vuln, verbose=args.verbose)
 
     if vuln['class'].startswith('docker'):
-        if checkers.docker_specified_installed(vuln['dependencies']):
+        if checkers.docker_specified_installed(vuln['dependencies'], verbose=args.verbose):
             color_print.debug(
                 '{vuln} already installed'.format(
                     vuln=vuln['name']))
@@ -49,8 +41,9 @@ def install(args):
         color_print.debug(
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
-        DockerInstaller.uninstall()
-        if not DockerInstaller.install_by_version(vuln['dependencies']):
+        color_print.debug('uninstall current docker if applicable')
+        DockerInstaller.uninstall(verbose=args.verbose)
+        if not DockerInstaller.install_by_version(vuln['dependencies'], verbose=args.verbose):
             color_print.error(
                 'error: failed to install {v}'.format(
                     v=vuln['name']))
@@ -60,12 +53,12 @@ def install(args):
                     v=vuln['name']))
 
     if vuln['class'] == 'kubernetes':
-        if checkers.kubernetes_specified_installed(vuln['dependencies']):
+        if checkers.kubernetes_specified_installed(vuln['dependencies'], verbose=args.verbose):
             color_print.debug(
                 '{vuln} already installed'.format(
                     vuln=vuln['name']))
             return
-        if not checkers.docker_installed():
+        if not checkers.docker_installed(verbose=args.verbose):
             color_print.error(
                 'error: it seems docker is not installed or correctly configured')
             color_print.error_and_exit(
@@ -73,7 +66,8 @@ def install(args):
         color_print.debug(
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
-        KubernetesInstaller.uninstall()
+        color_print.debug('uninstall current kubernetes if applicable')
+        KubernetesInstaller.uninstall(verbose=args.verbose)
         temp_pod_network_cidr = args.pod_network_cidr if args.pod_network_cidr else config.cni_plugin_cidrs[
             args.cni]
 
@@ -83,7 +77,8 @@ def install(args):
                                                       domestic=args.domestic,
                                                       taint_master=args.taint_master,
                                                       http_proxy=args.http_proxy,
-                                                      no_proxy=args.no_proxy):
+                                                      no_proxy=args.no_proxy,
+                                                      verbose=args.verbose):
             color_print.error(
                 'error: failed to install {v}'.format(
                     v=vuln['name']))
@@ -93,7 +88,7 @@ def install(args):
                     v=vuln['name']))
 
     if vuln['class'] == 'kernel':
-        if checkers.kernel_specified_installed(vuln['dependencies']):
+        if checkers.kernel_specified_installed(vuln['dependencies'], verbose=args.verbose):
             color_print.debug(
                 '{vuln} already installed'.format(
                     vuln=vuln['name']))
@@ -102,7 +97,7 @@ def install(args):
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
 
-        if not KernelInstaller.install_by_version(gadgets=vuln['dependencies']):
+        if not KernelInstaller.install_by_version(gadgets=vuln['dependencies'], verbose=args.verbose):
             color_print.error(
                 'error: failed to install {v}'.format(
                     v=vuln['name']))
@@ -113,7 +108,7 @@ def install(args):
             # reboot
             reboot = color_print.debug_input('reboot system now? (y/n) ')
             if reboot == 'y' or reboot == 'Y':
-                system_func.reboot_system()
+                system_func.reboot_system(verbose=args.verbose)
 
     if vuln['class'] == 'kata-containers':
         pass
@@ -127,7 +122,7 @@ def remove(args):
             'error: no cloud native vulnerability named {cnv}'.format(
                 cnv=args.cnv))
 
-    if vuln['class'] == 'config' or vuln['class'] == 'mount':
+    if vuln['class'] == 'config' or vuln['class'] == 'mount' or vuln['class'] == 'no-vuln':
         vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
         vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
         if not vuln:
@@ -135,7 +130,7 @@ def remove(args):
                 'error: no vulnerability named {cnv}'.format(
                     cnv=args.cnv))
 
-        internal_cmds.delete_vuln_resources_in_k8s(vuln)
+        internal_cmds.delete_vuln_resources_in_k8s(vuln, verbose=args.verbose)
         return
 
     color_print.debug(
@@ -143,11 +138,11 @@ def remove(args):
             vuln=vuln['name']))
 
     if vuln['class'].startswith('docker'):
-        DockerInstaller.uninstall()
+        DockerInstaller.uninstall(verbose=args.verbose)
         color_print.debug('{v} successfully removed'.format(v=vuln['name']))
 
     if vuln['class'] == 'kubernetes':
-        KubernetesInstaller.uninstall()
+        KubernetesInstaller.uninstall(verbose=args.verbose)
         color_print.debug('{v} successfully removed'.format(v=vuln['name']))
 
     if vuln['class'] == 'kernel':

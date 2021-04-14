@@ -7,6 +7,7 @@ import subprocess
 
 from core.env_managers.installer import Installer
 import config
+import utils.verbose as verbose_func
 
 
 class KataContainersInstaller(Installer):
@@ -15,11 +16,12 @@ class KataContainersInstaller(Installer):
         install_script=config.kata_install_script).split()
 
     @classmethod
-    def uninstall(cls):
+    def uninstall(cls, verbose=False):
         pass
 
     @classmethod
-    def install_by_version(cls, gadgets, context=None):
+    def install_by_version(cls, gadgets, context=None, verbose=False):
+        stdout, stderr = verbose_func.verbose_output(verbose)
         mappings = {
             'kata_version': gadgets[0]['version'],
             'kata_runtime_type': context['annotations']['kata-runtime-type'],
@@ -31,7 +33,7 @@ class KataContainersInstaller(Installer):
                 res = data.safe_substitute(mappings)
                 fw.write(res)
         try:
-            subprocess.run(cls.cmd_install_kata, check=True)
+            subprocess.run(cls.cmd_install_kata, stdout=stdout, stderr=stderr, check=True)
             return True
         except subprocess.CalledProcessError:
             return False

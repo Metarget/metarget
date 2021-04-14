@@ -5,6 +5,7 @@ Docker Installer
 import subprocess
 
 import utils.color_print as color_print
+import utils.verbose as verbose_func
 import config
 from core.env_managers.installer import Installer
 
@@ -27,18 +28,22 @@ class DockerInstaller(Installer):
     ]
 
     @classmethod
-    def uninstall(cls):
+    def uninstall(cls, verbose=False):
+        stdout, stderr = verbose_func.verbose_output(verbose)
         subprocess.run(
             cls.cmd_apt_uninstall +
             cls._docker_gadgets,
-            check=False)
+            stdout=stdout,
+            stderr=stderr,
+            check=False
+        )
 
     @classmethod
-    def install_by_version(cls, gadgets, context=None):
-        cls._pre_install()
+    def install_by_version(cls, gadgets, context=None, verbose=False):
+        cls._pre_install(verbose=verbose)
         for gadget in gadgets:
             if not cls._install_one_gadget_by_version(
-                    gadget['name'], gadget['version']):
+                    gadget['name'], gadget['version'], verbose=verbose):
                 color_print.warning(
                     'warning: docker seems to be installed, but some errors happened during installation')
                 # sometimes docker is installed but error occurs during installation
@@ -47,15 +52,19 @@ class DockerInstaller(Installer):
         return True
 
     @classmethod
-    def _pre_install(cls):
+    def _pre_install(cls, verbose=False):
+        stdout, stderr = verbose_func.verbose_output(verbose)
         # install requirements
-        subprocess.run(cls.cmd_apt_update, check=True)
+        color_print.debug('installing prerequisites')
+        subprocess.run(cls.cmd_apt_update, stdout=stdout, stderr=stderr, check=True)
         subprocess.run(
             cls.cmd_apt_install +
             cls._docker_requirements,
+            stdout=stdout,
+            stderr=stderr,
             check=True)
         cls._add_apt_repository(gpg_url=config.docker_apt_repo_gpg,
-                                repo_entry=config.docker_apt_repo_entry)
+                                repo_entry=config.docker_apt_repo_entry, verbose=verbose)
 
 
 if __name__ == "__main__":

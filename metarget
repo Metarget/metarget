@@ -42,6 +42,11 @@ def main():
     parser_gadget_install = subparsers_gadget.add_parser(
         'install', help='install gadgets')
     parser_gadget_install.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
+    parser_gadget_install.add_argument(
         'gadget', help='gadget name, run `metarget gadget list` to retrieve gadgets supported')
     parser_gadget_install.add_argument(
         '-v', '--version', dest='version', required=True, help='gadget version')
@@ -69,6 +74,11 @@ def main():
     parser_gadget_remove = subparsers_gadget.add_parser(
         'remove', help='uninstall gadgets')
     parser_gadget_remove.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
+    parser_gadget_remove.add_argument(
         'gadget',
         help='installed gadget name, run `metarget gadget list` to retrieve gadget supported')
     parser_gadget_remove.set_defaults(func=cmds.gadget.remove)
@@ -86,6 +96,11 @@ def main():
     # sub-subcommand `cnv install`
     parser_cnv_install = subparsers_cnv.add_parser(
         'install', help='install cloud native vulnerabilities')
+    parser_cnv_install.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
     parser_cnv_install.add_argument(
         'cnv',
         help='cnv name, run `metarget cnv list` to retrieve cnvs supported')
@@ -113,6 +128,11 @@ def main():
     parser_cnv_remove = subparsers_cnv.add_parser(
         'remove', help='uninstall cloud native vulnerabilities')
     parser_cnv_remove.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
+    parser_cnv_remove.add_argument(
         'cnv',
         help='installed cnv name, run `metarget cnv list` to retrieve cnv supported')
     parser_cnv_remove.set_defaults(func=cmds.cnv.remove)
@@ -131,12 +151,22 @@ def main():
     parser_appv_install = subparsers_appv.add_parser(
         'install', help='install application vulnerabilities')
     parser_appv_install.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
+    parser_appv_install.add_argument(
         'appv',
         help='appv name, run `metarget appv list` to retrieve appv supported')
     parser_appv_install.set_defaults(func=cmds.appv.install)
     # sub-subcommand `appv remove`
     parser_appv_remove = subparsers_appv.add_parser(
         'remove', help='uninstall application vulnerabilities')
+    parser_appv_remove.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
     parser_appv_remove.add_argument(
         'appv',
         help='running appv name, run `metarget appv list` to retrieve appv supported')

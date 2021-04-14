@@ -21,10 +21,10 @@ def install(args):
         color_print.error_and_exit(
             'error: no application vulnerability named {appv}'.format(
                 appv=args.appv))
-    if not checkers.docker_kubernetes_installed():  # should install docker or k8s firstly
+    if not checkers.docker_kubernetes_installed(verbose=args.verbose):  # should install docker or k8s firstly
         return
 
-    internal_cmds.deploy_vuln_resources_in_k8s(vuln)
+    internal_cmds.deploy_vuln_resources_in_k8s(vuln, verbose=args.verbose)
 
 
 def remove(args):
@@ -35,7 +35,7 @@ def remove(args):
             'error: no vulnerability named {appv}'.format(
                 appv=args.appv))
 
-    internal_cmds.delete_vuln_resources_in_k8s(vuln)
+    internal_cmds.delete_vuln_resources_in_k8s(vuln, verbose=args.verbose)
 
 
 def retrieve(args):
