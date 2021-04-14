@@ -20,12 +20,32 @@ from core.env_managers.kata_containers_installer import KataContainersInstaller
 
 
 def install(args):
+    """Install a cloud native vulnerability.
+
+    Install a vulnerable cloud native gadget with one vulnerability
+    specified by args.cnv.
+
+    Args:
+        args.cnv: Name of the specified cloud native vulnerability.
+        args.verbose: Verbose or not.
+      Args below only used when installing vulnerability related to Kubernetes:
+        args.cni: Name of CNI plugin.
+        args.pod_network_cidr: CIDR of pod network.
+        args.domestic: Pull Kubernetes images from domestic source or not.
+        args.taint_master: Taint the master node or not.
+        args.http_proxy: HTTP proxy used when pulling official images.
+        args.no_proxy: Domains which should be visited without proxy.
+
+    Returns:
+        None.
+    """
     vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
     vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
     if not vuln:
         color_print.error_and_exit(
             'error: no cloud native vulnerability named {cnv}'.format(
                 cnv=args.cnv))
+
     # deploy vulnerability
     if vuln['class'] == 'config' or vuln['class'] == 'mount' or vuln['class'] == 'no-vuln':
         if not checkers.docker_kubernetes_installed(
@@ -121,6 +141,18 @@ def install(args):
 
 
 def remove(args):
+    """Remove an installed cloud native vulnerability.
+
+    Remove the vulnerable cloud native gadget with the cloud native vulnerability
+    specified by args.cnv.
+
+    Args:
+        args.cnv: Name of the specified cloud native vulnerability.
+        args.verbose: Verbose or not.
+
+    Returns:
+        None.
+    """
     vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
     vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
     if not vuln:
@@ -162,6 +194,14 @@ def remove(args):
 
 
 def retrieve(args):
+    """List supported cloud native vulnerabilities.
+
+    Args:
+        args: Actually not used.
+
+    Returns:
+        None.
+    """
     vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
     vulns_stripped = list()
     for vuln in vulns:

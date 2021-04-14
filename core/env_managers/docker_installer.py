@@ -29,6 +29,14 @@ class DockerInstaller(Installer):
 
     @classmethod
     def uninstall(cls, verbose=False):
+        """Uninstall Docker.
+
+        Args:
+            verbose: Verbose or not.
+
+        Returns:
+            None.
+        """
         stdout, stderr = verbose_func.verbose_output(verbose)
         subprocess.run(
             cls.cmd_apt_uninstall +
@@ -40,6 +48,16 @@ class DockerInstaller(Installer):
 
     @classmethod
     def install_by_version(cls, gadgets, context=None, verbose=False):
+        """Install Docker with specified version.
+
+        Args:
+            gadgets: Docker gadgets (e.g. docker-ce).
+            context: Currently not used.
+            verbose: Verbose or not.
+
+        Returns:
+            Boolean indicating whether Docker is successfully installed or not.
+        """
         cls._pre_install(verbose=verbose)
         for gadget in gadgets:
             if not cls._install_one_gadget_by_version(

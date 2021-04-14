@@ -15,6 +15,18 @@ from core.vuln_app_manager import load_vulns
 
 
 def install(args):
+    """Install an application vulnerability.
+
+    Install an application vulnerability specified by args.appv in the current
+    Kubernetes cluster.
+
+    Args:
+        args.appv: Name of the specified application vulnerability.
+        args.verbose: Verbose or not.
+
+    Returns:
+        None.
+    """
     vulns = load_vulns.load_vulns_by_dir(config.vuln_app_dir_wildcard)
     vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.appv)
     if not vuln:
@@ -29,6 +41,18 @@ def install(args):
 
 
 def remove(args):
+    """Remove an installed application vulnerability.
+
+    Remove an installed application vulnerability specified by args.appv from the
+    current Kubernetes cluster.
+
+    Args:
+        args.appv: Name of the specified application vulnerability.
+        args.verbose: Verbose or not.
+
+    Returns:
+        None.
+    """
     vulns = load_vulns.load_vulns_by_dir(config.vuln_app_dir_wildcard)
     vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.appv)
     if not vuln:
@@ -40,6 +64,14 @@ def remove(args):
 
 
 def retrieve(args):
+    """List supported application vulnerabilities.
+
+    Args:
+        args: Actually not used.
+
+    Returns:
+        None.
+    """
     vulns = load_vulns.load_vulns_by_dir(config.vuln_app_dir_wildcard)
     vulns_stripped = list()
     for vuln in vulns:

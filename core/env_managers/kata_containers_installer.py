@@ -21,6 +21,16 @@ class KataContainersInstaller(Installer):
 
     @classmethod
     def install_by_version(cls, gadgets, context=None, verbose=False):
+        """Install Kata-containers with specified version.
+
+        Args:
+            gadgets: Kata-containers gadgets (e.g. kata-containers).
+            context: Context of installation process.
+            verbose: Verbose or not.
+
+        Returns:
+            Boolean indicating whether Kata-containers is successfully installed or not.
+        """
         stdout, stderr = verbose_func.verbose_output(verbose)
         mappings = {
             'kata_version': gadgets[0]['version'],
