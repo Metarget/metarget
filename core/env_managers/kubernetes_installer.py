@@ -12,6 +12,7 @@ from packaging import version
 import copy
 
 import config
+import utils.verbose as verbose_func
 from core.env_managers.installer import Installer
 from core.env_managers.cni_plugin_installer import CNIPluginInstaller
 
@@ -35,22 +36,27 @@ class KubernetesInstaller(Installer):
     _kubeadm_common_options = '--ignore-preflight-errors=NumCPU,cri'
 
     @classmethod
-    def uninstall(cls):
+    def uninstall(cls, verbose=False):
+        stdout, stderr = verbose_func.verbose_output(verbose)
         try:
             subprocess.run(
                 cls._cmd_kubeadm_reset,
                 input='y\n'.encode('utf-8'),
+                stdout=stdout,
+                stderr=stderr,
                 check=False)
         except FileNotFoundError:
             pass
         subprocess.run(
             cls.cmd_apt_uninstall +
             cls._kubernetes_gadgets,
+            stdout=stdout,
+            stderr=stderr,
             check=False)
 
     @classmethod
     def install_by_version(cls, gadgets, cni_plugin, pod_network_cidr,
-                           taint_master=False, domestic=False, http_proxy='', no_proxy=''):
+                           taint_master=False, domestic=False, http_proxy='', no_proxy='', verbose=False):
         temp_envs = copy.copy(dict(os.environ))
         temp_envs['http_proxy'] = http_proxy
         temp_envs['no_proxy'] = no_proxy
@@ -61,26 +67,26 @@ class KubernetesInstaller(Installer):
             'cni_plugin': cni_plugin,
             'taint_master': taint_master,
         }
-        return cls._install_with_context(gadgets, context)
+        return cls._install_with_context(gadgets, context, verbose=verbose)
 
     @classmethod
-    def _install_with_context(cls, gadgets, context=None):
+    def _install_with_context(cls, gadgets, context=None, verbose=False):
         worker_template_mappings = dict()  # used to generate install_k8s_worker_script
         worker_template_mappings['domestic'] = context.get('domestic', False)
-        cls._pre_configure()
-        cls._pre_install(worker_template_mappings)
+        cls._pre_configure(verbose=verbose)
+        cls._pre_install(worker_template_mappings, verbose=verbose)
         # firstly install kubernetes-cni, because of:
         # issue: https://github.com/kubernetes/kubernetes/issues/75701
         # note that the solution below is unstable and ugly to some extent...
         kubernetes_cni_version = cls._get_kubernetes_cni_version(
-            'kubelet', gadgets[0]['version'])
+            'kubelet', gadgets[0]['version'], verbose=verbose)
         if kubernetes_cni_version:
             cls._install_one_gadget_by_version(
-                'kubernetes-cni', kubernetes_cni_version, worker_template_mappings)
+                'kubernetes-cni', kubernetes_cni_version, worker_template_mappings, verbose=verbose)
         # install kubelet, kubeadm, kubectl
         for gadget in gadgets:
             cls._install_one_gadget_by_version(
-                gadget['name'], gadget['version'], worker_template_mappings)
+                gadget['name'], gadget['version'], worker_template_mappings, verbose=verbose)
 
         # pull necessary k8s images
         k8s_version = gadgets[0]['version']
@@ -92,7 +98,8 @@ class KubernetesInstaller(Installer):
             images_extra=images_extra,
             domestic=context.get(
                 'domestic', False),
-            mappings=worker_template_mappings)
+            mappings=worker_template_mappings,
+            verbose=verbose)
 
         # run kubeadm
         cls._run_kubeadm(
@@ -111,9 +118,9 @@ class KubernetesInstaller(Installer):
         return True
 
     @classmethod
-    def _install_cni_plugin(cls, k8s_version, context, mappings=None):
+    def _install_cni_plugin(cls, k8s_version, context, mappings=None, verbose=False):
         CNIPluginInstaller.install_cni_plugin(
-            k8s_version, context, mappings=mappings)
+            k8s_version, context, mappings=mappings, verbose=verbose)
 
     @classmethod
     def _config_auth(cls):
@@ -144,7 +151,7 @@ class KubernetesInstaller(Installer):
 
     @classmethod
     def _pull_k8s_images(cls, k8s_version, images_base,
-                         images_extra, domestic=False, mappings=None):
+                         images_extra, domestic=False, mappings=None, verbose=False):
         if domestic:  # pull from domestic sources
             if version.parse(k8s_version) <= version.parse(
                     config.k8s_stable_versions['1.9']):
@@ -152,26 +159,30 @@ class KubernetesInstaller(Installer):
                     images_base,
                     ori_prefix=config.k8s_images_prefix_official_9,
                     new_prefix=config.k8s_images_prefix_candidate,
-                    mappings=mappings)
+                    mappings=mappings,
+                    verbose=verbose)
                 cls._pull_domestic_images(
                     images_extra,
                     ori_prefix=config.k8s_images_prefix_official_9,
                     new_prefix=config.k8s_images_prefix_candidate,
-                    mappings=mappings)
+                    mappings=mappings,
+                    verbose=verbose)
             else:
                 cls._pull_domestic_images(
                     images_base,
                     ori_prefix=config.k8s_images_prefix_official,
                     new_prefix=config.k8s_images_prefix_candidate,
-                    mappings=mappings)
+                    mappings=mappings,
+                    verbose=verbose)
                 cls._pull_domestic_images(
                     images_extra,
                     ori_prefix=config.k8s_images_prefix_official,
                     new_prefix=config.k8s_images_prefix_candidate,
-                    mappings=mappings)
+                    mappings=mappings,
+                    verbose=verbose)
         else:
-            cls._pull_images(images_extra, mappings=mappings)
-            cls._pull_images(images_base, mappings=mappings)
+            cls._pull_images(images_extra, mappings=mappings, verbose=verbose)
+            cls._pull_images(images_base, mappings=mappings, verbose=verbose)
 
     @classmethod
     def _get_k8s_images_list(cls, k8s_version, images_base_version):
@@ -201,11 +212,12 @@ class KubernetesInstaller(Installer):
         return images_base, images_extra
 
     @classmethod
-    def _get_kubernetes_cni_version(cls, name, k8s_cni_version):
+    def _get_kubernetes_cni_version(cls, name, k8s_cni_version, verbose=False):
+        _, stderr = verbose_func.verbose_output(verbose)
         kubelet_complete_version = cls._get_apt_complete_version(
-            name, k8s_cni_version)
+            name, k8s_cni_version, verbose=verbose)
         res = subprocess.run(['apt', 'show', '{name}={version}'.format(
-            name=name, version=kubelet_complete_version)], stdout=subprocess.PIPE, check=True)
+            name=name, version=kubelet_complete_version)], stdout=subprocess.PIPE, stderr=stderr, check=True)
         depends = None
         for entry in res.stdout.decode('utf-8').split('\n'):
             if entry.startswith('Depends:'):
@@ -223,14 +235,15 @@ class KubernetesInstaller(Installer):
                     break
         if temp_version:
             return cls._get_apt_complete_version(
-                'kubernetes-cni', temp_version)
+                'kubernetes-cni', temp_version, verbose=verbose)
         else:
             return None
 
     @classmethod
-    def _pre_configure(cls):
+    def _pre_configure(cls, verbose=False):
+        stdout, stderr = verbose_func.verbose_output(verbose)
         # make sure br_netfilter is loaded.
-        subprocess.run(cls._cmd_modprobe, check=True)
+        subprocess.run(cls._cmd_modprobe, stdout=stdout, stderr=stderr, check=True)
 
         # ensure net.bridge.bridge-nf-call-iptables
         with open('/etc/sysctl.d/k8s.conf', 'a') as f:
@@ -238,24 +251,27 @@ class KubernetesInstaller(Installer):
             f.write('net.bridge.bridge-nf-call-iptables = 1\n')
 
         # temporarily turn off swap
-        subprocess.run(cls._cmd_swapoff, check=True)
+        subprocess.run(cls._cmd_swapoff, stdout=stdout, stderr=stderr, check=True)
 
     @classmethod
-    def _pre_install(cls, mappings=None):
+    def _pre_install(cls, mappings=None, verbose=False):
+        stdout, stderr = verbose_func.verbose_output(verbose)
         # install requirements
-        subprocess.run(cls.cmd_apt_update, check=True)
+        subprocess.run(cls.cmd_apt_update, stdout=stdout, stderr=stderr, check=True)
         subprocess.run(
             cls.cmd_apt_install +
             cls._kubernetes_requirements,
+            stdout=stdout,
+            stderr=stderr,
             check=True)
         cls._add_apt_repository(gpg_url=config.k8s_apt_repo_gpg,
-                                repo_entry=config.k8s_apt_repo_entry)
+                                repo_entry=config.k8s_apt_repo_entry, verbose=verbose)
         # incompatible with ustc repo because it has no gpg currently
         mappings['gpg_url'] = config.k8s_apt_repo_gpg
         mappings['repo_entry'] = config.k8s_apt_repo_entry
 
     @classmethod
-    def _update_k8s_worker_script(cls, mappings, context):
+    def _update_k8s_worker_script(cls, mappings, context, verbose=False):
         final_mappings = {
             'gpg_url': mappings.pop('gpg_url'),
             'repo_entry': mappings.pop('repo_entry'),
@@ -282,7 +298,7 @@ class KubernetesInstaller(Installer):
                             image=key)
         final_mappings['cmds_pull_images'] = cmds_pull_images
         final_mappings['master_ip'] = cls.get_host_ip()
-        token, ca_cert_hash = cls._get_kubeadm_token_and_hash()
+        token, ca_cert_hash = cls._get_kubeadm_token_and_hash(verbose=verbose)
         final_mappings['token'], final_mappings['ca_cert_hash'] = token, ca_cert_hash
         final_mappings['kubeadm_options'] = mappings['kubeadm_options']
         with open(config.k8s_worker_template, 'r') as fr:
@@ -293,10 +309,12 @@ class KubernetesInstaller(Installer):
                 fw.write(res)
 
     @classmethod
-    def _get_kubeadm_token_and_hash(cls):
+    def _get_kubeadm_token_and_hash(cls, verbose=False):
+        _, stderr = verbose_func.verbose_output(verbose)
         res = subprocess.run(
             'kubeadm token list'.split(),
             stdout=subprocess.PIPE,
+            stderr=stderr,
             check=True)
         res = res.stdout.decode('utf-8')
         token = re.search(r'([a-z0-9]{6}\.[a-z0-9]{16})', res).group(1)
@@ -304,6 +322,7 @@ class KubernetesInstaller(Installer):
             'bash {script}'.format(
                 script=config.k8s_hash_generator).split(),
             stdout=subprocess.PIPE,
+            stderr=stderr,
             check=True)
         res = res.stdout.decode('utf-8').strip()
         ca_cert_hash = res

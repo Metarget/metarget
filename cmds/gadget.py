@@ -21,7 +21,8 @@ def install(args):
                     gadget=args.gadget, version=args.version))
             return
         DockerInstaller.uninstall(verbose=args.verbose)
-        if not DockerInstaller.install_by_version(temp_gadgets, verbose=args.verbose):
+        if not DockerInstaller.install_by_version(
+                temp_gadgets, verbose=args.verbose):
             color_print.error(
                 'error: failed to install {gadget}'.format(
                     gadget=args.gadget))
@@ -35,12 +36,12 @@ def install(args):
             {'name': 'kubeadm', 'version': args.version},
             {'name': 'kubectl', 'version': args.version},
         ]
-        if checkers.kubernetes_specified_installed(temp_gadgets):
+        if checkers.kubernetes_specified_installed(temp_gadgets, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
                     gadget=args.gadget, version=args.version))
             return
-        KubernetesInstaller.uninstall()
+        KubernetesInstaller.uninstall(verbose=args.verbose)
         temp_pod_network_cidr = args.pod_network_cidr if args.pod_network_cidr else config.cni_plugin_cidrs[
             args.cni]
         if not KubernetesInstaller.install_by_version(temp_gadgets,
@@ -49,7 +50,8 @@ def install(args):
                                                       domestic=args.domestic,
                                                       taint_master=args.taint_master,
                                                       http_proxy=args.http_proxy,
-                                                      no_proxy=args.no_proxy):
+                                                      no_proxy=args.no_proxy,
+                                                      verbose=args.verbose):
             color_print.error(
                 'error: failed to install {gadget}'.format(
                     gadget=args.gadget))
@@ -61,12 +63,12 @@ def install(args):
         temp_gadgets = [
             {'name': 'kernel', 'version': args.version},
         ]
-        if checkers.kernel_specified_installed(temp_gadgets):
+        if checkers.kernel_specified_installed(temp_gadgets, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
                     gadget=args.gadget, version=args.version))
             return
-        if not KernelInstaller.install_by_version(temp_gadgets):
+        if not KernelInstaller.install_by_version(temp_gadgets, verbose=args.verbose):
             color_print.error(
                 'error: failed to install {gadget}'.format(
                     gadget=args.gadget))
@@ -77,16 +79,20 @@ def install(args):
             # reboot
             reboot = color_print.debug_input('reboot system now? (y/n) ')
             if reboot == 'y' or reboot == 'Y':
-                system_func.reboot_system()
+                system_func.reboot_system(verbose=args.verbose)
 
 
 def remove(args):
     if args.gadget == 'docker':
-        DockerInstaller.uninstall()
-        color_print.debug('{gadget} successfully removed'.format(gadget=args.gadget))
+        DockerInstaller.uninstall(verbose=args.verbose)
+        color_print.debug(
+            '{gadget} successfully removed'.format(
+                gadget=args.gadget))
     if args.gadget == 'k8s':
-        KubernetesInstaller.uninstall()
-        color_print.debug('{gadget} successfully removed'.format(gadget=args.gadget))
+        KubernetesInstaller.uninstall(verbose=args.verbose)
+        color_print.debug(
+            '{gadget} successfully removed'.format(
+                gadget=args.gadget))
     if args.gadget == 'kernel':
         color_print.warning(
             'removal of {gadget} is unsupported'.format(

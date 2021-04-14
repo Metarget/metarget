@@ -11,6 +11,7 @@ import json
 
 from core.env_managers.installer import Installer
 import utils.color_print as color_print
+import utils.verbose as verbose_func
 import core.env_managers.package_list_downloader as package_list_downloader
 import config
 
@@ -20,7 +21,7 @@ class KernelInstaller(Installer):
     cmd_dpkg_install = 'dpkg -i'.split()
 
     @classmethod
-    def install_by_version(cls, gadgets, context=None):
+    def install_by_version(cls, gadgets, context=None, verbose=False):
         # refer to
         # https://blog.csdn.net/u013431916/article/details/82530523
         # https://wiki.ubuntu.com/KernelTeam/KernelMaintenance
@@ -29,39 +30,41 @@ class KernelInstaller(Installer):
         version = gadgets[0]['version']
         color_print.debug('switching kernel by version')
         for repo in config.kernel_apt_repo_entries:
-            cls._add_apt_repository(repo_entry=repo)
-        if cls._is_version_available_in_apt(version):
-            return cls._install_by_version_with_apt(version)
+            cls._add_apt_repository(repo_entry=repo, verbose=verbose)
+        if cls._is_version_available_in_apt(version, verbose=verbose):
+            return cls._install_by_version_with_apt(version, verbose=verbose)
         else:
             color_print.warning(
                 'warning: no apt package for kernel %s' %
                 version)
             if version.endswith('.0'):
                 version = version.rstrip('.0') + '-'
-            return cls._install_by_version_with_download(version)
+            return cls._install_by_version_with_download(version, verbose=verbose)
 
     @classmethod
-    def _install_by_version_with_apt(cls, version):
+    def _install_by_version_with_apt(cls, version, verbose=False):
         color_print.debug('switching kernel version with apt')
+        stdout, stderr = verbose_func.verbose_output(verbose)
         try:
             # install image package
             package_name = cls._get_apt_complete_package(
-                'linux-image', ['linux-image-extra-{version}'.format(version=version), 'generic'])
+                'linux-image', ['linux-image-extra-{version}'.format(version=version), 'generic'], verbose=verbose)
             color_print.debug('installing kernel package %s' % package_name)
             version_suffix = package_name.lstrip('linux-image-extra-')
             temp_cmd = copy.copy(cls.cmd_apt_install)
             temp_cmd.append(package_name)
-            subprocess.run(temp_cmd, check=True)
-            cls._modify_grub(version=version_suffix)
+            subprocess.run(temp_cmd, stdout=stdout, stderr=stderr, check=True)
+            cls._modify_grub(version=version_suffix, verbose=verbose)
             return True
         except subprocess.CalledProcessError:
             return False
 
     @classmethod
-    def _install_by_version_with_download(cls, version):
+    def _install_by_version_with_download(cls, version, verbose=False):
         color_print.debug('switching kernel version with downloading packages')
+        stdout, stderr = verbose_func.verbose_output(verbose)
         try:
-            debs = cls._fetch_package_list_by_version(version)
+            debs = cls._fetch_package_list_by_version(version, verbose=verbose)
             if not debs:
                 return
             # download necessary *.deb and install
@@ -79,7 +82,7 @@ class KernelInstaller(Installer):
                         pass
             color_print.debug('installing kernel packages')
             # installation of kernel may return nonzero, currently ignore them
-            subprocess.run(temp_cmd, check=False)
+            subprocess.run(temp_cmd, stdout=stdout, stderr=stderr, check=False)
             if version_suffix:
                 color_print.debug('kernel version: %s' % version_suffix)
                 cls._modify_grub(version=version_suffix)
@@ -91,7 +94,8 @@ class KernelInstaller(Installer):
             return False
 
     @classmethod
-    def _modify_grub(cls, version=None, recover=False):
+    def _modify_grub(cls, version=None, recover=False, verbose=False):
+        stdout, stderr = verbose_func.verbose_output(verbose)
         # edit grub
         color_print.debug('modifying grub config file')
         if recover:  # recover grub
@@ -102,13 +106,13 @@ class KernelInstaller(Installer):
 
         cmd_modify_grub = 'sed\n-i\ns/^GRUB_DEFAULT=.*$/' \
                           'GRUB_DEFAULT={grub_option}/\n/etc/default/grub'.format(grub_option=grub_option).split('\n')
-        subprocess.run(cmd_modify_grub, check=True)
+        subprocess.run(cmd_modify_grub, stdout=stdout, stderr=stderr, check=True)
         # update grub
         color_print.debug('updating grub')
-        subprocess.run(cls.cmd_update_grub, check=True)
+        subprocess.run(cls.cmd_update_grub, stdout=stdout, stderr=stderr, check=True)
 
     @classmethod
-    def _fetch_package_list_by_version(cls, version):
+    def _fetch_package_list_by_version(cls, version, verbose=False):
         color_print.debug('retrieving package list for kernel %s' % version)
         try:
             f = open(config.kernel_packages_list, 'r')
@@ -131,9 +135,9 @@ class KernelInstaller(Installer):
         return None
 
     @classmethod
-    def _is_version_available_in_apt(cls, version):
+    def _is_version_available_in_apt(cls, version, verbose=False):
         return cls._get_apt_complete_package(
-            'linux-image', ['linux-image-extra-{version}'.format(version=version), 'generic'])
+            'linux-image', ['linux-image-extra-{version}'.format(version=version), 'generic'], verbose=verbose)
 
 
 if __name__ == "__main__":
