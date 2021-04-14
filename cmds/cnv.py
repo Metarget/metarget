@@ -28,12 +28,14 @@ def install(args):
                 cnv=args.cnv))
     # deploy vulnerability
     if vuln['class'] == 'config' or vuln['class'] == 'mount' or vuln['class'] == 'no-vuln':
-        if not checkers.docker_kubernetes_installed(verbose=args.verbose):  # should install docker or k8s firstly
+        if not checkers.docker_kubernetes_installed(
+                verbose=args.verbose):  # should install docker or k8s firstly
             return
         internal_cmds.deploy_vuln_resources_in_k8s(vuln, verbose=args.verbose)
 
     if vuln['class'].startswith('docker'):
-        if checkers.docker_specified_installed(vuln['dependencies'], verbose=args.verbose):
+        if checkers.docker_specified_installed(
+                vuln['dependencies'], verbose=args.verbose):
             color_print.debug(
                 '{vuln} already installed'.format(
                     vuln=vuln['name']))
@@ -43,7 +45,8 @@ def install(args):
                 vuln=vuln['name']))
         color_print.debug('uninstall current docker if applicable')
         DockerInstaller.uninstall(verbose=args.verbose)
-        if not DockerInstaller.install_by_version(vuln['dependencies'], verbose=args.verbose):
+        if not DockerInstaller.install_by_version(
+                vuln['dependencies'], verbose=args.verbose):
             color_print.error(
                 'error: failed to install {v}'.format(
                     v=vuln['name']))
@@ -53,7 +56,8 @@ def install(args):
                     v=vuln['name']))
 
     if vuln['class'] == 'kubernetes':
-        if checkers.kubernetes_specified_installed(vuln['dependencies'], verbose=args.verbose):
+        if checkers.kubernetes_specified_installed(
+                vuln['dependencies'], verbose=args.verbose):
             color_print.debug(
                 '{vuln} already installed'.format(
                     vuln=vuln['name']))
@@ -88,7 +92,8 @@ def install(args):
                     v=vuln['name']))
 
     if vuln['class'] == 'kernel':
-        if checkers.kernel_specified_installed(vuln['dependencies'], verbose=args.verbose):
+        if checkers.kernel_specified_installed(
+                vuln['dependencies'], verbose=args.verbose):
             color_print.debug(
                 '{vuln} already installed'.format(
                     vuln=vuln['name']))
@@ -97,7 +102,8 @@ def install(args):
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
 
-        if not KernelInstaller.install_by_version(gadgets=vuln['dependencies'], verbose=args.verbose):
+        if not KernelInstaller.install_by_version(
+                gadgets=vuln['dependencies'], verbose=args.verbose):
             color_print.error(
                 'error: failed to install {v}'.format(
                     v=vuln['name']))

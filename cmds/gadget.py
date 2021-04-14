@@ -37,7 +37,8 @@ def install(args):
             {'name': 'kubeadm', 'version': args.version},
             {'name': 'kubectl', 'version': args.version},
         ]
-        if checkers.kubernetes_specified_installed(temp_gadgets, verbose=args.verbose):
+        if checkers.kubernetes_specified_installed(
+                temp_gadgets, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
                     gadget=args.gadget, version=args.version))
@@ -65,12 +66,14 @@ def install(args):
         temp_gadgets = [
             {'name': 'kernel', 'version': args.version},
         ]
-        if checkers.kernel_specified_installed(temp_gadgets, verbose=args.verbose):
+        if checkers.kernel_specified_installed(
+                temp_gadgets, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
                     gadget=args.gadget, version=args.version))
             return
-        if not KernelInstaller.install_by_version(temp_gadgets, verbose=args.verbose):
+        if not KernelInstaller.install_by_version(
+                temp_gadgets, verbose=args.verbose):
             color_print.error(
                 'error: failed to install {gadget}'.format(
                     gadget=args.gadget))

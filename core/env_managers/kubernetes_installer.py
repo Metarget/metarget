@@ -113,15 +113,25 @@ class KubernetesInstaller(Installer):
         cls._config_auth()
         # delete master's taint if needed
         if not context.get('taint_master', None):
-            subprocess.run(cls._cmd_enable_schedule_master, stdout=stdout, stderr=stderr, check=False)
+            subprocess.run(
+                cls._cmd_enable_schedule_master,
+                stdout=stdout,
+                stderr=stderr,
+                check=False)
         # install CNI plugin
-        cls._install_cni_plugin(k8s_version, context, worker_template_mappings, verbose=verbose)
+        cls._install_cni_plugin(
+            k8s_version,
+            context,
+            worker_template_mappings,
+            verbose=verbose)
         # generate install-script for worker
-        cls._update_k8s_worker_script(worker_template_mappings, context, verbose=verbose)
+        cls._update_k8s_worker_script(
+            worker_template_mappings, context, verbose=verbose)
         return True
 
     @classmethod
-    def _install_cni_plugin(cls, k8s_version, context, mappings=None, verbose=False):
+    def _install_cni_plugin(cls, k8s_version, context,
+                            mappings=None, verbose=False):
         CNIPluginInstaller.install_cni_plugin(
             k8s_version, context, mappings=mappings, verbose=verbose)
 
@@ -152,7 +162,14 @@ class KubernetesInstaller(Installer):
         if pod_network_cidr:
             temp_cmd.append(
                 '--pod-network-cidr={cidr}'.format(cidr=pod_network_cidr))
-        subprocess.run(temp_cmd, stdout=stdout, stderr=stderr, check=True, env=context.get('envs', None))
+        subprocess.run(
+            temp_cmd,
+            stdout=stdout,
+            stderr=stderr,
+            check=True,
+            env=context.get(
+                'envs',
+                None))
 
     @classmethod
     def _pull_k8s_images(cls, k8s_version, images_base,
@@ -249,7 +266,11 @@ class KubernetesInstaller(Installer):
         color_print.debug('pre-configuring')
         stdout, stderr = verbose_func.verbose_output(verbose)
         # make sure br_netfilter is loaded.
-        subprocess.run(cls._cmd_modprobe, stdout=stdout, stderr=stderr, check=True)
+        subprocess.run(
+            cls._cmd_modprobe,
+            stdout=stdout,
+            stderr=stderr,
+            check=True)
 
         # ensure net.bridge.bridge-nf-call-iptables
         with open('/etc/sysctl.d/k8s.conf', 'a') as f:
@@ -257,14 +278,22 @@ class KubernetesInstaller(Installer):
             f.write('net.bridge.bridge-nf-call-iptables = 1\n')
 
         # temporarily turn off swap
-        subprocess.run(cls._cmd_swapoff, stdout=stdout, stderr=stderr, check=True)
+        subprocess.run(
+            cls._cmd_swapoff,
+            stdout=stdout,
+            stderr=stderr,
+            check=True)
 
     @classmethod
     def _pre_install(cls, mappings=None, verbose=False):
         color_print.debug('pre-installing')
         stdout, stderr = verbose_func.verbose_output(verbose)
         # install requirements
-        subprocess.run(cls.cmd_apt_update, stdout=stdout, stderr=stderr, check=True)
+        subprocess.run(
+            cls.cmd_apt_update,
+            stdout=stdout,
+            stderr=stderr,
+            check=True)
         subprocess.run(
             cls.cmd_apt_install +
             cls._kubernetes_requirements,
@@ -315,7 +344,9 @@ class KubernetesInstaller(Installer):
                 data = Template(worker_template)
                 res = data.safe_substitute(final_mappings)
                 fw.write(res)
-        color_print.debug('kubernetes worker script generated at %s' % config.k8s_worker_script)
+        color_print.debug(
+            'kubernetes worker script generated at %s' %
+            config.k8s_worker_script)
 
     @classmethod
     def _get_kubeadm_token_and_hash(cls, verbose=False):
