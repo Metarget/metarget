@@ -147,6 +147,8 @@ class Installer:
         if not cls._image_exist(image):
             cls._pull_image(temp_image, verbose=verbose)
             cls._tag_image(temp_image, image)
+        else:
+            color_print.debug('%s already pulled' % image)
 
     @classmethod
     def _tag_images(cls, old_names, new_names):

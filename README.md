@@ -305,7 +305,11 @@ To list vulnerable scenes related to cloud native applications supported by Meta
 ./metarget appv list
 ```
 
-## 5 Development Plan
+## 5 DEMO
+
+[![asciicast](https://asciinema.org/a/407107.svg)](https://asciinema.org/a/407107)
+
+## 6 Development Plan
 
 - [x] deployments of basic cloud native components (docker, k8s)
 - [x] integrations of vulnerable scenes related to cloud native components
@@ -313,6 +317,6 @@ To list vulnerable scenes related to cloud native applications supported by Meta
 - [ ] integrations of other cloud native vulnerable scenes
 - [ ] automatic construction of multi-node cloud native target cluster
 
-## 6 About Logo
+## 7 About Logo
 
 It is not a Kubernetes, but a vulnerable infrastructure with three gears which could not work well (vulnerable) :)
