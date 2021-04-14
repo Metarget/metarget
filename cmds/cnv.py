@@ -28,15 +28,8 @@ def install(args):
                 cnv=args.cnv))
     # deploy vulnerability
     if vuln['class'] == 'config' or vuln['class'] == 'mount':
-        vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
-        vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
-        if not vuln:
-            color_print.error_and_exit(
-                'error: no cloud native vulnerability named {cnv}'.format(
-                    cnv=args.cnv))
         if not checkers.docker_kubernetes_installed(verbose=args.verbose):  # should install docker or k8s firstly
             return
-
         internal_cmds.deploy_vuln_resources_in_k8s(vuln, verbose=args.verbose)
 
     if vuln['class'].startswith('docker'):

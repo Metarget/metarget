@@ -26,6 +26,7 @@ class KubernetesResourceDeployer:
         stdout, stderr = verbose_func.verbose_output(verbose)
         cmd_kubectl_create = 'kubectl {action} -f'.format(action=action).split()
         for res in resources_list:
+            color_print.debug('{action}ing {res}'.format(action=action.strip('e'), res=res))
             temp_cmd = copy.copy(cmd_kubectl_create)
             temp_cmd.append(res)
             try:

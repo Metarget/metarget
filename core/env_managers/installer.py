@@ -69,6 +69,7 @@ class Installer:
         # get complete version, e.g. 18.03.1~ce-0~ubuntu
         complete_version = cls._get_apt_complete_version(name, version, verbose=verbose)
         if complete_version:
+            color_print.debug('installing {gadget} with {version} version'.format(gadget=name, version=complete_version))
             # install with the specified version
             temp_cmd = copy.copy(cls.cmd_apt_install)
             temp_cmd.append(
@@ -121,12 +122,15 @@ class Installer:
         if mappings:
             mappings[image] = None
         if not cls._image_exist(image):
+            color_print.debug('pulling %s' % image)
             temp_cmd = 'docker pull {image}'.format(image=image).split()
             try:
                 subprocess.run(temp_cmd, stdout=stdout, stderr=stderr, check=True)
                 return True
             except subprocess.CalledProcessError:
                 return False
+        else:
+            color_print.debug('%s already pulled' % image)
 
     @classmethod
     def _pull_domestic_images(cls, images, ori_prefix,

@@ -30,6 +30,7 @@ def kubernetes_installed(verbose=False):
     try:
         temp_cmd = 'kubectl version'.split()
         subprocess.run(temp_cmd, stdout=subprocess.PIPE, stderr=stderr, check=True)
+        color_print.debug('kubernetes already installed')
         return True
     except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
         return False
@@ -40,6 +41,7 @@ def docker_installed(verbose=False):
     try:
         temp_cmd = 'docker version'.split()
         subprocess.run(temp_cmd, stdout=subprocess.PIPE, stderr=stderr, check=True)
+        color_print.debug('docker already installed')
         return True
     except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
         return False

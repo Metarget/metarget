@@ -12,6 +12,7 @@ from packaging import version
 import copy
 
 import config
+import utils.color_print as color_print
 import utils.verbose as verbose_func
 from core.env_managers.installer import Installer
 from core.env_managers.cni_plugin_installer import CNIPluginInstaller
@@ -71,6 +72,7 @@ class KubernetesInstaller(Installer):
 
     @classmethod
     def _install_with_context(cls, gadgets, context=None, verbose=False):
+        stdout, stderr = verbose_func.verbose_output(verbose)
         worker_template_mappings = dict()  # used to generate install_k8s_worker_script
         worker_template_mappings['domestic'] = context.get('domestic', False)
         cls._pre_configure(verbose=verbose)
@@ -105,16 +107,17 @@ class KubernetesInstaller(Installer):
         cls._run_kubeadm(
             k8s_version,
             context,
-            mappings=worker_template_mappings)
+            mappings=worker_template_mappings,
+            verbose=verbose)
         # configure kube config
         cls._config_auth()
         # delete master's taint if needed
         if not context.get('taint_master', None):
-            subprocess.run(cls._cmd_enable_schedule_master, check=False)
+            subprocess.run(cls._cmd_enable_schedule_master, stdout=stdout, stderr=stderr, check=False)
         # install CNI plugin
-        cls._install_cni_plugin(k8s_version, context, worker_template_mappings)
+        cls._install_cni_plugin(k8s_version, context, worker_template_mappings, verbose=verbose)
         # generate install-script for worker
-        cls._update_k8s_worker_script(worker_template_mappings, context)
+        cls._update_k8s_worker_script(worker_template_mappings, context, verbose=verbose)
         return True
 
     @classmethod
@@ -136,7 +139,9 @@ class KubernetesInstaller(Installer):
         os.chown(kube_config, uid=os.getuid(), gid=os.getgid())
 
     @classmethod
-    def _run_kubeadm(cls, k8s_version, context, mappings=None):
+    def _run_kubeadm(cls, k8s_version, context, mappings=None, verbose=False):
+        color_print.debug('running kubeadm')
+        stdout, stderr = verbose_func.verbose_output(verbose)
         temp_cmd = 'kubeadm init'.split()
         temp_cmd.append(
             '--kubernetes-version={k8s_version}'.format(k8s_version=k8s_version))
@@ -147,7 +152,7 @@ class KubernetesInstaller(Installer):
         if pod_network_cidr:
             temp_cmd.append(
                 '--pod-network-cidr={cidr}'.format(cidr=pod_network_cidr))
-        subprocess.run(temp_cmd, check=True, env=context.get('envs', None))
+        subprocess.run(temp_cmd, stdout=stdout, stderr=stderr, check=True, env=context.get('envs', None))
 
     @classmethod
     def _pull_k8s_images(cls, k8s_version, images_base,
@@ -241,6 +246,7 @@ class KubernetesInstaller(Installer):
 
     @classmethod
     def _pre_configure(cls, verbose=False):
+        color_print.debug('pre-configuring')
         stdout, stderr = verbose_func.verbose_output(verbose)
         # make sure br_netfilter is loaded.
         subprocess.run(cls._cmd_modprobe, stdout=stdout, stderr=stderr, check=True)
@@ -255,6 +261,7 @@ class KubernetesInstaller(Installer):
 
     @classmethod
     def _pre_install(cls, mappings=None, verbose=False):
+        color_print.debug('pre-installing')
         stdout, stderr = verbose_func.verbose_output(verbose)
         # install requirements
         subprocess.run(cls.cmd_apt_update, stdout=stdout, stderr=stderr, check=True)
@@ -272,6 +279,7 @@ class KubernetesInstaller(Installer):
 
     @classmethod
     def _update_k8s_worker_script(cls, mappings, context, verbose=False):
+        color_print.debug('generating kubernetes worker script')
         final_mappings = {
             'gpg_url': mappings.pop('gpg_url'),
             'repo_entry': mappings.pop('repo_entry'),
@@ -307,6 +315,7 @@ class KubernetesInstaller(Installer):
                 data = Template(worker_template)
                 res = data.safe_substitute(final_mappings)
                 fw.write(res)
+        color_print.debug('kubernetes worker script generated at %s' % config.k8s_worker_script)
 
     @classmethod
     def _get_kubeadm_token_and_hash(cls, verbose=False):
