@@ -3,4 +3,4 @@ class: no-vuln
 type: test
 dependencies:
   yamls:
-    - pods/ubuntu.yaml
+    - pods/no-vuln-ubuntu.yaml
