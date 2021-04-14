@@ -27,7 +27,7 @@ def install(args):
             'error: no cloud native vulnerability named {cnv}'.format(
                 cnv=args.cnv))
     # deploy vulnerability
-    if vuln['class'] == 'config' or vuln['class'] == 'mount':
+    if vuln['class'] == 'config' or vuln['class'] == 'mount' or vuln['class'] == 'no-vuln':
         if not checkers.docker_kubernetes_installed(verbose=args.verbose):  # should install docker or k8s firstly
             return
         internal_cmds.deploy_vuln_resources_in_k8s(vuln, verbose=args.verbose)
@@ -122,7 +122,7 @@ def remove(args):
             'error: no cloud native vulnerability named {cnv}'.format(
                 cnv=args.cnv))
 
-    if vuln['class'] == 'config' or vuln['class'] == 'mount':
+    if vuln['class'] == 'config' or vuln['class'] == 'mount' or vuln['class'] == 'no-vuln':
         vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
         vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
         if not vuln:
