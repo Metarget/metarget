@@ -56,7 +56,11 @@ class DockerInstaller(Installer):
         stdout, stderr = verbose_func.verbose_output(verbose)
         # install requirements
         color_print.debug('installing prerequisites')
-        subprocess.run(cls.cmd_apt_update, stdout=stdout, stderr=stderr, check=True)
+        subprocess.run(
+            cls.cmd_apt_update,
+            stdout=stdout,
+            stderr=stderr,
+            check=True)
         subprocess.run(
             cls.cmd_apt_install +
             cls._docker_requirements,

@@ -33,7 +33,11 @@ class KataContainersInstaller(Installer):
                 res = data.safe_substitute(mappings)
                 fw.write(res)
         try:
-            subprocess.run(cls.cmd_install_kata, stdout=stdout, stderr=stderr, check=True)
+            subprocess.run(
+                cls.cmd_install_kata,
+                stdout=stdout,
+                stderr=stderr,
+                check=True)
             return True
         except subprocess.CalledProcessError:
             return False

@@ -13,11 +13,14 @@ def deploy_vuln_resources_in_k8s(vuln, verbose=False):
     yamls = [(vuln['path'] + '/' + dependency)
              for dependency in vuln['dependencies']['yamls']]
     if not KubernetesResourceDeployer.apply(yamls, verbose=verbose):
-        color_print.error('error: failed to install {v}'.format(v=vuln['name']))
+        color_print.error(
+            'error: failed to install {v}'.format(
+                v=vuln['name']))
     else:
         color_print.debug('{v} successfully installed'.format(v=vuln['name']))
         pod_name = vuln['name'].replace('_', '-')
-        color_print.debug('run `kubectl exec -it {pod_name} /bin/bash` to have a try :)'.format(pod_name=pod_name))
+        color_print.debug(
+            'run `kubectl exec -it {pod_name} /bin/bash` to have a try :)'.format(pod_name=pod_name))
 
 
 def delete_vuln_resources_in_k8s(vuln, verbose=False):

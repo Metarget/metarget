@@ -34,7 +34,11 @@ class Installer:
         temp_cmd = copy.copy(cls.cmd_apt_madison)
         temp_cmd.append(name)
         try:
-            res = subprocess.run(temp_cmd, stdout=subprocess.PIPE, stderr=stderr, check=True)
+            res = subprocess.run(
+                temp_cmd,
+                stdout=subprocess.PIPE,
+                stderr=stderr,
+                check=True)
         except subprocess.CalledProcessError:
             return None
         entries = res.stdout.decode('utf-8').split('\n')
@@ -51,7 +55,11 @@ class Installer:
         temp_cmd = copy.copy(cls.cmd_apt_search)
         temp_cmd.append(name)
         try:
-            res = subprocess.run(temp_cmd, stdout=subprocess.PIPE, stderr=stderr, check=True)
+            res = subprocess.run(
+                temp_cmd,
+                stdout=subprocess.PIPE,
+                stderr=stderr,
+                check=True)
         except subprocess.CalledProcessError:
             return None
         entries = res.stdout.decode('utf-8').split('\n')
@@ -64,12 +72,16 @@ class Installer:
         return None
 
     @classmethod
-    def _install_one_gadget_by_version(cls, name, version, mappings=None, verbose=False):
+    def _install_one_gadget_by_version(
+            cls, name, version, mappings=None, verbose=False):
         stdout, stderr = verbose_func.verbose_output(verbose)
         # get complete version, e.g. 18.03.1~ce-0~ubuntu
-        complete_version = cls._get_apt_complete_version(name, version, verbose=verbose)
+        complete_version = cls._get_apt_complete_version(
+            name, version, verbose=verbose)
         if complete_version:
-            color_print.debug('installing {gadget} with {version} version'.format(gadget=name, version=complete_version))
+            color_print.debug(
+                'installing {gadget} with {version} version'.format(
+                    gadget=name, version=complete_version))
             # install with the specified version
             temp_cmd = copy.copy(cls.cmd_apt_install)
             temp_cmd.append(
@@ -77,7 +89,11 @@ class Installer:
                     name=name,
                     version=complete_version))
             try:
-                subprocess.run(temp_cmd, stderr=stderr, stdout=stdout, check=True)
+                subprocess.run(
+                    temp_cmd,
+                    stderr=stderr,
+                    stdout=stdout,
+                    check=True)
             except subprocess.CalledProcessError:
                 return False
             if mappings:
@@ -99,14 +115,27 @@ class Installer:
                     stdout=subprocess.PIPE,
                     stderr=stderr,
                     check=True)
-                subprocess.run(cls.cmd_apt_add_key, input=res.stdout, stdout=stdout, stderr=stderr, check=True)
+                subprocess.run(
+                    cls.cmd_apt_add_key,
+                    input=res.stdout,
+                    stdout=stdout,
+                    stderr=stderr,
+                    check=True)
 
             # add apt repository
             cmd_apt_add_repository = 'add-apt-repository\n' \
                                      '{repo_entry}'.format(
                                          repo_entry=repo_entry).split('\n')
-            subprocess.run(cmd_apt_add_repository, stdout=stdout, stderr=stderr, check=True)
-            subprocess.run(cls.cmd_apt_update, stdout=stdout, stderr=stderr, check=True)
+            subprocess.run(
+                cmd_apt_add_repository,
+                stdout=stdout,
+                stderr=stderr,
+                check=True)
+            subprocess.run(
+                cls.cmd_apt_update,
+                stdout=stdout,
+                stderr=stderr,
+                check=True)
             return True
         except subprocess.CalledProcessError:
             return False
@@ -125,7 +154,11 @@ class Installer:
             color_print.debug('pulling %s' % image)
             temp_cmd = 'docker pull {image}'.format(image=image).split()
             try:
-                subprocess.run(temp_cmd, stdout=stdout, stderr=stderr, check=True)
+                subprocess.run(
+                    temp_cmd,
+                    stdout=stdout,
+                    stderr=stderr,
+                    check=True)
                 return True
             except subprocess.CalledProcessError:
                 return False
@@ -136,7 +169,12 @@ class Installer:
     def _pull_domestic_images(cls, images, ori_prefix,
                               new_prefix, mappings=None, verbose=False):
         for image in images:
-            cls._pull_domestic_image(image, ori_prefix, new_prefix, mappings, verbose=verbose)
+            cls._pull_domestic_image(
+                image,
+                ori_prefix,
+                new_prefix,
+                mappings,
+                verbose=verbose)
 
     @classmethod
     def _pull_domestic_image(cls, image, ori_prefix,
@@ -192,7 +230,8 @@ class Installer:
             raise
 
     @classmethod
-    def _pull_quay_image(cls, image, domestic=False, mappings=None, verbose=False):
+    def _pull_quay_image(cls, image, domestic=False,
+                         mappings=None, verbose=False):
         if domestic:
             cls._pull_domestic_image(
                 image,
@@ -204,7 +243,8 @@ class Installer:
             cls._pull_image(image, mappings=mappings, verbose=verbose)
 
     @classmethod
-    def _pull_docker_image(cls, image, domestic=False, mappings=None, verbose=False):
+    def _pull_docker_image(cls, image, domestic=False,
+                           mappings=None, verbose=False):
         if domestic:
             cls._pull_domestic_image(
                 image,

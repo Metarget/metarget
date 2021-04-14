@@ -39,7 +39,8 @@ class KernelInstaller(Installer):
                 version)
             if version.endswith('.0'):
                 version = version.rstrip('.0') + '-'
-            return cls._install_by_version_with_download(version, verbose=verbose)
+            return cls._install_by_version_with_download(
+                version, verbose=verbose)
 
     @classmethod
     def _install_by_version_with_apt(cls, version, verbose=False):
@@ -77,7 +78,8 @@ class KernelInstaller(Installer):
                     '{prefix}/{filename}'.format(prefix=config.kernel_packages_dir, filename=filename))
                 if 'linux-image-' in filename:  # get full version for further modification in grub
                     try:
-                        version_suffix = re.search(r'linux-image-[a-z]*-?([\d].*?)_', filename).group(1)
+                        version_suffix = re.search(
+                            r'linux-image-[a-z]*-?([\d].*?)_', filename).group(1)
                     except AttributeError:  # failed to derive complete kernel version
                         pass
             color_print.debug('installing kernel packages')
@@ -105,11 +107,20 @@ class KernelInstaller(Installer):
                 version=version)
 
         cmd_modify_grub = 'sed\n-i\ns/^GRUB_DEFAULT=.*$/' \
-                          'GRUB_DEFAULT={grub_option}/\n/etc/default/grub'.format(grub_option=grub_option).split('\n')
-        subprocess.run(cmd_modify_grub, stdout=stdout, stderr=stderr, check=True)
+                          'GRUB_DEFAULT={grub_option}/\n/etc/default/grub'.format(
+                              grub_option=grub_option).split('\n')
+        subprocess.run(
+            cmd_modify_grub,
+            stdout=stdout,
+            stderr=stderr,
+            check=True)
         # update grub
         color_print.debug('updating grub')
-        subprocess.run(cls.cmd_update_grub, stdout=stdout, stderr=stderr, check=True)
+        subprocess.run(
+            cls.cmd_update_grub,
+            stdout=stdout,
+            stderr=stderr,
+            check=True)
 
     @classmethod
     def _fetch_package_list_by_version(cls, version, verbose=False):

@@ -11,7 +11,8 @@ from core.env_managers.installer import Installer
 
 class CNIPluginInstaller(Installer):
     @classmethod
-    def install_cni_plugin(cls, k8s_version, context, mappings=None, verbose=False):
+    def install_cni_plugin(cls, k8s_version, context,
+                           mappings=None, verbose=False):
         color_print.debug('installing cni plugin')
         if context.get('cni_plugin', None) == 'flannel':
             CNIPluginInstaller._install_flannel(
@@ -24,7 +25,8 @@ class CNIPluginInstaller(Installer):
                 k8s_version=k8s_version, context=context, mappings=mappings, verbose=verbose)
 
     @classmethod
-    def _install_flannel(cls, k8s_version, context, mappings=None, verbose=False):
+    def _install_flannel(cls, k8s_version, context,
+                         mappings=None, verbose=False):
         # refer to
         # https://github.com/coreos/flannel/blob/master/Documentation/kubernetes.md#older-versions-of-kubernetes
         # and
@@ -39,8 +41,12 @@ class CNIPluginInstaller(Installer):
                     False),
                 mappings=mappings,
                 verbose=verbose)
-            cls._create_k8s_resources(config.flannel_yaml_k8s_1_6_to_1_15_rbac, verbose=verbose)
-            cls._create_k8s_resources(config.flannel_yaml_k8s_1_6_to_1_15, verbose=verbose)
+            cls._create_k8s_resources(
+                config.flannel_yaml_k8s_1_6_to_1_15_rbac,
+                verbose=verbose)
+            cls._create_k8s_resources(
+                config.flannel_yaml_k8s_1_6_to_1_15,
+                verbose=verbose)
         else:
             cls._pull_quay_image(
                 config.flannel_image_k8s_from_1_16,
@@ -51,12 +57,15 @@ class CNIPluginInstaller(Installer):
                 verbose=verbose)
             if k8s_version.minor == version.parse(
                     '1.16').minor and k8s_version.major == version.parse('1.16').major:
-                cls._create_k8s_resources(config.flannel_yaml_k8s_16, verbose=verbose)
+                cls._create_k8s_resources(
+                    config.flannel_yaml_k8s_16, verbose=verbose)
             elif k8s_version > version.parse('1.16'):
-                cls._create_k8s_resources(config.flannel_yaml_k8s_over_16, verbose=verbose)
+                cls._create_k8s_resources(
+                    config.flannel_yaml_k8s_over_16, verbose=verbose)
 
     @classmethod
-    def _install_calico(cls, k8s_version, context, mappings=None, verbose=False):
+    def _install_calico(cls, k8s_version, context,
+                        mappings=None, verbose=False):
         # refer to
         # https://github.com/operator-framework/operator-lifecycle-manager/issues/1818
         # calico only work for k8s 1.16+? (it is true in my cluster)
@@ -70,12 +79,15 @@ class CNIPluginInstaller(Installer):
         k8s_version = version.parse(k8s_version)
         # seems not to work below 1.14
         if k8s_version < version.parse('1.14'):
-            cls._create_k8s_resources(config.calico_yaml_below_1_14, verbose=verbose)
+            cls._create_k8s_resources(
+                config.calico_yaml_below_1_14, verbose=verbose)
         else:
-            cls._create_k8s_resources(config.calico_yaml_from_1_14, verbose=verbose)
+            cls._create_k8s_resources(
+                config.calico_yaml_from_1_14, verbose=verbose)
 
     @classmethod
-    def _install_cilium(cls, k8s_version, context, mappings=None, verbose=False):
+    def _install_cilium(cls, k8s_version, context,
+                        mappings=None, verbose=False):
         # refer to
         # https://docs.cilium.io/en/stable/concepts/kubernetes/requirements/#k8s-requirements
         # https://docs.cilium.io/en/stable/gettingstarted/k8s-install-default/
