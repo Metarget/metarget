@@ -41,6 +41,7 @@ def install(args):
         color_print.debug(
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
+        color_print.debug('uninstall current docker if applicable')
         DockerInstaller.uninstall(verbose=args.verbose)
         if not DockerInstaller.install_by_version(vuln['dependencies'], verbose=args.verbose):
             color_print.error(
@@ -65,6 +66,7 @@ def install(args):
         color_print.debug(
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
+        color_print.debug('uninstall current kubernetes if applicable')
         KubernetesInstaller.uninstall(verbose=args.verbose)
         temp_pod_network_cidr = args.pod_network_cidr if args.pod_network_cidr else config.cni_plugin_cidrs[
             args.cni]

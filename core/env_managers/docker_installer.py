@@ -29,7 +29,6 @@ class DockerInstaller(Installer):
 
     @classmethod
     def uninstall(cls, verbose=False):
-        color_print.debug('uninstall current docker if applicable')
         stdout, stderr = verbose_func.verbose_output(verbose)
         subprocess.run(
             cls.cmd_apt_uninstall +

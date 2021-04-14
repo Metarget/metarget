@@ -20,6 +20,7 @@ def install(args):
                 '{gadget} with version {version} already installed'.format(
                     gadget=args.gadget, version=args.version))
             return
+        color_print.debug('uninstall current docker if applicable')
         DockerInstaller.uninstall(verbose=args.verbose)
         if not DockerInstaller.install_by_version(
                 temp_gadgets, verbose=args.verbose):
@@ -41,6 +42,7 @@ def install(args):
                 '{gadget} with version {version} already installed'.format(
                     gadget=args.gadget, version=args.version))
             return
+        color_print.debug('uninstall current kubernetes if applicable')
         KubernetesInstaller.uninstall(verbose=args.verbose)
         temp_pod_network_cidr = args.pod_network_cidr if args.pod_network_cidr else config.cni_plugin_cidrs[
             args.cni]

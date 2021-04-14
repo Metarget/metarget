@@ -151,12 +151,22 @@ def main():
     parser_appv_install = subparsers_appv.add_parser(
         'install', help='install application vulnerabilities')
     parser_appv_install.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
+    parser_appv_install.add_argument(
         'appv',
         help='appv name, run `metarget appv list` to retrieve appv supported')
     parser_appv_install.set_defaults(func=cmds.appv.install)
     # sub-subcommand `appv remove`
     parser_appv_remove = subparsers_appv.add_parser(
         'remove', help='uninstall application vulnerabilities')
+    parser_appv_remove.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
     parser_appv_remove.add_argument(
         'appv',
         help='running appv name, run `metarget appv list` to retrieve appv supported')
