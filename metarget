@@ -6,6 +6,7 @@ Metarget - Automatic Constructions of Vulnerable Infrastructures
 
 import argparse
 import sys
+import os
 
 import cmds.gadget
 import cmds.cnv
@@ -13,7 +14,24 @@ import cmds.appv
 import config
 
 
+def initialize():
+    """Do some initializations.
+
+    Metarget is a daemon-less tool, so we should ensure
+    the runtime environment works well.
+
+    Returns:
+        None.
+    """
+    try:  # create data/ if necessary
+        os.mkdir(config.runtime_data_dir)
+    except FileExistsError:
+        pass
+
+
 def main():
+    initialize()
+
     parser = argparse.ArgumentParser(
         prog='metarget',
         description='automatic constructions of vulnerable infrastructures')
@@ -154,6 +172,11 @@ def main():
         '--verbose',
         action='store_true',
         help='print output verbosely',
+    )
+    parser_appv_install.add_argument(
+        '--external',
+        action='store_true',
+        help='expose service through NodePort (ClusterIP by default)',
     )
     parser_appv_install.add_argument(
         'appv',

@@ -2,7 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f ./wordpress/pwnscriptum/docker-compose.yml -o RCE-FOR-K8S-4/wordpress/pwnscriptum/
+    kompose.cmd: kompose convert -f ./wordpress/pwnscriptum/docker-compose.yml -o
+      RCE-FOR-K8S-4/wordpress/pwnscriptum/
     kompose.version: 1.22.0 (955b78124)
   creationTimestamp: null
   labels:
@@ -17,26 +18,28 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f ./wordpress/pwnscriptum/docker-compose.yml -o RCE-FOR-K8S-4/wordpress/pwnscriptum/
+        kompose.cmd: kompose convert -f ./wordpress/pwnscriptum/docker-compose.yml
+          -o RCE-FOR-K8S-4/wordpress/pwnscriptum/
         kompose.version: 1.22.0 (955b78124)
       creationTimestamp: null
       labels:
         io.kompose.service: wordpress-pwnscriptum-web
     spec:
       containers:
-        - env:
-            - name: WORDPRESS_DB_HOST
-              value: mysql:3306
-            - name: WORDPRESS_DB_NAME
-              value: wordpress
-            - name: WORDPRESS_DB_PASSWORD
-              value: root
-            - name: WORDPRESS_DB_USER
-              value: root
-          image: vulhub/wordpress:4.6
-          name: wordpress-pwnscriptum-web
-          ports:
-            - containerPort: 80
-          resources: {}
+      - env:
+        - name: WORDPRESS_DB_HOST
+          value: mysql:3306
+        - name: WORDPRESS_DB_NAME
+          value: wordpress
+        - name: WORDPRESS_DB_PASSWORD
+          value: root
+        - name: WORDPRESS_DB_USER
+          value: root
+        image: vulhub/wordpress:4.6
+        imagePullPolicy: IfNotPresent
+        name: wordpress-pwnscriptum-web
+        ports:
+        - containerPort: 80
+        resources: {}
       restartPolicy: Always
 status: {}

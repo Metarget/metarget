@@ -17,17 +17,19 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f ./apereo-cas/4.1-rce/docker-compose.yml -o RCE-FOR-K8S-4/apereo-cas/4.1-rce/
+        kompose.cmd: kompose convert -f ./apereo-cas/4.1-rce/docker-compose.yml -o
+          RCE-FOR-K8S-4/apereo-cas/4.1-rce/
         kompose.version: 1.22.0 (955b78124)
       creationTimestamp: null
       labels:
         io.kompose.service: apereo-cas-4-1-rce-web
     spec:
       containers:
-        - image: vulhub/apereo-cas:4.1.5
-          name: apereo-cas-4-1-rce-web
-          ports:
-            - containerPort: 8080
-          resources: {}
+      - image: vulhub/apereo-cas:4.1.5
+        imagePullPolicy: IfNotPresent
+        name: apereo-cas-4-1-rce-web
+        ports:
+        - containerPort: 8080
+        resources: {}
       restartPolicy: Always
 status: {}

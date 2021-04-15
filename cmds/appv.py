@@ -11,7 +11,7 @@ import utils.checkers as checkers
 import utils.filters as filters
 import config
 import cmds.internal as internal_cmds
-from core.vuln_app_manager import load_vulns
+from core.vuln_app_manager import vuln_loader
 
 
 def install(args):
@@ -22,12 +22,13 @@ def install(args):
 
     Args:
         args.appv: Name of the specified application vulnerability.
+        args.external: Expose service through NodePort or not (ClusterIP by default).
         args.verbose: Verbose or not.
 
     Returns:
         None.
     """
-    vulns = load_vulns.load_vulns_by_dir(config.vuln_app_dir_wildcard)
+    vulns = vuln_loader.load_vulns_by_dir(config.vuln_app_dir_wildcard)
     vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.appv)
     if not vuln:
         color_print.error_and_exit(
@@ -37,7 +38,7 @@ def install(args):
             verbose=args.verbose):  # should install docker or k8s firstly
         return
 
-    internal_cmds.deploy_vuln_resources_in_k8s(vuln, verbose=args.verbose)
+    internal_cmds.deploy_vuln_resources_in_k8s(vuln, external=args.external, verbose=args.verbose)
 
 
 def remove(args):
@@ -53,7 +54,7 @@ def remove(args):
     Returns:
         None.
     """
-    vulns = load_vulns.load_vulns_by_dir(config.vuln_app_dir_wildcard)
+    vulns = vuln_loader.load_vulns_by_dir(config.vuln_app_dir_wildcard)
     vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.appv)
     if not vuln:
         color_print.error_and_exit(
@@ -72,7 +73,7 @@ def retrieve(args):
     Returns:
         None.
     """
-    vulns = load_vulns.load_vulns_by_dir(config.vuln_app_dir_wildcard)
+    vulns = vuln_loader.load_vulns_by_dir(config.vuln_app_dir_wildcard)
     vulns_stripped = list()
     for vuln in vulns:
         vuln_stripped = collections.OrderedDict()

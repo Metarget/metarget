@@ -1,3 +1,8 @@
+
+tools/install_k8s_worker.sh
+tools/install_kata.sh
+data/
+
 # useless data
 *.log
 
@@ -20,6 +25,3 @@ venv/
 # programming languages
 *.pyc
 *.o
-
-tools/install_k8s_worker.sh
-tools/install_kata.sh

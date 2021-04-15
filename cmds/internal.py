@@ -4,9 +4,11 @@ Internal Commands
 
 import utils.color_print as color_print
 from core.env_managers.kubernetes_resource_deployer import KubernetesResourceDeployer
+from core.vuln_app_manager import port_manager
+from core.vuln_app_manager import yaml_modifier
 
 
-def deploy_vuln_resources_in_k8s(vuln, verbose=False):
+def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
     """Deploy resources related to one vulnerability.
 
      Deploy resources related to one vulnerability specified by args.vuln
@@ -14,6 +16,7 @@ def deploy_vuln_resources_in_k8s(vuln, verbose=False):
 
     Args:
         vuln: Information dict about one vulnerability and its resources' locations.
+        external: Expose service through NodePort or not (ClusterIP by default)..
         verbose: Verbose or not.
 
     Returns:
@@ -24,6 +27,20 @@ def deploy_vuln_resources_in_k8s(vuln, verbose=False):
             vuln=vuln['name']))
     yamls = [(vuln['path'] + '/' + dependency)
              for dependency in vuln['dependencies']['yamls']]
+    # if services need to be exposed externally, modify yaml
+    # and change type from ClusterIP to NodePort
+    if external:
+        yamls_svc = [yaml for yaml in yamls if yaml.endswith('-service.yaml')]
+        if yamls_svc:
+            # remove services from yamls
+            yamls = [yaml for yaml in yamls if yaml.endswith('-service.yaml')]
+            # allocate ports on host
+            host_ports = port_manager.allocate_ports(entries=yamls_svc)
+            # generate new yamls using nodeport in svc yamls
+            new_yamls_svc = yaml_modifier.clusterip_to_nodeport(yamls=yamls, ports=host_ports)
+            # add updated services into original yamls
+            yamls.extend(new_yamls_svc)
+
     if not KubernetesResourceDeployer.apply(yamls, verbose=verbose):
         color_print.error(
             'error: failed to install {v}'.format(
@@ -53,6 +70,9 @@ def delete_vuln_resources_in_k8s(vuln, verbose=False):
             vuln=vuln['name']))
     yamls = [(vuln['path'] + '/' + dependency)
              for dependency in vuln['dependencies']['yamls']]
+    # remove port record if applicable
+    # TODO
+
     if not KubernetesResourceDeployer.delete(yamls, verbose=verbose):
         color_print.error('error: failed to remove {v}'.format(v=vuln['name']))
     else:

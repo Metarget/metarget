@@ -12,7 +12,7 @@ import utils.checkers as checkers
 import utils.filters as filters
 import utils.system as system_func
 import cmds.internal as internal_cmds
-from core.vuln_cn_manager import load_vulns
+from core.vuln_cn_manager import vuln_loader
 from core.env_managers.docker_installer import DockerInstaller
 from core.env_managers.kubernetes_installer import KubernetesInstaller
 from core.env_managers.kernel_installer import KernelInstaller
@@ -39,7 +39,7 @@ def install(args):
     Returns:
         None.
     """
-    vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
+    vulns = vuln_loader.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
     vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
     if not vuln:
         color_print.error_and_exit(
@@ -153,7 +153,7 @@ def remove(args):
     Returns:
         None.
     """
-    vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
+    vulns = vuln_loader.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
     vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
     if not vuln:
         color_print.error_and_exit(
@@ -161,7 +161,7 @@ def remove(args):
                 cnv=args.cnv))
 
     if vuln['class'] == 'config' or vuln['class'] == 'mount' or vuln['class'] == 'no-vuln':
-        vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
+        vulns = vuln_loader.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
         vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
         if not vuln:
             color_print.error_and_exit(
@@ -202,7 +202,7 @@ def retrieve(args):
     Returns:
         None.
     """
-    vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
+    vulns = vuln_loader.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
     vulns_stripped = list()
     for vuln in vulns:
         vuln_stripped = collections.OrderedDict()

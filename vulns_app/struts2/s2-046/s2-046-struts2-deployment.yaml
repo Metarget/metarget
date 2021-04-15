@@ -24,10 +24,11 @@ spec:
         io.kompose.service: s2-046-struts2
     spec:
       containers:
-        - image: vulhub/struts2:2.3.30
-          name: s2-046-struts2
-          ports:
-            - containerPort: 8080
-          resources: {}
+      - image: vulhub/struts2:2.3.30
+        imagePullPolicy: IfNotPresent
+        name: s2-046-struts2
+        ports:
+        - containerPort: 8080
+        resources: {}
       restartPolicy: Always
 status: {}

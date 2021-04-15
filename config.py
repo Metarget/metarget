@@ -17,6 +17,21 @@ vuln_cn_dir_wildcard = "vulns_cn/*"
 vuln_app_dir_wildcard = "vulns_app/*/*"
 vuln_app_dir_prefix = "vulns_app/"
 vuln_app_desc_file = 'desc.yaml'
+runtime_data_dir = 'data/'
+
+# k8s worker
+k8s_worker_template = 'tools/install_k8s_worker_template.sh'
+k8s_worker_script = 'tools/install_k8s_worker.sh'
+k8s_hash_generator = 'tools/generate_hash.sh'
+
+# related to kernel
+kernel_packages_list = 'yamls/kernel_packages_list.yaml'
+ubuntu_kernel_repo = 'https://kernel.ubuntu.com/~kernel-ppa/mainline/'
+kernel_packages_dir = '/tmp'
+
+# kata containers
+kata_install_template = 'tools/install_kata_template.sh'
+kata_install_script = 'tools/install_kata.sh'
 
 # kubernetes components images sources
 _k8s_images_prefix_aliyun = "registry.cn-hangzhou.aliyuncs.com/google_containers/"
@@ -210,17 +225,3 @@ k8s_images_extra = {
         'gcr.io/google_containers/k8s-dns-dnsmasq-nanny-amd64:1.14.7',
     ]
 }
-
-# k8s worker
-k8s_worker_template = 'tools/install_k8s_worker_template.sh'
-k8s_worker_script = 'tools/install_k8s_worker.sh'
-k8s_hash_generator = 'tools/generate_hash.sh'
-
-# related to kernel
-kernel_packages_list = 'yamls/kernel_packages_list.yaml'
-ubuntu_kernel_repo = 'https://kernel.ubuntu.com/~kernel-ppa/mainline/'
-kernel_packages_dir = '/tmp'
-
-# kata containers
-kata_install_template = 'tools/install_kata_template.sh'
-kata_install_script = 'tools/install_kata.sh'

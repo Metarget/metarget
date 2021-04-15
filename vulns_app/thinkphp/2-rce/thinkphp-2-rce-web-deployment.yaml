@@ -24,10 +24,11 @@ spec:
         io.kompose.service: thinkphp-2-rce-web
     spec:
       containers:
-        - image: vulhub/thinkphp:2.1
-          name: thinkphp-2-rce-web
-          ports:
-            - containerPort: 80
-          resources: {}
+      - image: vulhub/thinkphp:2.1
+        imagePullPolicy: IfNotPresent
+        name: thinkphp-2-rce-web
+        ports:
+        - containerPort: 80
+        resources: {}
       restartPolicy: Always
 status: {}

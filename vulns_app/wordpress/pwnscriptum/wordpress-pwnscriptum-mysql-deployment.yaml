@@ -2,7 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f ./wordpress/pwnscriptum/docker-compose.yml -o RCE-FOR-K8S-4/wordpress/pwnscriptum/
+    kompose.cmd: kompose convert -f ./wordpress/pwnscriptum/docker-compose.yml -o
+      RCE-FOR-K8S-4/wordpress/pwnscriptum/
     kompose.version: 1.22.0 (955b78124)
   creationTimestamp: null
   labels:
@@ -17,18 +18,20 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f ./wordpress/pwnscriptum/docker-compose.yml -o RCE-FOR-K8S-4/wordpress/pwnscriptum/
+        kompose.cmd: kompose convert -f ./wordpress/pwnscriptum/docker-compose.yml
+          -o RCE-FOR-K8S-4/wordpress/pwnscriptum/
         kompose.version: 1.22.0 (955b78124)
       creationTimestamp: null
       labels:
         io.kompose.service: wordpress-pwnscriptum-mysql
     spec:
       containers:
-        - env:
-            - name: MYSQL_ROOT_PASSWORD
-              value: root
-          image: mysql:5
-          name: wordpress-pwnscriptum-mysql
-          resources: {}
+      - env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        image: mysql:5
+        imagePullPolicy: IfNotPresent
+        name: wordpress-pwnscriptum-mysql
+        resources: {}
       restartPolicy: Always
 status: {}
