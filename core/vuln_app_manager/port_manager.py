@@ -1,6 +1,8 @@
 """
-
+Host Ports Manager
 """
+
+import config
 
 
 def allocate_ports(entries):
@@ -12,7 +14,10 @@ def allocate_ports(entries):
     Returns:
 
     """
-    pass
+    ports = list()
+    with
+    for entry in entries:
+
 
 
 def release_ports(entries):

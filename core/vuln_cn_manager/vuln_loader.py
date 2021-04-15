@@ -1,3 +1,7 @@
+"""
+Cloud Native Vulnerabilities Loader
+"""
+
 import yaml
 import glob
 import re

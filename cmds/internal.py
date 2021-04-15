@@ -37,7 +37,7 @@ def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
             # allocate ports on host
             host_ports = port_manager.allocate_ports(entries=yamls_svc)
             # generate new yamls using nodeport in svc yamls
-            new_yamls_svc = yaml_modifier.clusterip_to_nodeport(yamls=yamls, ports=host_ports)
+            new_yamls_svc = yaml_modifier.generate_svcs_with_clusterip_to_nodeport(yamls=yamls, ports=host_ports)
             # add updated services into original yamls
             yamls.extend(new_yamls_svc)
 
@@ -70,10 +70,13 @@ def delete_vuln_resources_in_k8s(vuln, verbose=False):
             vuln=vuln['name']))
     yamls = [(vuln['path'] + '/' + dependency)
              for dependency in vuln['dependencies']['yamls']]
-    # remove port record if applicable
-    # TODO
 
     if not KubernetesResourceDeployer.delete(yamls, verbose=verbose):
         color_print.error('error: failed to remove {v}'.format(v=vuln['name']))
     else:
+        # remove port record if applicable
+        yamls_svc = [yaml for yaml in yamls if yaml.endswith('-service.yaml')]
+        if yamls_svc:  # release ports not used any more
+            port_manager.release_ports(yamls_svc)
+
         color_print.debug('{v} successfully removed'.format(v=vuln['name']))

@@ -1,3 +1,7 @@
+"""
+Application Vulnerabilities Loader
+"""
+
 import yaml
 import glob
 
