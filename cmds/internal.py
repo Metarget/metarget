@@ -5,7 +5,7 @@ Internal Commands
 import utils.color_print as color_print
 from core.env_managers.kubernetes_resource_deployer import KubernetesResourceDeployer
 from core.vuln_app_manager import port_manager
-from core.vuln_app_manager import yaml_modifier
+from core.vuln_app_manager import resource_modifier
 
 
 def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
@@ -37,7 +37,7 @@ def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
             # allocate ports on host
             host_ports = port_manager.allocate_ports(entries=yamls_svc)
             # generate new yamls using nodeport in svc yamls
-            new_yamls_svc = yaml_modifier.generate_svcs_with_clusterip_to_nodeport(yamls=yamls, ports=host_ports)
+            new_yamls_svc = resource_modifier.generate_svcs_with_clusterip_to_nodeport(yamls=yamls, ports=host_ports)
             # add updated services into original yamls
             yamls.extend(new_yamls_svc)
 
