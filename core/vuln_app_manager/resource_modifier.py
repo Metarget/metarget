@@ -29,7 +29,8 @@ def generate_svcs_with_clusterip_to_nodeport(yamls, ports):
             # cluster -> nodeport
             resource['spec']['type'] = 'NodePort'
             resource['spec']['ports']['nodePort'] = int(port)
-            new_yaml_path = config.runtime_data_dir + '/' + yaml_path.split('/')[-1]
+            new_yaml_path = config.runtime_data_dir + \
+                '/' + yaml_path.split('/')[-1]
             # save new yaml under data/
             with open(new_yaml_path, 'w') as fw:
                 yaml.dump(resource, fw)
