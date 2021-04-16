@@ -7,6 +7,7 @@ Metarget - Automatic Constructions of Vulnerable Infrastructures
 import argparse
 import sys
 import os
+from pathlib import Path
 
 import cmds.gadget
 import cmds.cnv
@@ -27,6 +28,13 @@ def initialize():
         os.mkdir(config.runtime_data_dir)
     except FileExistsError:
         pass
+
+    try:  # create data/host_ports_usage.yaml if necessary
+        f = open(config.runtime_host_ports_usage_file, 'r')
+        f.close()
+    except FileNotFoundError:
+        p = Path(config.runtime_host_ports_usage_file)
+        p.touch()
 
 
 def main():

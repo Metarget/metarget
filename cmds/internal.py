@@ -30,14 +30,14 @@ def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
     # if services need to be exposed externally, modify yaml
     # and change type from ClusterIP to NodePort
     if external:
-        yamls_svc = [yaml for yaml in yamls if yaml.endswith('-service.yaml')]
+        yamls_svc = [temp_yaml for temp_yaml in yamls if temp_yaml.endswith('-service.yaml')]
         if yamls_svc:
             # remove services from yamls
-            yamls = [yaml for yaml in yamls if yaml.endswith('-service.yaml')]
+            yamls = [temp_yaml for temp_yaml in yamls if not temp_yaml.endswith('-service.yaml')]
             # allocate ports on host
             host_ports = port_manager.allocate_ports(entries=yamls_svc)
             # generate new yamls using nodeport in svc yamls
-            new_yamls_svc = resource_modifier.generate_svcs_with_clusterip_to_nodeport(yamls=yamls, ports=host_ports)
+            new_yamls_svc = resource_modifier.generate_svcs_with_clusterip_to_nodeport(yamls=yamls_svc, ports=host_ports)
             # add updated services into original yamls
             yamls.extend(new_yamls_svc)
 

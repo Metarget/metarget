@@ -18,7 +18,7 @@ def allocate_ports(entries):
         List of ports allocated.
     """
     ports = list()
-    with open(config.runtime_host_ports_usage, 'r') as f:
+    with open(config.runtime_host_ports_usage_file, 'r') as f:
         content = yaml.load(f, Loader=yaml.SafeLoader)
         ports_usage = content if content else []
         ports_used_list = [svc['port'] for svc in ports_usage]
@@ -35,7 +35,7 @@ def allocate_ports(entries):
             })
             # will not be allocated in the next iteration
             ports_used_list.append(port_to_be_allocated)
-    with open(config.runtime_host_ports_usage, 'w') as f:
+    with open(config.runtime_host_ports_usage_file, 'w') as f:
         yaml.dump(ports_usage, f)
     return ports
 
@@ -58,7 +58,7 @@ def release_ports(entries):
     Returns:
         None.
     """
-    with open(config.runtime_host_ports_usage, 'r') as f:
+    with open(config.runtime_host_ports_usage_file, 'r') as f:
         content = yaml.load(f, Loader=yaml.SafeLoader)
         ports_usage = content if content else []
         services_using_ports = [port_usage['name']
@@ -70,7 +70,7 @@ def release_ports(entries):
                 services_using_ports.pop(index)
             except ValueError:
                 continue
-    with open(config.runtime_host_ports_usage, 'w') as f:
+    with open(config.runtime_host_ports_usage_file, 'w') as f:
         yaml.dump(ports_usage, f)
 
 

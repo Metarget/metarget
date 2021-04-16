@@ -18,7 +18,7 @@ vuln_app_dir_wildcard = "vulns_app/*/*"
 vuln_app_dir_prefix = "vulns_app/"
 vuln_app_desc_file = 'desc.yaml'
 runtime_data_dir = 'data/'
-runtime_host_ports_usage = 'data/host_ports_usage.yaml'
+runtime_host_ports_usage_file = 'data/host_ports_usage.yaml'
 runtime_host_port_lower_bound = 30000
 
 # k8s worker
