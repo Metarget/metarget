@@ -60,11 +60,6 @@ def main():
     parser_gadget_install = subparsers_gadget.add_parser(
         'install', help='install gadgets')
     parser_gadget_install.add_argument(
-        '--verbose',
-        action='store_true',
-        help='print output verbosely',
-    )
-    parser_gadget_install.add_argument(
         'gadget', help='gadget name, run `metarget gadget list` to retrieve gadgets supported')
     parser_gadget_install.add_argument(
         '-v', '--version', dest='version', required=True, help='gadget version')
@@ -87,18 +82,23 @@ def main():
         '--http-proxy', action='store', help='set proxy', default='')
     parser_gadget_install.add_argument(
         '--no-proxy', action='store', help='do not proxy for some sites', default='')
+    parser_gadget_install.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
     parser_gadget_install.set_defaults(func=cmds.gadget.install)
     # sub-subcommand `gadget remove`
     parser_gadget_remove = subparsers_gadget.add_parser(
         'remove', help='uninstall gadgets')
     parser_gadget_remove.add_argument(
+        'gadget',
+        help='installed gadget name, run `metarget gadget list` to retrieve gadget supported')
+    parser_gadget_remove.add_argument(
         '--verbose',
         action='store_true',
         help='print output verbosely',
     )
-    parser_gadget_remove.add_argument(
-        'gadget',
-        help='installed gadget name, run `metarget gadget list` to retrieve gadget supported')
     parser_gadget_remove.set_defaults(func=cmds.gadget.remove)
 
     # subcommand `cnv`
@@ -114,11 +114,6 @@ def main():
     # sub-subcommand `cnv install`
     parser_cnv_install = subparsers_cnv.add_parser(
         'install', help='install cloud native vulnerabilities')
-    parser_cnv_install.add_argument(
-        '--verbose',
-        action='store_true',
-        help='print output verbosely',
-    )
     parser_cnv_install.add_argument(
         'cnv',
         help='cnv name, run `metarget cnv list` to retrieve cnvs supported')
@@ -141,6 +136,11 @@ def main():
         '--taint-master',
         action='store_true',
         help='taint master node or not')
+    parser_cnv_install.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
     parser_cnv_install.set_defaults(func=cmds.cnv.install)
     # sub-subcommand `cnv remove`
     parser_cnv_remove = subparsers_cnv.add_parser(
@@ -169,14 +169,14 @@ def main():
     parser_appv_install = subparsers_appv.add_parser(
         'install', help='install application vulnerabilities')
     parser_appv_install.add_argument(
-        '--verbose',
-        action='store_true',
-        help='print output verbosely',
-    )
-    parser_appv_install.add_argument(
         '--external',
         action='store_true',
         help='expose service through NodePort (ClusterIP by default)',
+    )
+    parser_appv_install.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
     )
     parser_appv_install.add_argument(
         'appv',
