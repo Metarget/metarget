@@ -8,6 +8,7 @@ metadata:
   labels:
     io.kompose.service: thinkphp-5-0-23-rce-web
   name: thinkphp-5-0-23-rce-web
+  namespace: metarget
 spec:
   replicas: 1
   selector:

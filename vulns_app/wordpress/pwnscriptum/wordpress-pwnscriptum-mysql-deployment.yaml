@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: wordpress-pwnscriptum-mysql
   name: wordpress-pwnscriptum-mysql
+  namespace: metarget
 spec:
   replicas: 1
   selector:

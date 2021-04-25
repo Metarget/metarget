@@ -5,9 +5,10 @@ metadata:
   labels:
     io.kompose.service: imagetragick-web-claim0
   name: imagetragick-web-claim0
+  namespace: metarget
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   resources:
     requests:
       storage: 100Mi

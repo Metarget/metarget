@@ -8,6 +8,7 @@ metadata:
   labels:
     io.kompose.service: s2-046-struts2
   name: s2-046-struts2
+  namespace: metarget
 spec:
   replicas: 1
   selector:

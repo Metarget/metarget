@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: xianzhi-2017-02-82239600-mysql
   name: xianzhi-2017-02-82239600-mysql
+  namespace: metarget
 spec:
   replicas: 1
   selector:

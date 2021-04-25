@@ -8,11 +8,12 @@ metadata:
   labels:
     io.kompose.service: thinkphp-5-rce-web
   name: thinkphp-5-rce-web
+  namespace: metarget
 spec:
   ports:
-    - name: "8080"
-      port: 8080
-      targetPort: 80
+  - name: '8080'
+    port: 8080
+    targetPort: 80
   selector:
     io.kompose.service: thinkphp-5-rce-web
 status:

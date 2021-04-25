@@ -2,6 +2,7 @@
 Internal Commands
 """
 
+import config
 import utils.color_print as color_print
 from core.env_managers.kubernetes_resource_deployer import KubernetesResourceDeployer
 from core.vuln_app_manager import port_manager
@@ -22,6 +23,7 @@ def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
     Returns:
         None.
     """
+
     color_print.debug(
         '{vuln} is going to be installed'.format(
             vuln=vuln['name']))
@@ -41,13 +43,16 @@ def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
             # add updated services into original yamls
             yamls.extend(new_yamls_svc)
 
-    if not KubernetesResourceDeployer.apply(yamls, verbose=verbose):
+    # create namespace metarget in k8s if it is not created yet
+    if not KubernetesResourceDeployer.apply(resources_list=[config.k8s_metarget_namespace_file], verbose=verbose):
+        color_print.error_and_exit('error: failed to create namespace {nm}'.format(nm=config.k8s_metarget_namespace))
+
+    if not KubernetesResourceDeployer.apply(resources_list=yamls, verbose=verbose):
         color_print.error(
             'error: failed to install {v}'.format(
                 v=vuln['name']))
     else:
         color_print.debug('{v} successfully installed'.format(v=vuln['name']))
-        pod_name = vuln['name'].replace('_', '-')
 
 
 def delete_vuln_resources_in_k8s(vuln, verbose=False):

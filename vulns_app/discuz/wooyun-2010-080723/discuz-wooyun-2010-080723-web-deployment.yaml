@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: discuz-wooyun-2010-080723-web
   name: discuz-wooyun-2010-080723-web
+  namespace: metarget
 spec:
   replicas: 1
   selector:

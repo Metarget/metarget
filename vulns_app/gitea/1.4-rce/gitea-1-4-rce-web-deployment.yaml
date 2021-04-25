@@ -8,6 +8,7 @@ metadata:
   labels:
     io.kompose.service: gitea-1-4-rce-web
   name: gitea-1-4-rce-web
+  namespace: metarget
 spec:
   replicas: 1
   selector:

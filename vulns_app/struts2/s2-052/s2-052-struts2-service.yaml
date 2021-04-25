@@ -8,11 +8,12 @@ metadata:
   labels:
     io.kompose.service: s2-052-struts2
   name: s2-052-struts2
+  namespace: metarget
 spec:
   ports:
-    - name: "8080"
-      port: 8080
-      targetPort: 8080
+  - name: '8080'
+    port: 8080
+    targetPort: 8080
   selector:
     io.kompose.service: s2-052-struts2
 status:

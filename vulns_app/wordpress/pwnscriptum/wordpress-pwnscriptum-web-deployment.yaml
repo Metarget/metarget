@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: wordpress-pwnscriptum-web
   name: wordpress-pwnscriptum-web
+  namespace: metarget
 spec:
   replicas: 1
   selector:

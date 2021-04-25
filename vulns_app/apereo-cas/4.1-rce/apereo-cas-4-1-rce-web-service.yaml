@@ -8,11 +8,12 @@ metadata:
   labels:
     io.kompose.service: apereo-cas-4-1-rce-web
   name: apereo-cas-4-1-rce-web
+  namespace: metarget
 spec:
   ports:
-    - name: "8080"
-      port: 8080
-      targetPort: 8080
+  - name: '8080'
+    port: 8080
+    targetPort: 8080
   selector:
     io.kompose.service: apereo-cas-4-1-rce-web
 status:
