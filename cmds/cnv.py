@@ -29,7 +29,7 @@ def install(args):
         args.cnv: Name of the specified cloud native vulnerability.
         args.verbose: Verbose or not.
       Args below only used when installing vulnerability related to Kubernetes:
-        args.cni: Name of CNI plugin.
+        args.cni_plugin: Name of CNI plugin.
         args.pod_network_cidr: CIDR of pod network.
         args.domestic: Pull Kubernetes images from domestic source or not.
         args.taint_master: Taint the master node or not.
@@ -94,10 +94,10 @@ def install(args):
         color_print.debug('uninstall current kubernetes if applicable')
         KubernetesInstaller.uninstall(verbose=args.verbose)
         temp_pod_network_cidr = args.pod_network_cidr if args.pod_network_cidr else config.cni_plugin_cidrs[
-            args.cni]
+            args.cni_plugin]
 
         if not KubernetesInstaller.install_by_version(vuln['dependencies'],
-                                                      cni_plugin=args.cni,
+                                                      cni_plugin=args.cni_plugin,
                                                       pod_network_cidr=temp_pod_network_cidr,
                                                       domestic=args.domestic,
                                                       taint_master=args.taint_master,

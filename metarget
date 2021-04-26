@@ -72,7 +72,7 @@ def main():
     parser_gadget_install.add_argument(
         '-v', '--version', dest='version', required=True, help='gadget version')
     parser_gadget_install.add_argument(
-        '--cni',
+        '--cni-plugin',
         default=config.DEFAULT_CNI_PLUGIN,
         help='cni plugin, {default_cni_plugin} by default'.format(default_cni_plugin=config.DEFAULT_CNI_PLUGIN))
     parser_gadget_install.add_argument(
@@ -136,7 +136,7 @@ def main():
     parser_cnv_install.add_argument(
         '--no-proxy', action='store', help='do not proxy for some sites', default='')
     parser_cnv_install.add_argument(
-        '--cni',
+        '--cni-plugin',
         default=config.DEFAULT_CNI_PLUGIN,
         help='cni plugin, {default_cni_plugin} by default'.format(default_cni_plugin=config.DEFAULT_CNI_PLUGIN))
     parser_cnv_install.add_argument(
