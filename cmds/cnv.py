@@ -28,14 +28,14 @@ def install(args):
     Args:
         args.cnv: Name of the specified cloud native vulnerability.
         args.verbose: Verbose or not.
+        args.http_proxy: HTTP proxy.
+        args.https_proxy: HTTPS proxy.
+        args.no_proxy: Domains which should be visited without proxy.
       Args below only used when installing vulnerability related to Kubernetes:
         args.cni_plugin: Name of CNI plugin.
         args.pod_network_cidr: CIDR of pod network.
         args.domestic: Pull Kubernetes images from domestic source or not.
         args.taint_master: Taint the master node or not.
-        args.http_proxy: HTTP proxy.
-        args.https_proxy: HTTPS proxy.
-        args.no_proxy: Domains which should be visited without proxy.
 
     Returns:
         None.
@@ -96,14 +96,16 @@ def install(args):
         temp_pod_network_cidr = args.pod_network_cidr if args.pod_network_cidr else config.cni_plugin_cidrs[
             args.cni_plugin]
 
-        if not KubernetesInstaller.install_by_version(vuln['dependencies'],
-                                                      cni_plugin=args.cni_plugin,
-                                                      pod_network_cidr=temp_pod_network_cidr,
-                                                      domestic=args.domestic,
-                                                      taint_master=args.taint_master,
-                                                      http_proxy=args.http_proxy,
-                                                      no_proxy=args.no_proxy,
-                                                      verbose=args.verbose):
+        if not KubernetesInstaller.install_by_version(
+                vuln['dependencies'],
+                cni_plugin=args.cni_plugin,
+                pod_network_cidr=temp_pod_network_cidr,
+                domestic=args.domestic,
+                taint_master=args.taint_master,
+                http_proxy=args.http_proxy,
+                https_proxy=args.https_proxy,
+                no_proxy=args.no_proxy,
+                verbose=args.verbose):
             color_print.error(
                 'error: failed to install {v}'.format(
                     v=vuln['name']))
@@ -138,7 +140,32 @@ def install(args):
                 system_func.reboot_system(verbose=args.verbose)
 
     if vuln['class'] == 'kata-containers':
-        pass
+        if checkers.kata_specified_installed(
+                temp_gadget=vuln['dependencies'],
+                kata_runtime_type=vuln['annotations']['kata-runtime-type'],
+                verbose=args.verbose):
+            color_print.debug(
+                '{vuln} already installed'.format(
+                    vuln=vuln['name']))
+            return
+        color_print.debug(
+            '{vuln} is going to be installed'.format(
+                vuln=vuln['name']))
+
+        if not KataContainersInstaller.install_by_version(
+                gadgets=vuln['dependencies'],
+                kata_runtime_type=vuln['annotations']['kata-runtime-type'],
+                http_proxy=args.http_proxy,
+                https_proxy=args.https_proxy,
+                no_proxy=args.no_proxy,
+                verbose=args.verbose):
+            color_print.error(
+                'error: failed to install {v}'.format(
+                    v=vuln['name']))
+        else:
+            color_print.debug(
+                '{v} successfully installed'.format(
+                    v=vuln['name']))
 
 
 def remove(args):

@@ -164,3 +164,7 @@ def kernel_specified_installed(temp_gadget, verbose=False):
         return False
     except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
         return False
+
+
+def kata_specified_installed(temp_gadget, kata_runtime_type, verbose=False):
+    pass

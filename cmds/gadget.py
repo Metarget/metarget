@@ -18,14 +18,14 @@ def install(args):
     Args:
         args.gadget: Name of the specified cloud native gadget.
         args.verbose: Verbose or not.
+        args.http_proxy: HTTP proxy.
+        args.https_proxy: HTTPS proxy.
+        args.no_proxy: Domains which should be visited without proxy.
       Args below only used when installing Kubernetes:
         args.cni_plugin: Name of CNI plugin.
         args.pod_network_cidr: CIDR of pod network.
         args.domestic: Pull Kubernetes images from domestic source or not.
         args.taint_master: Taint the master node or not.
-        args.http_proxy: HTTP proxy.
-        args.https_proxy: HTTPS proxy.
-        args.no_proxy: Domains which should be visited without proxy.
 
     Returns:
         None.
@@ -70,6 +70,7 @@ def install(args):
                                                       domestic=args.domestic,
                                                       taint_master=args.taint_master,
                                                       http_proxy=args.http_proxy,
+                                                      https_proxy=args.https_proxy,
                                                       no_proxy=args.no_proxy,
                                                       verbose=args.verbose):
             color_print.error(
@@ -103,6 +104,18 @@ def install(args):
             if reboot == 'y' or reboot == 'Y':
                 system_func.reboot_system(verbose=args.verbose)
 
+    if args.gadget == 'kata':
+        temp_gadgets = [
+            {'name': 'kata-containers', 'version': args.version},
+        ]
+        if checkers.kata_specified_installed(
+                temp_gadgets, verbose=args.verbose):
+            color_print.debug(
+                '{gadget} with version {version} already installed'.format(
+                    gadget=args.gadget, version=args.version))
+            return
+        # TODO
+
 
 def remove(args):
     """Remove an installed cloud native gadget.
@@ -128,6 +141,8 @@ def remove(args):
         color_print.warning(
             'removal of {gadget} is unsupported'.format(
                 gadget=args.gadget))
+    if args.gadget == 'kata':
+        pass
 
 
 def retrieve(args):

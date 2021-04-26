@@ -1,0 +1,15 @@
+name: kata-escape-2020
+class: kata-containers
+type: container_escape
+dependencies:
+  - name: kata-containers
+    version: 1.10.0
+    versions: ~
+annotations:
+  kata-runtime-type:
+    clh
+links:
+  - https://nvd.nist.gov/vuln/detail/CVE-2020-2023
+  - https://nvd.nist.gov/vuln/detail/CVE-2020-2025
+  - https://nvd.nist.gov/vuln/detail/CVE-2020-2026
+  - https://mp.weixin.qq.com/s/q4xJtlO6iFpHQginGvVBDQ

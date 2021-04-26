@@ -60,10 +60,12 @@ def main():
     # add subparsers for `gadget`
     subparsers_gadget = parser_gadget.add_subparsers(
         help='description', metavar='subcommand')
+
     # sub-subcommand `gadget list`
     parser_gadget_list = subparsers_gadget.add_parser(
         'list', help='list supported gadgets')
     parser_gadget_list.set_defaults(func=cmds.gadget.retrieve)
+
     # sub-subcommand `gadget install`
     parser_gadget_install = subparsers_gadget.add_parser(
         'install', help='install gadgets')
@@ -71,6 +73,7 @@ def main():
         'gadget', help='gadget name, run `metarget gadget list` to retrieve gadgets supported')
     parser_gadget_install.add_argument(
         '-v', '--version', dest='version', required=True, help='gadget version')
+    # options for k8s
     parser_gadget_install.add_argument(
         '--cni-plugin',
         default=config.DEFAULT_CNI_PLUGIN,
@@ -86,6 +89,14 @@ def main():
         help='taint master node or not')
     parser_gadget_install.add_argument(
         '--domestic', action='store_true', help='magic')
+    # options for kata
+    parser_gadget_install.add_argument(
+        '--kata-runtime-type',
+        action='store',
+        help='type of kata runtime, {default_runtime} by default'.format(
+            default_runtime=config.DEFAULT_KATA_RUNTIME_TYPE),
+        default=config.DEFAULT_KATA_RUNTIME_TYPE)
+    # options common
     parser_gadget_install.add_argument(
         '--http-proxy', action='store', help='set http proxy', default='')
     parser_gadget_install.add_argument(
@@ -98,6 +109,7 @@ def main():
         help='print output verbosely',
     )
     parser_gadget_install.set_defaults(func=cmds.gadget.install)
+
     # sub-subcommand `gadget remove`
     parser_gadget_remove = subparsers_gadget.add_parser(
         'remove', help='uninstall gadgets')
@@ -117,24 +129,21 @@ def main():
     # add subparsers for `cnv`
     subparsers_cnv = parser_cnv.add_subparsers(
         help='description', metavar='subcommand')
+
     # sub-subcommand `cnv list`
     parser_cnv_list = subparsers_cnv.add_parser(
         'list', help='list supported cloud native vulnerabilities')
     parser_cnv_list.set_defaults(func=cmds.cnv.retrieve)
+
     # sub-subcommand `cnv install`
     parser_cnv_install = subparsers_cnv.add_parser(
         'install', help='install cloud native vulnerabilities')
     parser_cnv_install.add_argument(
         'cnv',
         help='cnv name, run `metarget cnv list` to retrieve cnvs supported')
+    # options for k8s
     parser_cnv_install.add_argument(
         '--domestic', action='store_true', help='magic')
-    parser_cnv_install.add_argument(
-        '--http-proxy', action='store', help='set http proxy', default='')
-    parser_gadget_install.add_argument(
-        '--https-proxy', action='store', help='set https proxy', default='')
-    parser_cnv_install.add_argument(
-        '--no-proxy', action='store', help='do not proxy for some sites', default='')
     parser_cnv_install.add_argument(
         '--cni-plugin',
         default=config.DEFAULT_CNI_PLUGIN,
@@ -148,12 +157,20 @@ def main():
         '--taint-master',
         action='store_true',
         help='taint master node or not')
+    # options common
+    parser_cnv_install.add_argument(
+        '--http-proxy', action='store', help='set http proxy', default='')
+    parser_cnv_install.add_argument(
+        '--https-proxy', action='store', help='set https proxy', default='')
+    parser_cnv_install.add_argument(
+        '--no-proxy', action='store', help='do not proxy for some sites', default='')
     parser_cnv_install.add_argument(
         '--verbose',
         action='store_true',
         help='print output verbosely',
     )
     parser_cnv_install.set_defaults(func=cmds.cnv.install)
+
     # sub-subcommand `cnv remove`
     parser_cnv_remove = subparsers_cnv.add_parser(
         'remove', help='uninstall cloud native vulnerabilities')
@@ -173,10 +190,12 @@ def main():
     # add subparsers for `appv`
     subparsers_appv = parser_appv.add_subparsers(
         help='description', metavar='subcommand')
+
     # sub-subcommand `appv list`
     parser_appv_list = subparsers_appv.add_parser(
         'list', help='list supported application vulnerabilities')
     parser_appv_list.set_defaults(func=cmds.appv.retrieve)
+
     # sub-subcommand `appv install`
     parser_appv_install = subparsers_appv.add_parser(
         'install', help='install application vulnerabilities')
@@ -194,6 +213,7 @@ def main():
         'appv',
         help='appv name, run `metarget appv list` to retrieve appv supported')
     parser_appv_install.set_defaults(func=cmds.appv.install)
+
     # sub-subcommand `appv remove`
     parser_appv_remove = subparsers_appv.add_parser(
         'remove', help='uninstall application vulnerabilities')

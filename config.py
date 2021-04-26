@@ -5,11 +5,14 @@ import platform
 VERSION = '0.1'
 # default CNI plugin
 DEFAULT_CNI_PLUGIN = 'flannel'
+# default kata runtime type
+DEFAULT_KATA_RUNTIME_TYPE = 'qemu'
 
 # currently supported gadgets
 gadgets_supported = [
     'docker',
     'k8s',
+    'kata',
     'kernel',
 ]
 
@@ -38,6 +41,9 @@ kernel_packages_dir = '/tmp'
 # kata containers
 kata_install_template = 'tools/install_kata_template.sh'
 kata_install_script = 'tools/install_kata.sh'
+kata_static_tar_file = 'kata-static-%s-x86_64.tar.xz'
+kata_tar_decompress_dest = 'opt/kata/'
+kata_static_url_prefix = 'https://github.com/kata-containers/runtime/releases/download/%s/'
 
 # kubernetes components images sources
 _k8s_images_prefix_aliyun = "registry.cn-hangzhou.aliyuncs.com/google_containers/"

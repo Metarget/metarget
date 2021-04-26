@@ -300,3 +300,7 @@ class Installer(object):
             for chunk in bar:
                 if chunk:
                     f.write(chunk)
+
+    @staticmethod
+    def restart_docker():
+        pass
