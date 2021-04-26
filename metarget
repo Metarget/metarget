@@ -87,7 +87,9 @@ def main():
     parser_gadget_install.add_argument(
         '--domestic', action='store_true', help='magic')
     parser_gadget_install.add_argument(
-        '--http-proxy', action='store', help='set proxy', default='')
+        '--http-proxy', action='store', help='set http proxy', default='')
+    parser_gadget_install.add_argument(
+        '--https-proxy', action='store', help='set https proxy', default='')
     parser_gadget_install.add_argument(
         '--no-proxy', action='store', help='do not proxy for some sites', default='')
     parser_gadget_install.add_argument(

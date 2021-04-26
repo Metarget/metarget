@@ -33,7 +33,8 @@ def install(args):
         args.pod_network_cidr: CIDR of pod network.
         args.domestic: Pull Kubernetes images from domestic source or not.
         args.taint_master: Taint the master node or not.
-        args.http_proxy: HTTP proxy used when pulling official images.
+        args.http_proxy: HTTP proxy.
+        args.https_proxy: HTTPS proxy.
         args.no_proxy: Domains which should be visited without proxy.
 
     Returns:

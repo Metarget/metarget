@@ -267,12 +267,13 @@ class Installer(object):
         return ip
 
     @staticmethod
-    def download_file(url, save_dir):
+    def download_file(url, save_dir, proxies=None):
         """Downlaod file from URL.
 
         Downlload file from URL and save it locally.
 
         Args:
+            proxies: HTTP proxy if necessary.
             url: File's URL.
             save_dir: Download destination.
 
@@ -284,7 +285,7 @@ class Installer(object):
         color_print.debug(
             'downloading {url} to {dst}'.format(
                 url=url, dst=save_dir))
-        res = requests.get(url, stream=True)
+        res = requests.get(url, stream=True, proxies=proxies)
         total_length = int(int(res.headers.get('content-length')) / 1024) + 1
         file_name = url.split('/')[-1]
         dst = save_dir + '/' + file_name
