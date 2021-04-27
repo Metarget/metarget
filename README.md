@@ -286,7 +286,7 @@ Currently unsupported.
 |[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|mount|container_escape|✅|
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|mount|container_escape|✅|
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|mount|container_escape|✅|
-|kata-escape-2020|kata-containers|container_escape||
+|kata-escape-2020|kata-containers|container_escape|✅|
 
 ### 4.2 Vulnerable Scenes Related to Cloud Native Applications
 

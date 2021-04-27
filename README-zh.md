@@ -302,7 +302,7 @@ pip install -r requirements.txt
 |[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|危险挂载|容器逃逸|✅|
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|危险挂载|容器逃逸|✅|
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|危险挂载|容器逃逸|✅|
-|kata-escape-2020|kata-containers|容器逃逸||
+|kata-escape-2020|kata-containers|容器逃逸|✅|
 
 ### 4.2 云原生应用脆弱场景
 

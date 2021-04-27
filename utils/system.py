@@ -11,9 +11,14 @@ import utils.verbose as verbose_func
 
 
 def reload_daemon_config(verbose=False):
+    color_print.debug('reloading daemon configurations')
     stdout, stderr = verbose_func.verbose_output(verbose)
     try:
-        subprocess.run('systemctl daemon-reload'.split(), stdout=stdout, stderr=stderr, check=True)
+        subprocess.run(
+            'systemctl daemon-reload'.split(),
+            stdout=stdout,
+            stderr=stderr,
+            check=True)
         return True
     except subprocess.CalledProcessError:
         color_print.error('failed to reload daemon configurations')
