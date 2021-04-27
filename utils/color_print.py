@@ -5,9 +5,9 @@ Print with colors
 import sys
 
 
-RED_STR = "\033[31m%s\033[0m"
+RED_STR = "\033[31merror: %s\033[0m"
 GREEN_STR = "\033[32m%s\033[0m"
-YELLOW_STR = "\033[33m%s\033[0m"
+YELLOW_STR = "\033[33mwarning: %s\033[0m"
 
 
 def debug(message, mode=0):

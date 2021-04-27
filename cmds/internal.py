@@ -45,11 +45,11 @@ def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
 
     # create namespace metarget in k8s if it is not created yet
     if not KubernetesResourceDeployer.apply(resources_list=[config.k8s_metarget_namespace_file], verbose=verbose):
-        color_print.error_and_exit('error: failed to create namespace {nm}'.format(nm=config.k8s_metarget_namespace))
+        color_print.error_and_exit('failed to create namespace {nm}'.format(nm=config.k8s_metarget_namespace))
 
     if not KubernetesResourceDeployer.apply(resources_list=yamls, verbose=verbose):
         color_print.error(
-            'error: failed to install {v}'.format(
+            'failed to install {v}'.format(
                 v=vuln['name']))
     else:
         color_print.debug('{v} successfully installed'.format(v=vuln['name']))
@@ -75,7 +75,7 @@ def delete_vuln_resources_in_k8s(vuln, verbose=False):
              for dependency in vuln['dependencies']['yamls']]
 
     if not KubernetesResourceDeployer.delete(yamls, verbose=verbose):
-        color_print.error('error: failed to remove {v}'.format(v=vuln['name']))
+        color_print.error('failed to remove {v}'.format(v=vuln['name']))
     else:
         # remove port record if applicable
         yamls_svc = [yaml for yaml in yamls if yaml.endswith('-service.yaml')]

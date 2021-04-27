@@ -44,7 +44,7 @@ def install(args):
     vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
     if not vuln:
         color_print.error_and_exit(
-            'error: no cloud native vulnerability named {cnv}'.format(
+            'no cloud native vulnerability named {cnv}'.format(
                 cnv=args.cnv))
 
     # deploy vulnerability
@@ -69,7 +69,7 @@ def install(args):
         if not DockerInstaller.install_by_version(
                 vuln['dependencies'], verbose=args.verbose):
             color_print.error(
-                'error: failed to install {v}'.format(
+                'failed to install {v}'.format(
                     v=vuln['name']))
         else:
             color_print.debug(
@@ -85,7 +85,7 @@ def install(args):
             return
         if not checkers.docker_installed(verbose=args.verbose):
             color_print.error(
-                'error: it seems docker is not installed or correctly configured')
+                'it seems docker is not installed or correctly configured')
             color_print.error_and_exit(
                 'you can run `metarget gadget install docker --version 18.03.1` to install one')
         color_print.debug(
@@ -107,7 +107,7 @@ def install(args):
                 no_proxy=args.no_proxy,
                 verbose=args.verbose):
             color_print.error(
-                'error: failed to install {v}'.format(
+                'failed to install {v}'.format(
                     v=vuln['name']))
         else:
             color_print.debug(
@@ -128,7 +128,7 @@ def install(args):
         if not KernelInstaller.install_by_version(
                 gadgets=vuln['dependencies'], verbose=args.verbose):
             color_print.error(
-                'error: failed to install {v}'.format(
+                'failed to install {v}'.format(
                     v=vuln['name']))
         else:
             color_print.debug(
@@ -160,7 +160,7 @@ def install(args):
                 no_proxy=args.no_proxy,
                 verbose=args.verbose):
             color_print.error(
-                'error: failed to install {v}'.format(
+                'failed to install {v}'.format(
                     v=vuln['name']))
         else:
             color_print.debug(
@@ -185,7 +185,7 @@ def remove(args):
     vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
     if not vuln:
         color_print.error_and_exit(
-            'error: no cloud native vulnerability named {cnv}'.format(
+            'no cloud native vulnerability named {cnv}'.format(
                 cnv=args.cnv))
 
     if vuln['class'] == 'config' or vuln['class'] == 'mount' or vuln['class'] == 'no-vuln':
@@ -193,7 +193,7 @@ def remove(args):
         vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
         if not vuln:
             color_print.error_and_exit(
-                'error: no vulnerability named {cnv}'.format(
+                'no vulnerability named {cnv}'.format(
                     cnv=args.cnv))
 
         internal_cmds.delete_vuln_resources_in_k8s(vuln, verbose=args.verbose)

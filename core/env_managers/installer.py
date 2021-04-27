@@ -12,6 +12,7 @@ import requests
 from tqdm import tqdm
 
 import config
+import utils.system as system_func
 import utils.verbose as verbose_func
 import utils.color_print as color_print
 
@@ -99,7 +100,7 @@ class Installer(object):
             if mappings:
                 mappings[name] = complete_version
             return True
-        color_print.warning('warning: no candidate version for %s' % name)
+        color_print.warning('no candidate version for %s' % name)
         return False
 
     @classmethod
@@ -302,5 +303,14 @@ class Installer(object):
                     f.write(chunk)
 
     @staticmethod
-    def restart_docker():
-        pass
+    def reload_and_restart_docker(verbose=False):
+        # reload docker daemon configurations
+        if not system_func.reload_daemon_config(verbose=verbose):
+            return False
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        try:
+            subprocess.run('systemctl restart docker'.split(), stdout=stdout, stderr=stderr, check=True)
+            return True
+        except subprocess.CalledProcessError:
+            color_print.error('failed to restart docker')
+            return False

@@ -6,16 +6,15 @@ Metarget - Automatic Constructions of Vulnerable Infrastructures
 
 import argparse
 import sys
-import os
-from pathlib import Path
 
+import utils.system as system_func
 import cmds.gadget
 import cmds.cnv
 import cmds.appv
 import config
 
 
-def initialize():
+def _initialize():
     """Do some initializations.
 
     Metarget is a daemon-less tool, so we should ensure
@@ -24,21 +23,14 @@ def initialize():
     Returns:
         None.
     """
-    try:  # create data/ if necessary
-        os.mkdir(config.runtime_data_dir)
-    except FileExistsError:
-        pass
-
-    try:  # create data/host_ports_usage.yaml if necessary
-        f = open(config.runtime_host_ports_usage_file, 'r')
-        f.close()
-    except FileNotFoundError:
-        p = Path(config.runtime_host_ports_usage_file)
-        p.touch()
+    # create data/ if necessary
+    system_func.mkdir_if_not_exist(config.runtime_data_dir)
+    # create data/host_ports_usage.yaml if necessary
+    system_func.create_file_if_not_exist(config.runtime_host_ports_usage_file)
 
 
 def main():
-    initialize()
+    _initialize()
 
     parser = argparse.ArgumentParser(
         prog='metarget',

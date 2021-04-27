@@ -42,7 +42,7 @@ def install(args):
         if not DockerInstaller.install_by_version(
                 temp_gadgets, verbose=args.verbose):
             color_print.error(
-                'error: failed to install {gadget}'.format(
+                'failed to install {gadget}'.format(
                     gadget=args.gadget))
         else:
             color_print.debug(
@@ -74,7 +74,7 @@ def install(args):
                                                       no_proxy=args.no_proxy,
                                                       verbose=args.verbose):
             color_print.error(
-                'error: failed to install {gadget}'.format(
+                'failed to install {gadget}'.format(
                     gadget=args.gadget))
         else:
             color_print.debug(
@@ -93,7 +93,7 @@ def install(args):
         if not KernelInstaller.install_by_version(
                 temp_gadgets, verbose=args.verbose):
             color_print.error(
-                'error: failed to install {gadget}'.format(
+                'failed to install {gadget}'.format(
                     gadget=args.gadget))
         else:
             color_print.debug(

@@ -39,10 +39,8 @@ ubuntu_kernel_repo = 'https://kernel.ubuntu.com/~kernel-ppa/mainline/'
 kernel_packages_dir = '/tmp'
 
 # kata containers
-kata_install_template = 'tools/install_kata_template.sh'
-kata_install_script = 'tools/install_kata.sh'
 kata_static_tar_file = 'kata-static-%s-x86_64.tar.xz'
-kata_tar_decompress_dest = 'opt/kata/'
+kata_tar_decompress_dest = '/opt/kata/'
 kata_static_url_prefix = 'https://github.com/kata-containers/runtime/releases/download/%s/'
 
 # kubernetes components images sources

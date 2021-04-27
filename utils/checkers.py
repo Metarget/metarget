@@ -20,13 +20,13 @@ def docker_kubernetes_installed(verbose=False):
     """
     if not docker_installed(verbose=verbose):
         color_print.error(
-            'error: it seems docker is not installed or correctly configured')
+            'it seems docker is not installed or correctly configured')
         color_print.error(
             'you can run `metarget gadget install docker --version 18.03.1` to install one')
         return False
     if not kubernetes_installed(verbose=verbose):
         color_print.error(
-            'error: it seems kubernetes is not installed or correctly configured')
+            'it seems kubernetes is not installed or correctly configured')
         color_print.error(
             'you can run `metarget gadget install k8s --version 1.16.5` to install one')
         return False
