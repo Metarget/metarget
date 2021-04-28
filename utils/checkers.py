@@ -197,10 +197,10 @@ def kata_specified_installed(temp_gadget, kata_runtime_type, verbose=False):
             try:
                 link_target = os.readlink(
                     '{kata_config_dir}/configuration.toml'.format(kata_config_dir=config.kata_config_dir))
-                actual_runtime_type = link_target.split('.')[0].split('-')[1]
+                actual_runtime_type = link_target.split('.')[0].split('-')[-1]
                 if actual_runtime_type != kata_runtime_type:
                     color_print.warning(
-                        'your expected kata runtime type is {expected}, while current is {actual}'.format(
+                        'your expected kata runtime type is {expected}, while current type is {actual}'.format(
                             expected=kata_runtime_type, actual=actual_runtime_type))
                     color_print.warning('you can configure runtime type manually')
             except (FileNotFoundError, OSError):
