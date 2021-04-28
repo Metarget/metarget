@@ -8,6 +8,7 @@ metadata:
   labels:
     io.kompose.service: fastjson-1-2-24-rce-web
   name: fastjson-1-2-24-rce-web
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -17,17 +18,19 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f ./fastjson/1.2.24-rce/docker-compose.yml -o RCE-FOR-K8S-4/fastjson/1.2.24-rce/
+        kompose.cmd: kompose convert -f ./fastjson/1.2.24-rce/docker-compose.yml -o
+          RCE-FOR-K8S-4/fastjson/1.2.24-rce/
         kompose.version: 1.22.0 (955b78124)
       creationTimestamp: null
       labels:
         io.kompose.service: fastjson-1-2-24-rce-web
     spec:
       containers:
-        - image: vulhub/fastjson:1.2.24
-          name: fastjson-1-2-24-rce-web
-          ports:
-            - containerPort: 8090
-          resources: {}
+      - image: vulhub/fastjson:1.2.24
+        imagePullPolicy: IfNotPresent
+        name: fastjson-1-2-24-rce-web
+        ports:
+        - containerPort: 8090
+        resources: {}
       restartPolicy: Always
 status: {}

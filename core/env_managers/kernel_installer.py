@@ -45,7 +45,7 @@ class KernelInstaller(Installer):
             return cls._install_by_version_with_apt(version, verbose=verbose)
         else:
             color_print.warning(
-                'warning: no apt package for kernel %s' %
+                'no apt package for kernel %s' %
                 version)
             if version.endswith('.0'):
                 version = version.rstrip('.0') + '-'
@@ -139,7 +139,7 @@ class KernelInstaller(Installer):
             f = open(config.kernel_packages_list, 'r')
         except FileNotFoundError:
             color_print.warning(
-                'warning: %s does not exist.' %
+                '%s does not exist.' %
                 config.kernel_packages_list)
             package_list_downloader.download_package_list()
             f = open(config.kernel_packages_list, 'r')

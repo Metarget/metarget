@@ -4,6 +4,7 @@ metadata:
   labels:
     io.kompose.service: dvwa
   name: dvwa-web
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -16,10 +17,11 @@ spec:
         io.kompose.service: dvwa
     spec:
       containers:
-        - image: vulnerables/web-dvwa:latest
-          name: dvwa-web
-          ports:
-            - containerPort: 80
-          resources: {}
+      - image: vulnerables/web-dvwa:latest
+        imagePullPolicy: IfNotPresent
+        name: dvwa-web
+        ports:
+        - containerPort: 80
+        resources: {}
       restartPolicy: Always
 status: {}

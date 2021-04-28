@@ -12,6 +12,7 @@ import requests
 from tqdm import tqdm
 
 import config
+import utils.system as system_func
 import utils.verbose as verbose_func
 import utils.color_print as color_print
 
@@ -99,7 +100,7 @@ class Installer(object):
             if mappings:
                 mappings[name] = complete_version
             return True
-        color_print.warning('warning: no candidate version for %s' % name)
+        color_print.warning('no candidate version for %s' % name)
         return False
 
     @classmethod
@@ -267,14 +268,15 @@ class Installer(object):
         return ip
 
     @staticmethod
-    def download_file(url, save_dir):
-        """Downlaod file from URL.
+    def download_file(url, save_path, proxies=None):
+        """Download file from URL.
 
-        Downlload file from URL and save it locally.
+        Download file from URL and save it locally.
 
         Args:
             url: File's URL.
-            save_dir: Download destination.
+            save_path: Path where file will be saved.
+            proxies: HTTP proxy if necessary.
 
         Returns:
             None.
@@ -283,11 +285,10 @@ class Installer(object):
         # https://zhuanlan.zhihu.com/p/106309634
         color_print.debug(
             'downloading {url} to {dst}'.format(
-                url=url, dst=save_dir))
-        res = requests.get(url, stream=True)
+                url=url, dst=save_path))
+        res = requests.get(url, stream=True, proxies=proxies)
         total_length = int(int(res.headers.get('content-length')) / 1024) + 1
-        file_name = url.split('/')[-1]
-        dst = save_dir + '/' + file_name
+        dst = save_path
         with open(dst, 'wb') as f:
             bar = tqdm(
                 iterable=res.iter_content(
@@ -299,3 +300,32 @@ class Installer(object):
             for chunk in bar:
                 if chunk:
                     f.write(chunk)
+
+    @staticmethod
+    def reload_and_restart_docker(verbose=False):
+        """Reload configurations and restart Docker.
+
+        systemctl daemon-reload && systemctl restart docker
+
+        Args:
+            verbose: Verbose or not.
+
+        Returns:
+            Boolean indicating whether configurations is successfully reload and
+            Docker is successfully restarted or not.
+        """
+        # reload docker daemon configurations
+        if not system_func.reload_daemon_config(verbose=verbose):
+            return False
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        color_print.debug('restarting docker')
+        try:
+            subprocess.run(
+                'systemctl restart docker'.split(),
+                stdout=stdout,
+                stderr=stderr,
+                check=True)
+            return True
+        except subprocess.CalledProcessError:
+            color_print.error('failed to restart docker')
+            return False

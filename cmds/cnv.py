@@ -12,7 +12,7 @@ import utils.checkers as checkers
 import utils.filters as filters
 import utils.system as system_func
 import cmds.internal as internal_cmds
-from core.vuln_cn_manager import load_vulns
+from core.vuln_cn_manager import vuln_loader
 from core.env_managers.docker_installer import DockerInstaller
 from core.env_managers.kubernetes_installer import KubernetesInstaller
 from core.env_managers.kernel_installer import KernelInstaller
@@ -28,22 +28,23 @@ def install(args):
     Args:
         args.cnv: Name of the specified cloud native vulnerability.
         args.verbose: Verbose or not.
+        args.http_proxy: HTTP proxy.
+        args.https_proxy: HTTPS proxy.
+        args.no_proxy: Domains which should be visited without proxy.
       Args below only used when installing vulnerability related to Kubernetes:
-        args.cni: Name of CNI plugin.
+        args.cni_plugin: Name of CNI plugin.
         args.pod_network_cidr: CIDR of pod network.
         args.domestic: Pull Kubernetes images from domestic source or not.
         args.taint_master: Taint the master node or not.
-        args.http_proxy: HTTP proxy used when pulling official images.
-        args.no_proxy: Domains which should be visited without proxy.
 
     Returns:
         None.
     """
-    vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
+    vulns = vuln_loader.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
     vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
     if not vuln:
         color_print.error_and_exit(
-            'error: no cloud native vulnerability named {cnv}'.format(
+            'no cloud native vulnerability named {cnv}'.format(
                 cnv=args.cnv))
 
     # deploy vulnerability
@@ -63,12 +64,12 @@ def install(args):
         color_print.debug(
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
-        color_print.debug('uninstall current docker if applicable')
+        color_print.debug('uninstalling current docker if applicable')
         DockerInstaller.uninstall(verbose=args.verbose)
         if not DockerInstaller.install_by_version(
                 vuln['dependencies'], verbose=args.verbose):
             color_print.error(
-                'error: failed to install {v}'.format(
+                'failed to install {v}'.format(
                     v=vuln['name']))
         else:
             color_print.debug(
@@ -84,27 +85,29 @@ def install(args):
             return
         if not checkers.docker_installed(verbose=args.verbose):
             color_print.error(
-                'error: it seems docker is not installed or correctly configured')
+                'it seems docker is not installed or correctly configured')
             color_print.error_and_exit(
                 'you can run `metarget gadget install docker --version 18.03.1` to install one')
         color_print.debug(
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
-        color_print.debug('uninstall current kubernetes if applicable')
+        color_print.debug('uninstalling current kubernetes if applicable')
         KubernetesInstaller.uninstall(verbose=args.verbose)
         temp_pod_network_cidr = args.pod_network_cidr if args.pod_network_cidr else config.cni_plugin_cidrs[
-            args.cni]
+            args.cni_plugin]
 
-        if not KubernetesInstaller.install_by_version(vuln['dependencies'],
-                                                      cni_plugin=args.cni,
-                                                      pod_network_cidr=temp_pod_network_cidr,
-                                                      domestic=args.domestic,
-                                                      taint_master=args.taint_master,
-                                                      http_proxy=args.http_proxy,
-                                                      no_proxy=args.no_proxy,
-                                                      verbose=args.verbose):
+        if not KubernetesInstaller.install_by_version(
+                vuln['dependencies'],
+                cni_plugin=args.cni_plugin,
+                pod_network_cidr=temp_pod_network_cidr,
+                domestic=args.domestic,
+                taint_master=args.taint_master,
+                http_proxy=args.http_proxy,
+                https_proxy=args.https_proxy,
+                no_proxy=args.no_proxy,
+                verbose=args.verbose):
             color_print.error(
-                'error: failed to install {v}'.format(
+                'failed to install {v}'.format(
                     v=vuln['name']))
         else:
             color_print.debug(
@@ -125,7 +128,7 @@ def install(args):
         if not KernelInstaller.install_by_version(
                 gadgets=vuln['dependencies'], verbose=args.verbose):
             color_print.error(
-                'error: failed to install {v}'.format(
+                'failed to install {v}'.format(
                     v=vuln['name']))
         else:
             color_print.debug(
@@ -137,7 +140,41 @@ def install(args):
                 system_func.reboot_system(verbose=args.verbose)
 
     if vuln['class'] == 'kata-containers':
-        pass
+        if checkers.kata_specified_installed(
+                temp_gadget=vuln['dependencies'],
+                kata_runtime_type=vuln['annotations']['kata-runtime-type'],
+                verbose=args.verbose):
+            color_print.debug(
+                '{vuln} already installed'.format(
+                    vuln=vuln['name']))
+            return
+        if not checkers.docker_installed(verbose=args.verbose):
+            color_print.error(
+                'it seems docker is not installed or correctly configured')
+            color_print.error_and_exit(
+                'you can run `metarget gadget install docker --version 18.03.1` to install one')
+
+        color_print.debug(
+            '{vuln} is going to be installed'.format(
+                vuln=vuln['name']))
+
+        color_print.debug('uninstalling current kata-containers if applicable')
+        KataContainersInstaller.uninstall(verbose=args.verbose)
+
+        if not KataContainersInstaller.install_by_version(
+                gadgets=vuln['dependencies'],
+                kata_runtime_type=vuln['annotations']['kata-runtime-type'],
+                http_proxy=args.http_proxy,
+                https_proxy=args.https_proxy,
+                no_proxy=args.no_proxy,
+                verbose=args.verbose):
+            color_print.error(
+                'failed to install {v}'.format(
+                    v=vuln['name']))
+        else:
+            color_print.debug(
+                '{v} successfully installed'.format(
+                    v=vuln['name']))
 
 
 def remove(args):
@@ -153,19 +190,19 @@ def remove(args):
     Returns:
         None.
     """
-    vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
+    vulns = vuln_loader.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
     vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
     if not vuln:
         color_print.error_and_exit(
-            'error: no cloud native vulnerability named {cnv}'.format(
+            'no cloud native vulnerability named {cnv}'.format(
                 cnv=args.cnv))
 
     if vuln['class'] == 'config' or vuln['class'] == 'mount' or vuln['class'] == 'no-vuln':
-        vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
+        vulns = vuln_loader.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
         vuln = filters.filter_vuln_by_name(vulns=vulns, name=args.cnv)
         if not vuln:
             color_print.error_and_exit(
-                'error: no vulnerability named {cnv}'.format(
+                'no vulnerability named {cnv}'.format(
                     cnv=args.cnv))
 
         internal_cmds.delete_vuln_resources_in_k8s(vuln, verbose=args.verbose)
@@ -183,14 +220,19 @@ def remove(args):
         KubernetesInstaller.uninstall(verbose=args.verbose)
         color_print.debug('{v} successfully removed'.format(v=vuln['name']))
 
+    if vuln['class'] == 'kata-containers':
+        if KataContainersInstaller.uninstall(verbose=args.verbose):
+            color_print.debug(
+                '{v} successfully removed'.format(
+                    v=vuln['name']))
+        else:
+            color_print.error('failed to remove {v}'.format(v=vuln['name']))
+
     if vuln['class'] == 'kernel':
         color_print.warning(
             'removal of vulnerabilities in class {vuln_class} is unsupported'.format(
                 vuln_class=vuln['class']))
         return
-
-    if vuln['class'] == 'kata-containers':
-        pass
 
 
 def retrieve(args):
@@ -202,7 +244,7 @@ def retrieve(args):
     Returns:
         None.
     """
-    vulns = load_vulns.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
+    vulns = vuln_loader.load_vulns_by_dir(config.vuln_cn_dir_wildcard)
     vulns_stripped = list()
     for vuln in vulns:
         vuln_stripped = collections.OrderedDict()

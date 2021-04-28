@@ -65,7 +65,8 @@ class KubernetesInstaller(Installer):
 
     @classmethod
     def install_by_version(cls, gadgets, cni_plugin, pod_network_cidr,
-                           taint_master=False, domestic=False, http_proxy='', no_proxy='', verbose=False):
+                           taint_master=False, domestic=False, http_proxy='',
+                           https_proxy='', no_proxy='', verbose=False):
         """Install Kubernetes with specified version.
 
         Args:
@@ -75,6 +76,7 @@ class KubernetesInstaller(Installer):
             taint_master: Taint the master node or not.
             domestic: Pull Kubernetes images from domestic source or not.
             http_proxy: HTTP proxy used when pulling official images.
+            https_proxy: HTTPS proxy if necessary.
             no_proxy: Domains which should be visited without proxy.
             verbose: Verbose or not.
 
@@ -83,6 +85,7 @@ class KubernetesInstaller(Installer):
         """
         temp_envs = copy.copy(dict(os.environ))
         temp_envs['http_proxy'] = http_proxy
+        temp_envs['https_proxy'] = https_proxy
         temp_envs['no_proxy'] = no_proxy
         context = {
             'envs': temp_envs,

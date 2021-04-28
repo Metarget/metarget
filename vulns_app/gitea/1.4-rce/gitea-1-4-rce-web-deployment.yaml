@@ -8,6 +8,7 @@ metadata:
   labels:
     io.kompose.service: gitea-1-4-rce-web
   name: gitea-1-4-rce-web
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -24,11 +25,12 @@ spec:
         io.kompose.service: gitea-1-4-rce-web
     spec:
       containers:
-        - image: vulhub/gitea:1.4.0
-          name: gitea-1-4-rce-web
-          ports:
-            - containerPort: 3000
-            - containerPort: 22
-          resources: {}
+      - image: vulhub/gitea:1.4.0
+        imagePullPolicy: IfNotPresent
+        name: gitea-1-4-rce-web
+        ports:
+        - containerPort: 3000
+        - containerPort: 22
+        resources: {}
       restartPolicy: Always
 status: {}

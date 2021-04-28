@@ -8,11 +8,12 @@ metadata:
   labels:
     io.kompose.service: fastjson-1-2-24-rce-web
   name: fastjson-1-2-24-rce-web
+  namespace: metarget
 spec:
   ports:
-    - name: "8090"
-      port: 8090
-      targetPort: 8090
+  - name: '8090'
+    port: 8090
+    targetPort: 8090
   selector:
     io.kompose.service: fastjson-1-2-24-rce-web
 status:

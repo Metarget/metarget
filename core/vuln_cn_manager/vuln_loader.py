@@ -1,7 +1,12 @@
+"""
+Cloud Native Vulnerabilities Loader
+"""
+
 import yaml
-import logging
 import glob
 import re
+
+import utils.color_print as color_print
 
 
 def load_vuln(filename):
@@ -22,7 +27,7 @@ def load_vuln(filename):
             vuln['path'] = re.sub('[^/]+.yaml$', '', filename)
             return vuln
     except FileNotFoundError:
-        logging.warning('{filename} does not exist, skipped.'.format(filename=filename))
+        color_print.warning('{filename} does not exist, skipped.'.format(filename=filename))
         return None
 
 

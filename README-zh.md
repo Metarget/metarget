@@ -14,7 +14,7 @@ Metarget的名称来源于`meta-`（元）加`target`（目标，靶机），是
 
 与此同时，我们也能看到，开源社区涌现出一些优秀的安全项目，如[Vulhub](https://github.com/vulhub/vulhub)、[VulApps](https://github.com/Medicean/VulApps)等，将漏洞场景打包成镜像，方便研究人员开箱即用。
 
-然而，这些项目主要针对应用程序漏洞。那么，如果我们需要研究的是Docker、Kubernetes、操作系统内核等底层基础自身的漏洞呢？这又回到了前面的环境搭建问题。
+然而，这些项目主要针对应用程序漏洞。那么，如果我们需要研究的是Docker、Kubernetes、操作系统内核等底层基础设施自身的漏洞呢？这又回到了前面的环境搭建问题。
 
 我们希望Metarget能够在一定程度上解决这个问题，致力于底层基础设施的脆弱场景自动化构建。在此之上，我们还希望Metarget实现对云原生环境多层次脆弱场景的自动化构建。
 
@@ -24,17 +24,18 @@ Metarget的名称来源于`meta-`（元）加`target`（目标，靶机），是
 
 具体来说，我们希望：
 
-- 执行`metarget cnv install cve-2019-5736`直接将带有CVE-2019-5736漏洞的Docker安装在服务器上
-- 执行`metarget cnv install cve-2018-1002105`直接将带有CVE-2018-1002105漏洞的Kubernetes安装在服务器上
-- 执行`metarget cnv install cve-2016-5195`直接将系统切换为带有脏牛漏洞的内核
+- 执行`metarget cnv install cve-2019-5736`直接将带有CVE-2019-5736漏洞的Docker安装在服务器上。
+- 执行`metarget cnv install cve-2018-1002105`直接将带有CVE-2018-1002105漏洞的Kubernetes安装在服务器上。
+- 执行`metarget cnv install kata-escape-2020`直接将带有CVE-2020-2023/2025/2026等漏洞的Kata-containers安装在服务器上。
+- 执行`metarget cnv install cve-2016-5195`直接将系统切换为带有脏牛漏洞的内核。
 
 有点酷了，是不是？不要讲那么多，不要RTFM，我只想一键搞定环境泡杯咖啡，然后开始漏洞研究。
 
 在这个基础上，我们还希望：
 
-- 攻防相关的同学能够借助Metarget快速搭建从简单到复杂的云原生靶场环境，从而积累云原生环境下的渗透经验
-- 执行`metarget appv install dvwa`直接安装一个[DVWA](https://github.com/digininja/DVWA)靶机到脆弱的底层基础设施上
-- 执行`metarget appv install thinkphp-5-0-23-rce`直接安装一个ThinkPHP RCE漏洞环境到脆弱的底层基础设施上
+- 攻防相关的同学能够借助Metarget快速搭建从简单到复杂的云原生靶场环境，从而积累云原生环境下的渗透经验。
+- 执行`metarget appv install dvwa`直接安装一个[DVWA](https://github.com/digininja/DVWA)靶机到脆弱的底层基础设施上。
+- 执行`metarget appv install thinkphp-5-0-23-rce --external`直接安装一个ThinkPHP RCE漏洞环境到脆弱的底层基础设施上，并以`NodePort`形式将端口暴露出来。
 
 在一个刚刚装好的Ubuntu操作系统上，安装Metarget，然后简单执行五条指令就能完成一个多层次脆弱靶机场景搭建：
 
@@ -43,7 +44,7 @@ Metarget的名称来源于`meta-`（元）加`target`（目标，靶机），是
 ./metarget cnv install cve-2019-5736 # Docker层面容器逃逸
 ./metarget cnv install cve-2018-1002105 --domestic # Kubernetes单节点集群（包含权限提升漏洞）
 ./metarget cnv install privileged-container # 部署一个特权容器
-./metarget appv install dvwa # 部署一个DVWA靶机
+./metarget appv install dvwa --external # 部署一个DVWA靶机
 ```
 
 RCE、容器逃逸、横向移动、隐蔽持久化，统统打包送给你。
@@ -54,7 +55,7 @@ RCE、容器逃逸、横向移动、隐蔽持久化，统统打包送给你。
 
 注意：
 
-本项目目的在于自动化构建**用于信息安全研究的脆弱场景**，不保证生成的场景（如自动化安装的Kubernetes）的安全性，不推荐将本项目用于正常业务组件、集群的安装和部署。
+本项目目的在于自动化构建**用于信息安全研究的脆弱场景**，不保证生成的场景（如自动化安装的Kubernetes）的安全性，**不推荐**将本项目用于正常业务组件、集群的安装和部署。
 
 ## 2 使用方法
 
@@ -120,27 +121,40 @@ Kubernetes通常需要配置大量参数，Metarget项目提供了部分参数�
 ```
   -v VERSION, --version VERSION
                         gadget version
-  --cni CNI             cni plugin, flannel by default
+  --cni-plugin CNI_PLUGIN
+                        cni plugin, flannel by default
   --pod-network-cidr POD_NETWORK_CIDR
                         pod network cidr, default cidr for each plugin by
                         default
   --taint-master        taint master node or not
   --domestic            magic
-  --http-proxy HTTP_PROXY
-                        set proxy
-  --no-proxy NO_PROXY   do not proxy for some sites
 ```
 
-**考虑到特殊的网络环境，国内的朋友需要指定以下两个参数之一，以顺利完成Kubernetes的部署：**
+**考虑到特殊的网络环境，国内的朋友如果无法访问Kubernetes官方镜像源，可以指定以下参数，以顺利完成Kubernetes的部署：**
 
-- http-proxy：用于从官方源下载Kubernetes系统组件镜像的代理
-- domestic：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理
+- domestic：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理（偶尔会下载失败，需多次尝试）
 
-如果主机能够直接访问Kubernetes官方源，则不必指定这些参数。
+如果主机能够直接访问Kubernetes官方镜像源，则不必指定该参数。
 
 **Metarget支持部署多节点Kubernetes集群环境，如果想要部署多节点，在单节点部署成功后，将`tools`目录下生成的`install_k8s_worker.sh`脚本复制到每个工作节点上执行即可。**
 
-#### 2.2.3 示例：安装指定版本Linux内核
+#### 2.2.3 示例：安装指定版本的Kata-containers
+
+执行以下命令：
+
+```bash
+./metarget gadget install kata --version 1.10.0
+```
+
+执行成功后，版本为1.10.0的Kata-containers将被安装在当前Linux系统上。
+
+注意：
+
+你也可以通过`--kata-runtime-type`选项指定kata运行时的类型（如qemu、clh、fc等），默认值为`qemu`。
+
+**考虑到特殊的网络环境，国内的朋友如果无法下载Kata-containers安装包，可以通过`--https-proxy`参数指定代理，也可以预先从Github上下载Kata-containers压缩包放置在`data/`目录下，Metarget将自动使用已下载的包。**
+
+#### 2.2.4 示例：安装指定版本Linux内核
 
 执行以下命令：
 
@@ -196,14 +210,25 @@ optional arguments:
 
 执行成功后，存在CVE-2018-1002105漏洞的Kubernetes单节点集群将被安装在当前Linux系统上。
 
-**考虑到特殊的网络环境，国内的朋友需要指定以下两个参数之一，以顺利完成Kubernetes相关脆弱环境的部署：**
+**考虑到特殊的网络环境，国内的朋友如果无法访问Kubernetes官方镜像源，可以指定以下参数，以顺利完成Kubernetes的部署：**
 
-- http-proxy：用于从官方源下载Kubernetes系统组件镜像的代理
-- domestic：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理
+- domestic：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理（偶尔会下载失败，需多次尝试）
 
-如果主机能够直接访问Kubernetes官方源，则不必指定这些参数。
+如果主机能够直接访问Kubernetes官方镜像源，则不必指定该参数。
 
-#### 2.3.3 示例：CVE-2016-5195
+#### 2.3.3 示例：Kata-containers安全容器逃逸
+
+执行以下命令：
+
+```bash
+./metarget cnv install kata-escape-2020
+```
+
+执行成功后，存在CVE-2020-2023/2025/2026等漏洞的Kata-containers将被安装在当前系统上。
+
+**考虑到特殊的网络环境，国内的朋友如果无法下载Kata-containers安装包，可以通过`--https-proxy`参数指定代理，也可以预先从Github上下载Kata-containers压缩包放置在`data/`目录下，Metarget将自动使用已下载的包。**
+
+#### 2.3.4 示例：CVE-2016-5195
 
 执行以下命令：
 
@@ -243,6 +268,12 @@ optional arguments:
 ```
 
 执行成功后，DVWA将以Deployment和Service资源的形式被部署在当前集群中。
+
+注意：
+
+你可以通过指定`--external`选项让服务以`Nodeport`形式暴露出来，这样一来，你就能够通过工作节点的IP访问到该服务。
+
+默认情况下，服务类型为`ClusterIP`。
 
 ### 2.5 管理“云原生靶机集群”的脆弱场景
 
@@ -302,7 +333,7 @@ pip install -r requirements.txt
 |[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|危险挂载|容器逃逸|✅|
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|危险挂载|容器逃逸|✅|
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|危险挂载|容器逃逸|✅|
-|kata-escape-2020|kata-containers|容器逃逸||
+|[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|容器逃逸|✅|
 
 ### 4.2 云原生应用脆弱场景
 
@@ -330,8 +361,8 @@ Metarget将以上项目中的靶机统一转化为Kubernetes中的Deployment和S
 - [x] 实现基本云原生组件安装部署
 - [x] 实现经典云原生漏洞场景集成
 - [x] 实现容器内RCE脆弱场景集成
-- [ ] 实现其他云原生脆弱场景集成
 - [ ] 实现多节点云原生靶场集群自动化生成
+- 实现其他云原生脆弱场景集成（长期更新）
 
 ## 7 关于Logo
 

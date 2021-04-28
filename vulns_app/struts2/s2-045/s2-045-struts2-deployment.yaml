@@ -8,6 +8,7 @@ metadata:
   labels:
     io.kompose.service: s2-045-struts2
   name: s2-045-struts2
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -24,10 +25,11 @@ spec:
         io.kompose.service: s2-045-struts2
     spec:
       containers:
-        - image: vulhub/struts2:2.3.30
-          name: s2-045-struts2
-          ports:
-            - containerPort: 8080
-          resources: {}
+      - image: vulhub/struts2:2.3.30
+        imagePullPolicy: IfNotPresent
+        name: s2-045-struts2
+        ports:
+        - containerPort: 8080
+        resources: {}
       restartPolicy: Always
 status: {}

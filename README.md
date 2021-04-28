@@ -24,26 +24,27 @@ In this project, we come up with concepts like *installing vulnerabilities* and 
 
 To be exact, we expect that:
 
-- `metarget cnv install cve-2019-5736` will install Docker with CVE-2019-5736 onto the server
-- `metarget cnv install cve-2018-1002105` will install Kubernetes with CVE-2018-1002105 onto the server
-- `metarget cnv install cve-2016-5195` will install a kernel with DirtyCoW into the server
+- `metarget cnv install cve-2019-5736` will install Docker with CVE-2019-5736 onto the server.
+- `metarget cnv install cve-2018-1002105` will install Kubernetes with CVE-2018-1002105 onto the server.
+- `metarget cnv install kata-escape-2020` will install Kata-containers with CVE-2020-2023/2025/2026 onto the server.
+- `metarget cnv install cve-2016-5195` will install a kernel with DirtyCoW into the server.
 
 It's cool, right? No more steps. No RTFM. Execute one command and enjoy your coffee.
 
 Furthermore, we expect that:
 
-- with Metarget's help, ethical hackers are able to deploy simple or complicated cloud native targets swiftly and learn by hacking cloud native environments
-- `metarget appv install dvwa` will install a [DVWA](https://github.com/digininja/DVWA) target onto our vulnerable infrastructure
-- `metarget appv install thinkphp-5-0-23-rce` will install a ThinkPHP RCE vulnerability onto our vulnerable infrastructure
+- with Metarget's help, ethical hackers are able to deploy simple or complicated cloud native targets swiftly and learn by hacking cloud native environments.
+- `metarget appv install dvwa` will install a [DVWA](https://github.com/digininja/DVWA) target onto our vulnerable infrastructure.
+- `metarget appv install thinkphp-5-0-23-rce --external` will install a ThinkPHP RCE vulnerability with `NodePort` service onto our vulnerable infrastructure.
 
-You can just run 5 commands below after installing a new Ubunntu and obtain a multi-layer vulnerable scene:
+You can just run 5 commands below after installing a new Ubuntu and obtain a multi-layer vulnerable scene:
 
 ```bash
 ./metarget cnv install cve-2016-5195 # container escape with dirtyCoW
 ./metarget cnv install cve-2019-5736 # container escape with docker
 ./metarget cnv install cve-2018-1002105 # kubernetes single-node cluster with cve-2018-1002105
 ./metarget cnv install privileged-container # deploy a privileged container
-./metarget appv install dvwa # deploy dvwa target
+./metarget appv install dvwa --external # deploy dvwa target
 ```
 
 RCE, container escape, lateral movement, persistence, they are yours now.
@@ -113,25 +114,36 @@ If the command above completes successfully, 1.16.5 Kubernetes single-node clust
 
 Note:
 
-Usually, lots of options need to be configured in Kubernetes. As a seuciry research project, Metarget provides some options for installation of Kubernetes:
+Usually, lots of options need to be configured in Kubernetes. As a security research project, Metarget provides some options for installation of Kubernetes:
 
 ```
   -v VERSION, --version VERSION
                         gadget version
-  --cni CNI             cni plugin, flannel by default
+  --cni-plugin CNI_PLUGIN
+                        cni plugin, flannel by default
   --pod-network-cidr POD_NETWORK_CIDR
                         pod network cidr, default cidr for each plugin by
                         default
   --taint-master        taint master node or not
-  --domestic            magic
-  --http-proxy HTTP_PROXY
-                        set proxy
-  --no-proxy NO_PROXY   do not proxy for some sites
 ```
 
 **Metarget supports deployment of multi-node cluster. If you want to add more nodes into the cluster, you can copy `tools/install_k8s_worker.sh` script and run it on each worker nodes after the successful installation of single-node cluster.**
 
-#### 2.2.3 Case: Install Linux Kernel with Specified Version
+#### 2.2.3 Case: Install Kata-containers with Specified Version
+
+Run:
+
+```bash
+./metarget gadget install kata --version 1.10.0
+```
+
+If the command above completes successfully, 1.10.0 Kata-containers will be installed.
+
+Note:
+
+You can also specify the type of kata runtime (qemu/clh/fc/...) with `--kata-runtime-type` option, which is `qemu` by default.
+
+#### 2.2.4 Case: Install Linux Kernel with Specified Version
 
 Run:
 
@@ -187,7 +199,17 @@ Run:
 
 If the command above completes successfully, Kubernetes with CVE-2018-1002105 will be installed。
 
-#### 2.3.3 Case: CVE-2016-5195
+#### 2.3.3 Case: Kata-containers Escape
+
+Run:
+
+```bash
+./metarget cnv install kata-escape-2020
+```
+
+If the command above completes successfully, Kata-containers with CVE-2020-2023/2025/2026 will be installed。
+
+#### 2.3.4 Case: CVE-2016-5195
 
 Run: 
 
@@ -227,6 +249,12 @@ Run:
 ```
 
 If the command above completes successfully, [DVWA](https://github.com/digininja/DVWA) will be deployed as *Deployment* and *Service* resources in current Kubernetes.
+
+Note:
+
+You can specify `--external` option, then the service will be exposed as `NodePort`, so that you can visit it by IP of the host node.
+
+By default, the type of service is `ClusterIP`.
 
 ### 2.5 Manage Vulnerable Cloud Native Target Cluster
 
@@ -286,7 +314,7 @@ Currently unsupported.
 |[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|mount|container_escape|✅|
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|mount|container_escape|✅|
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|mount|container_escape|✅|
-|kata-escape-2020|kata-containers|container_escape||
+|[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|✅|
 
 ### 4.2 Vulnerable Scenes Related to Cloud Native Applications
 
@@ -314,8 +342,8 @@ To list vulnerable scenes related to cloud native applications supported by Meta
 - [x] deployments of basic cloud native components (docker, k8s)
 - [x] integrations of vulnerable scenes related to cloud native components
 - [x] integrations of RCE scenes in containers
-- [ ] integrations of other cloud native vulnerable scenes
 - [ ] automatic construction of multi-node cloud native target cluster
+- integrations of other cloud native vulnerable scenes (long term)
 
 ## 7 About Logo
 

@@ -8,6 +8,7 @@ metadata:
   labels:
     io.kompose.service: thinkphp-5-rce-web
   name: thinkphp-5-rce-web
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -24,10 +25,11 @@ spec:
         io.kompose.service: thinkphp-5-rce-web
     spec:
       containers:
-        - image: vulhub/thinkphp:5.0.20
-          name: thinkphp-5-rce-web
-          ports:
-            - containerPort: 80
-          resources: {}
+      - image: vulhub/thinkphp:5.0.20
+        imagePullPolicy: IfNotPresent
+        name: thinkphp-5-rce-web
+        ports:
+        - containerPort: 80
+        resources: {}
       restartPolicy: Always
 status: {}

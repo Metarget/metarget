@@ -2,12 +2,14 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    kompose.cmd: kompose convert -f ./discuz/wooyun-2010-080723/docker-compose.yml -o RCE-FOR-K8S-4/discuz/wooyun-2010-080723/
+    kompose.cmd: kompose convert -f ./discuz/wooyun-2010-080723/docker-compose.yml
+      -o RCE-FOR-K8S-4/discuz/wooyun-2010-080723/
     kompose.version: 1.22.0 (955b78124)
   creationTimestamp: null
   labels:
     io.kompose.service: discuz-wooyun-2010-080723-db
   name: discuz-wooyun-2010-080723-db
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -17,20 +19,22 @@ spec:
   template:
     metadata:
       annotations:
-        kompose.cmd: kompose convert -f ./discuz/wooyun-2010-080723/docker-compose.yml -o RCE-FOR-K8S-4/discuz/wooyun-2010-080723/
+        kompose.cmd: kompose convert -f ./discuz/wooyun-2010-080723/docker-compose.yml
+          -o RCE-FOR-K8S-4/discuz/wooyun-2010-080723/
         kompose.version: 1.22.0 (955b78124)
       creationTimestamp: null
       labels:
         io.kompose.service: discuz-wooyun-2010-080723-db
     spec:
       containers:
-        - env:
-            - name: MYSQL_DATABASE
-              value: discuz
-            - name: MYSQL_ROOT_PASSWORD
-              value: root
-          image: mysql:5.5
-          name: discuz-wooyun-2010-080723-db
-          resources: {}
+      - env:
+        - name: MYSQL_DATABASE
+          value: discuz
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        image: mysql:5.5
+        imagePullPolicy: IfNotPresent
+        name: discuz-wooyun-2010-080723-db
+        resources: {}
       restartPolicy: Always
 status: {}

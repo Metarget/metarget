@@ -60,7 +60,7 @@ class KubernetesResourceDeployer(object):
                     check=True)
             except subprocess.CalledProcessError:
                 color_print.error(
-                    'error: failed to {action} resources in {res}'.format(
+                    'failed to {action} resources in {res}'.format(
                         action=action, res=res))
                 return False
         return True
