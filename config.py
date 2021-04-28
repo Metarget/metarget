@@ -42,6 +42,7 @@ kernel_packages_dir = '/tmp'
 kata_static_tar_file = 'kata-static-%s-x86_64.tar.xz'
 kata_tar_decompress_dest = '/opt/kata/'
 kata_static_url_prefix = 'https://github.com/kata-containers/runtime/releases/download/%s/'
+kata_config_dir = '/etc/kata-containers/'
 
 # kubernetes components images sources
 _k8s_images_prefix_aliyun = "registry.cn-hangzhou.aliyuncs.com/google_containers/"

@@ -1,12 +1,13 @@
 """
 Checkers
 """
-
+import os
 import subprocess
 import re
 
 import utils.color_print as color_print
 import utils.verbose as verbose_func
+import config
 
 
 def docker_kubernetes_installed(verbose=False):
@@ -167,4 +168,48 @@ def kernel_specified_installed(temp_gadget, verbose=False):
 
 
 def kata_specified_installed(temp_gadget, kata_runtime_type, verbose=False):
-    pass
+    """Check whether kata-containers with specified version has been installed.
+
+    Args:
+        temp_gadget: Kata-containers gadgets (e.g. kata-containers).
+        kata_runtime_type: Runtime of Kata (e.g. qemu/clh/...).
+        verbose:
+
+    Returns:
+        If kata-containers with specified version has been installed, return True,
+        else False.
+    """
+    try:
+        _, stderr = verbose_func.verbose_output(verbose)
+        temp_cmd = '{base_dir}/bin/kata-runtime --version'.format(
+            base_dir=config.kata_tar_decompress_dest).split()
+        res = subprocess.run(
+            temp_cmd,
+            stdout=subprocess.PIPE,
+            stderr=stderr,
+            check=True)
+        version_string = res.stdout.decode('utf-8').split('\n')[0]
+        server_version = re.search(
+            r'.*([\d]+\.[\d]+\.[\d]+)',
+            version_string).group(1)
+        if server_version == temp_gadget[0]['version']:
+            # check whether kata runtime type is also correct
+            try:
+                link_target = os.readlink(
+                    '{kata_config_dir}/configuration.toml'.format(kata_config_dir=config.kata_config_dir))
+                actual_runtime_type = link_target.split('.')[0].split('-')[1]
+                if actual_runtime_type != kata_runtime_type:
+                    color_print.warning(
+                        'your expected kata runtime type is {expected}, while current is {actual}'.format(
+                            expected=kata_runtime_type, actual=actual_runtime_type))
+                    color_print.warning('you can configure runtime type manually')
+            except (FileNotFoundError, OSError):
+                color_print.warning(
+                    'configuration.toml does not exist or is not an effective symbol link to real configurations')
+                color_print.warning(
+                    'please check configurations in {kata_config_dir} manually'.format(
+                        kata_config_dir=config.kata_config_dir))
+            return True
+        return False
+    except (IndexError, AttributeError, FileNotFoundError, subprocess.CalledProcessError):
+        return False

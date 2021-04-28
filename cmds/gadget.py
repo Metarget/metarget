@@ -26,7 +26,8 @@ def install(args):
         args.pod_network_cidr: CIDR of pod network.
         args.domestic: Pull Kubernetes images from domestic source or not.
         args.taint_master: Taint the master node or not.
-
+      Args below only used when installing kata-containers:
+        args.kata_runtime_type: Runtime of Kata (e.g. qemu/clh/...).
     Returns:
         None.
     """
@@ -37,7 +38,7 @@ def install(args):
                 '{gadget} with version {version} already installed'.format(
                     gadget=args.gadget, version=args.version))
             return
-        color_print.debug('uninstall current docker if applicable')
+        color_print.debug('uninstalling current docker if applicable')
         DockerInstaller.uninstall(verbose=args.verbose)
         if not DockerInstaller.install_by_version(
                 temp_gadgets, verbose=args.verbose):
@@ -48,6 +49,7 @@ def install(args):
             color_print.debug(
                 '{gadget} with version {version} successfully installed'.format(
                     gadget=args.gadget, version=args.version))
+
     if args.gadget == 'k8s':
         temp_gadgets = [
             {'name': 'kubelet', 'version': args.version},
@@ -60,7 +62,12 @@ def install(args):
                 '{gadget} with version {version} already installed'.format(
                     gadget=args.gadget, version=args.version))
             return
-        color_print.debug('uninstall current kubernetes if applicable')
+        if not checkers.docker_installed(verbose=args.verbose):
+            color_print.error(
+                'it seems docker is not installed or correctly configured')
+            color_print.error_and_exit(
+                'you can run `metarget gadget install docker --version 18.03.1` to install one')
+        color_print.debug('uninstalling current kubernetes if applicable')
         KubernetesInstaller.uninstall(verbose=args.verbose)
         temp_pod_network_cidr = args.pod_network_cidr if args.pod_network_cidr else config.cni_plugin_cidrs[
             args.cni_plugin]
@@ -80,6 +87,34 @@ def install(args):
             color_print.debug(
                 '{gadget} successfully installed'.format(
                     gadget=args.gadget))
+
+    if args.gadget == 'kata':
+        temp_gadgets = [
+            {'name': 'kata-containers', 'version': args.version},
+        ]
+        if checkers.kata_specified_installed(
+                temp_gadgets, kata_runtime_type=args.kata_runtime_type, verbose=args.verbose):
+            color_print.debug(
+                '{gadget} with version {version} already installed'.format(
+                    gadget=args.gadget, version=args.version))
+            return
+        if not checkers.docker_installed(verbose=args.verbose):
+            color_print.error(
+                'it seems docker is not installed or correctly configured')
+            color_print.error_and_exit(
+                'you can run `metarget gadget install docker --version 18.03.1` to install one')
+        color_print.debug('uninstalling current kata-containers if applicable')
+        KataContainersInstaller.uninstall(verbose=args.verbose)
+        if not KataContainersInstaller.install_by_version(
+                temp_gadgets, kata_runtime_type=args.kata_runtime_type, verbose=args.verbose):
+            color_print.error(
+                'failed to install {gadget}'.format(
+                    gadget=args.gadget))
+        else:
+            color_print.debug(
+                '{gadget} with version {version} (runtime type: {runtime_type}) successfully installed'.format(
+                    gadget=args.gadget, version=args.version, runtime_type=args.kata_runtime_type))
+
     if args.gadget == 'kernel':
         temp_gadgets = [
             {'name': 'kernel', 'version': args.version},
@@ -104,18 +139,6 @@ def install(args):
             if reboot == 'y' or reboot == 'Y':
                 system_func.reboot_system(verbose=args.verbose)
 
-    if args.gadget == 'kata':
-        temp_gadgets = [
-            {'name': 'kata-containers', 'version': args.version},
-        ]
-        if checkers.kata_specified_installed(
-                temp_gadgets, verbose=args.verbose):
-            color_print.debug(
-                '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version))
-            return
-        # TODO
-
 
 def remove(args):
     """Remove an installed cloud native gadget.
@@ -137,13 +160,28 @@ def remove(args):
         color_print.debug(
             '{gadget} successfully removed'.format(
                 gadget=args.gadget))
+    if args.gadget == 'kata':
+        if KataContainersInstaller.uninstall(verbose=args.verbose):
+            color_print.debug(
+                '{gadget} successfully removed'.format(
+                    gadget=args.gadget))
+        else:
+            color_print.error(
+                'failed to remove {gadget}'.format(
+                    gadget=args.gadget))
     if args.gadget == 'kernel':
         color_print.warning(
             'removal of {gadget} is unsupported'.format(
                 gadget=args.gadget))
-    if args.gadget == 'kata':
-        pass
 
 
 def retrieve(args):
-    print(config.gadgets_supported)
+    """List supported cloud native components.
+
+    Args:
+        args: Actually not used.
+
+    Returns:
+        None.
+    """
+    print(' '.join(config.gadgets_supported))

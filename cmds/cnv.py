@@ -211,14 +211,19 @@ def remove(args):
         KubernetesInstaller.uninstall(verbose=args.verbose)
         color_print.debug('{v} successfully removed'.format(v=vuln['name']))
 
+    if vuln['class'] == 'kata-containers':
+        if KataContainersInstaller.uninstall(verbose=args.verbose):
+            color_print.debug(
+                '{v} successfully removed'.format(
+                    v=vuln['name']))
+        else:
+            color_print.error('failed to remove {v}'.format(v=vuln['name']))
+
     if vuln['class'] == 'kernel':
         color_print.warning(
             'removal of vulnerabilities in class {vuln_class} is unsupported'.format(
                 vuln_class=vuln['class']))
         return
-
-    if vuln['class'] == 'kata-containers':
-        pass
 
 
 def retrieve(args):

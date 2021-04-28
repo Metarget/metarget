@@ -6,10 +6,10 @@ Kata-containers Installer
 - (maybe we should make it clear in README.md in the future)
 """
 
-from shutil import rmtree
 import json
 from pathlib import Path
 import subprocess
+from shutil import rmtree
 
 import utils.system as system_func
 import utils.verbose as verbose_func
@@ -29,7 +29,23 @@ class KataContainersInstaller(Installer):
         Returns:
             None.
         """
-        pass
+        # currently, metarget only supports docker
+        # in the future more CRIs will be supported
+
+        # 1. configure /etc/docker/daemon.json
+        if not cls._configure_docker_with_kata(base_dir=config.kata_tar_decompress_dest, recover=True):
+            color_print.error('failed to remove kata-containers configurations')
+            return False
+        # 2. reload daemon configurations and restart docker
+        if not cls.reload_and_restart_docker(verbose=verbose):
+            return False
+        # 3. remove /etc/kata-containers/
+        color_print.debug('removing {kata_config_dir}'.format(kata_config_dir=config.kata_config_dir))
+        rmtree(path=config.kata_config_dir, ignore_errors=True)
+        # 4. remove /opt/kata/
+        color_print.debug('removing {kata_dst}'.format(kata_dst=config.kata_tar_decompress_dest))
+        rmtree(path=config.kata_tar_decompress_dest, ignore_errors=True)
+        return True
 
     @classmethod
     def install_by_version(cls, gadgets, kata_runtime_type,
@@ -38,7 +54,7 @@ class KataContainersInstaller(Installer):
 
         Args:
             gadgets: Kata-containers gadgets (e.g. kata-containers).
-            kata_runtime_type: Runtime of Kata (e.g. qemu/clh/...)
+            kata_runtime_type: Runtime of Kata (e.g. qemu/clh/...).
             http_proxy: HTTP proxy.
             https_proxy: HTTPS proxy.
             no_proxy: Domains which should be visited without proxy.
@@ -79,11 +95,9 @@ class KataContainersInstaller(Installer):
         color_print.debug(
             'decompressing files into {dest}'.format(
                 dest=config.kata_tar_decompress_dest))
-        kata_decompress_dest = Path(config.kata_tar_decompress_dest)
-        if kata_decompress_dest.exists():
-            rmtree(config.kata_tar_decompress_dest)
-        kata_decompress_dest.mkdir()
-        # use --strip-components=2 because `opt/kata/` path from tar are not needed
+        rmtree(path=config.kata_tar_decompress_dest, ignore_errors=True)
+        system_func.mkdir_if_not_exist(config.kata_tar_decompress_dest)
+        # use --strip-components=3 because `opt/kata/` path from tar are not needed
         # also, we should not just decompress files into `/` root path
         # which might cause risks
         temp_cmd = 'tar xf {file} -C {dest} --strip-components=3'.format(
@@ -101,14 +115,13 @@ class KataContainersInstaller(Installer):
             return False
 
         # 3. copy files
-        color_print.debug('copying files to /etc/kata-containers')
-        etc_kata = Path('/etc/kata-containers')
-        if etc_kata.exists():  # rm -rf /etc/kata-containers
-            rmtree('/etc/kata-containers')
+        color_print.debug('copying files to {kata_config_dir}'.format(kata_config_dir=config.kata_config_dir))
+        rmtree(path=config.kata_config_dir, ignore_errors=True)
+        system_func.mkdir_if_not_exist(config.kata_config_dir)
         temp_cmd = 'cp -r {src} {dst}'.format(
             src=config.kata_tar_decompress_dest +
-            'share/defaults/kata-containers',
-            dst='/etc')
+            'share/defaults/kata-containers/*',
+            dst=config.kata_config_dir)
         try:
             subprocess.run(
                 temp_cmd.split(),
@@ -116,17 +129,18 @@ class KataContainersInstaller(Installer):
                 stderr=stderr,
                 check=True)
         except subprocess.CalledProcessError:
-            color_print.error('failed to copy files to /etc/kata-containers')
+            color_print.error('failed to copy files to {kata_config_dir}'.format(kata_config_dir=config.kata_config_dir))
             return False
 
         # 4. configure runtime type
         color_print.debug('configuring kata runtime (type: {runtime_type})'.format(runtime_type=kata_runtime_type))
         kata_configuration_file = Path(
-            '/etc/kata-containers/configuration.toml')
+            '{kata_config_dir}/configuration.toml'.format(kata_config_dir=config.kata_config_dir))
         if kata_configuration_file.exists():
             kata_configuration_file.unlink()
         kata_configuration_file.symlink_to(
-            '/etc/kata-containers/configuration-{runtime_type}.toml'.format(
+            '{kata_config_dir}/configuration-{runtime_type}.toml'.format(
+                kata_config_dir=config.kata_config_dir,
                 runtime_type=kata_runtime_type))
 
         # [5]. if docker is installed,
@@ -143,30 +157,36 @@ class KataContainersInstaller(Installer):
         return cls.reload_and_restart_docker(verbose=verbose)
 
     @classmethod
-    def _configure_docker_with_kata(cls, base_dir):
+    def _configure_docker_with_kata(cls, base_dir, recover=False):
         # configure /etc/docker/daemon.json
-        color_print.debug('writing /etc/docker/daemon.json')
-        runtimes = {
-            "kata-runtime": {
-                "path": "{base_dir}/bin/kata-runtime".format(base_dir=base_dir)
-            },
-            "kata-clh": {
-                "path": "{base_dir}/bin/kata-clh".format(base_dir=base_dir)
-            },
-            "kata-qemu": {
-                "path": "{base_dir}/bin/kata-qemu".format(base_dir=base_dir)
-            },
-            "kata-fc": {
-                "path": "{base_dir}/bin/kata-fc".format(base_dir=base_dir)
-            },
-        }
+        color_print.debug('modifying /etc/docker/daemon.json')
         system_func.create_file_if_not_exist('/etc/docker/daemon.json')
         try:
             with open('/etc/docker/daemon.json', 'r') as f:
                 content = json.loads(f.read())
         except json.decoder.JSONDecodeError:
             content = dict()
-        content['runtimes'] = runtimes
+        if recover:  # used when removing kata-containers
+            try:
+                content.pop('runtimes')
+            except KeyError:
+                pass
+        else:  # used when installing kata-containers
+            runtimes = {
+                "kata-runtime": {
+                    "path": "{base_dir}/bin/kata-runtime".format(base_dir=base_dir)
+                },
+                "kata-clh": {
+                    "path": "{base_dir}/bin/kata-clh".format(base_dir=base_dir)
+                },
+                "kata-qemu": {
+                    "path": "{base_dir}/bin/kata-qemu".format(base_dir=base_dir)
+                },
+                "kata-fc": {
+                    "path": "{base_dir}/bin/kata-fc".format(base_dir=base_dir)
+                },
+            }
+            content['runtimes'] = runtimes
         with open('/etc/docker/daemon.json', 'w') as f:
             f.write(json.dumps(content))
 
@@ -179,4 +199,4 @@ if __name__ == "__main__":
         {'name': 'kata-containers', 'version': '1.10.0'},
     ]
     KataContainersInstaller.install_by_version(
-        temp_gadgets, 'clh', verbose=True)
+        temp_gadgets, kata_runtime_type='clh', verbose=True)
