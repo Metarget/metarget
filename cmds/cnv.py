@@ -64,7 +64,7 @@ def install(args):
         color_print.debug(
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
-        color_print.debug('uninstall current docker if applicable')
+        color_print.debug('uninstalling current docker if applicable')
         DockerInstaller.uninstall(verbose=args.verbose)
         if not DockerInstaller.install_by_version(
                 vuln['dependencies'], verbose=args.verbose):
@@ -91,7 +91,7 @@ def install(args):
         color_print.debug(
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
-        color_print.debug('uninstall current kubernetes if applicable')
+        color_print.debug('uninstalling current kubernetes if applicable')
         KubernetesInstaller.uninstall(verbose=args.verbose)
         temp_pod_network_cidr = args.pod_network_cidr if args.pod_network_cidr else config.cni_plugin_cidrs[
             args.cni_plugin]
@@ -148,9 +148,18 @@ def install(args):
                 '{vuln} already installed'.format(
                     vuln=vuln['name']))
             return
+        if not checkers.docker_installed(verbose=args.verbose):
+            color_print.error(
+                'it seems docker is not installed or correctly configured')
+            color_print.error_and_exit(
+                'you can run `metarget gadget install docker --version 18.03.1` to install one')
+
         color_print.debug(
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
+
+        color_print.debug('uninstalling current kata-containers if applicable')
+        KataContainersInstaller.uninstall(verbose=args.verbose)
 
         if not KataContainersInstaller.install_by_version(
                 gadgets=vuln['dependencies'],
