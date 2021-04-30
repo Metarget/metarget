@@ -283,7 +283,7 @@ optional arguments:
 
 ### 3.1 依赖项
 
-- Ubuntu 16.04或18.04（未测试）
+- Ubuntu 16.04或18.04
 - Python >= 3.5
 - pip3
 

@@ -264,7 +264,7 @@ Developing, currently not supported.
 
 ### 3.1 Requirements
 
-- Ubuntu 16.04 or 18.04 (not tested)
+- Ubuntu 16.04 or 18.04
 - Python >= 3.5
 - pip3
 
