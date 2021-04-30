@@ -22,7 +22,6 @@ class DockerInstaller(Installer):
     _docker_requirements = [
         'apt-transport-https',
         'ca-certificates',
-        'curl',
         'gnupg-agent',
         'software-properties-common',
     ]
@@ -58,7 +57,9 @@ class DockerInstaller(Installer):
         Returns:
             Boolean indicating whether Docker is successfully installed or not.
         """
-        cls._pre_install(verbose=verbose)
+        if not cls._pre_install(verbose=verbose):
+            color_print.error('failed to install prerequisites')
+            return False
         for gadget in gadgets:
             if not cls._install_one_gadget_by_version(
                     gadget['name'], gadget['version'], verbose=verbose):
@@ -74,19 +75,22 @@ class DockerInstaller(Installer):
         stdout, stderr = verbose_func.verbose_output(verbose)
         # install requirements
         color_print.debug('installing prerequisites')
-        subprocess.run(
-            cls.cmd_apt_update,
-            stdout=stdout,
-            stderr=stderr,
-            check=True)
-        subprocess.run(
-            cls.cmd_apt_install +
-            cls._docker_requirements,
-            stdout=stdout,
-            stderr=stderr,
-            check=True)
-        cls._add_apt_repository(gpg_url=config.docker_apt_repo_gpg,
-                                repo_entry=config.docker_apt_repo_entry, verbose=verbose)
+        try:
+            subprocess.run(
+                cls.cmd_apt_update,
+                stdout=stdout,
+                stderr=stderr,
+                check=True)
+            subprocess.run(
+                cls.cmd_apt_install +
+                cls._docker_requirements,
+                stdout=stdout,
+                stderr=stderr,
+                check=True)
+        except subprocess.CalledProcessError:
+            return False
+        return cls._add_apt_repository(gpg_url=config.docker_apt_repo_gpg,
+                                       repo_entry=config.docker_apt_repo_entry, verbose=verbose)
 
 
 if __name__ == "__main__":
