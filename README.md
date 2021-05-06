@@ -307,8 +307,8 @@ Currently unsupported.
 |[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|exposure_of_service|✅|
 |[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|container_escape|✅|
 |[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|container_escape|✅|
-|cap_dac_read_search-container|config|container_escape||
-|cap_sys_admin-container|config|container_escape||
+|[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape|✅|
+|[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|config|container_escape|✅|
 |cap_sys_ptrace-container|config|container_escape||
 |[privileged-container](vulns_cn/configs/privileged-container.yaml)|config|container_escape|✅|
 |[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|mount|container_escape|✅|

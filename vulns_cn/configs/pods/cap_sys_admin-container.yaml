@@ -3,6 +3,8 @@ kind: Pod
 metadata:
   name: cap-sys-admin-container
   namespace: metarget
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/ubuntu: unconfined
 spec:
   containers:
   - name: ubuntu
