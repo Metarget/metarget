@@ -130,11 +130,10 @@ class KubernetesInstaller(Installer):
             verbose=verbose)
 
         # run kubeadm
-        cls._run_kubeadm(
-            k8s_version,
-            context,
-            mappings=worker_template_mappings,
-            verbose=verbose)
+        if not cls._run_kubeadm(
+                k8s_version, context, mappings=worker_template_mappings, verbose=verbose):
+            return False
+
         # configure kube config
         cls._config_auth()
         # delete master's taint if needed
@@ -188,14 +187,19 @@ class KubernetesInstaller(Installer):
         if pod_network_cidr:
             temp_cmd.append(
                 '--pod-network-cidr={cidr}'.format(cidr=pod_network_cidr))
-        subprocess.run(
-            temp_cmd,
-            stdout=stdout,
-            stderr=stderr,
-            check=True,
-            env=context.get(
-                'envs',
-                None))
+        try:
+            subprocess.run(
+                temp_cmd,
+                stdout=stdout,
+                stderr=stderr,
+                check=True,
+                env=context.get(
+                    'envs',
+                    None))
+            return True
+        except subprocess.CalledProcessError:
+            color_print.error('failed to run kubeadm')
+            return False
 
     @classmethod
     def _pull_k8s_images(cls, k8s_version, images_base,
