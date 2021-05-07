@@ -309,7 +309,7 @@ Currently unsupported.
 |[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|container_escape|✅|
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape|✅|
 |[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|config|container_escape|✅|
-|cap_sys_ptrace-container|config|container_escape||
+|[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|config|container_escape|✅|
 |[privileged-container](vulns_cn/configs/privileged-container.yaml)|config|container_escape|✅|
 |[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|mount|container_escape|✅|
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|mount|container_escape|✅|

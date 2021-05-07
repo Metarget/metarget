@@ -1,6 +1,7 @@
 """
 Applications YAML Modifier
 """
+import os.path
 
 import yaml
 
@@ -32,8 +33,7 @@ def generate_svcs_with_clusterip_to_nodeport(yamls, ports):
             # if service uses more than one port,
             # only one of ports it uses is exposed through node port
             resource['spec']['ports'][0]['nodePort'] = int(port)
-            new_yaml_path = config.runtime_data_dir + \
-                '/' + yaml_path.split('/')[-1]
+            new_yaml_path = os.path.join(config.runtime_data_dir, yaml_path.split('/')[-1])
             # save new yaml under data/
             with open(new_yaml_path, 'w') as fw:
                 yaml.dump(resource, fw)

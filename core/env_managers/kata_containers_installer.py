@@ -126,7 +126,7 @@ class KataContainersInstaller(Installer):
         rmtree(path=config.kata_config_dir, ignore_errors=True)
         system_func.mkdir_if_not_exist(config.kata_config_dir)
         for file in glob.glob(
-                config.kata_tar_decompress_dest + '/share/defaults/kata-containers/*'):
+                config.kata_tar_decompress_dest + 'share/defaults/kata-containers/*'):
             file_copy(
                 src=file,
                 dst=config.kata_config_dir,

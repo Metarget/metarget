@@ -4,6 +4,7 @@ metadata:
   name: cap-sys-ptrace-container
   namespace: metarget
 spec:
+  hostPID: true
   containers:
   - name: ubuntu
     image: ubuntu:latest
