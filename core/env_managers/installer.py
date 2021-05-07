@@ -104,6 +104,19 @@ class Installer(object):
         return False
 
     @classmethod
+    def _apt_update(cls, verbose=False):
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        try:
+            subprocess.run(
+                cls.cmd_apt_update,
+                stdout=stdout,
+                stderr=stderr,
+                check=True)
+            return True
+        except subprocess.CalledProcessError:
+            return False
+
+    @classmethod
     def _add_apt_repository(cls, repo_entry, gpg_url=None, verbose=False):
         stdout, stderr = verbose_func.verbose_output(verbose)
         color_print.debug('adding apt repository %s' % repo_entry)
@@ -129,11 +142,6 @@ class Installer(object):
                                          repo_entry=repo_entry).split('\n')
             subprocess.run(
                 cmd_apt_add_repository,
-                stdout=stdout,
-                stderr=stderr,
-                check=True)
-            subprocess.run(
-                cls.cmd_apt_update,
                 stdout=stdout,
                 stderr=stderr,
                 check=True)

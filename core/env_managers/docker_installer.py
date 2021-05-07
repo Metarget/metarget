@@ -76,11 +76,8 @@ class DockerInstaller(Installer):
         # install requirements
         color_print.debug('installing prerequisites')
         try:
-            subprocess.run(
-                cls.cmd_apt_update,
-                stdout=stdout,
-                stderr=stderr,
-                check=True)
+            if not cls._apt_update(verbose=verbose):
+                return False
             subprocess.run(
                 cls.cmd_apt_install +
                 cls._docker_requirements,
@@ -89,8 +86,12 @@ class DockerInstaller(Installer):
                 check=True)
         except subprocess.CalledProcessError:
             return False
-        return cls._add_apt_repository(gpg_url=config.docker_apt_repo_gpg,
-                                       repo_entry=config.docker_apt_repo_entry, verbose=verbose)
+        cls._add_apt_repository(gpg_url=config.docker_apt_repo_gpg,
+                                repo_entry=config.docker_apt_repo_entry, verbose=verbose)
+        for repo in config.containerd_apt_repo_entries:
+            cls._add_apt_repository(repo_entry=repo, verbose=verbose)
+
+        return True
 
 
 if __name__ == "__main__":

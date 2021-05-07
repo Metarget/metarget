@@ -72,9 +72,13 @@ _docker_apt_repo_entry_official = 'deb [arch=amd64] https://download.docker.com/
     release=release)
 
 # kernel apt repositories
-_kernel_apt_repo_entry_xenial_official = 'deb http://security.ubuntu.com/ubuntu xenial-security main'
 _kernel_apt_repo_entry_trusty_official = 'deb http://security.ubuntu.com/ubuntu trusty-security main'
+_kernel_apt_repo_entry_xenial_official = 'deb http://security.ubuntu.com/ubuntu xenial-security main'
 _kernel_apt_repo_entry_bionic_official = 'deb http://security.ubuntu.com/ubuntu bionic-security main'
+
+# containerd apt repository
+_containerd_apt_repo_entry_xenial_official = 'deb http://archive.ubuntu.com/ubuntu xenial-updates universe'
+_containerd_apt_repo_entry_bionic_official = 'deb http://archive.ubuntu.com/ubuntu bionic-updates universe'
 
 # active k8s components images source
 k8s_images_prefix_official = "k8s.gcr.io/"
@@ -102,6 +106,12 @@ kernel_apt_repo_entries = [
     _kernel_apt_repo_entry_trusty_official,
     _kernel_apt_repo_entry_xenial_official,
     _kernel_apt_repo_entry_bionic_official,
+]
+
+# active containerd apt repository
+containerd_apt_repo_entries = [
+    _containerd_apt_repo_entry_xenial_official,
+    _containerd_apt_repo_entry_bionic_official,
 ]
 
 # CNI plugins
