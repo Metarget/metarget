@@ -41,6 +41,7 @@ class KernelInstaller(Installer):
         color_print.debug('switching kernel by version')
         for repo in config.kernel_apt_repo_entries:
             cls._add_apt_repository(repo_entry=repo, verbose=verbose)
+
         if cls._is_version_available_in_apt(version, verbose=verbose):
             return cls._install_by_version_with_apt(version, verbose=verbose)
         else:

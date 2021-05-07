@@ -319,11 +319,7 @@ class KubernetesInstaller(Installer):
         color_print.debug('pre-installing')
         stdout, stderr = verbose_func.verbose_output(verbose)
         # install requirements
-        subprocess.run(
-            cls.cmd_apt_update,
-            stdout=stdout,
-            stderr=stderr,
-            check=True)
+        cls._apt_update(verbose=verbose)
         subprocess.run(
             cls.cmd_apt_install +
             cls._kubernetes_requirements,
