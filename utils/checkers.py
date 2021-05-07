@@ -110,11 +110,11 @@ def kubernetes_specified_installed(temp_gadget, verbose=False):
         return False
 
 
-def docker_specified_installed(temp_gadget, verbose=False):
+def docker_specified_installed(temp_gadgets, verbose=False):
     """Check whether Docker with specified version has been installed.
 
     Args:
-        temp_gadget: Docker gadgets (e.g. docker-ce).
+        temp_gadgets: Docker gadgets (e.g. docker-ce).
         verbose: Verbose or not.
 
     Returns:
@@ -133,11 +133,59 @@ def docker_specified_installed(temp_gadget, verbose=False):
         server_version = re.search(
             r'Version: *([\d]+\.[\d]+\.[\d]+)',
             server_string).group(1)
-        if server_version == temp_gadget[0]['version']:
+        temp_version = _get_gadget_version_from_gadgets(
+            gadgets=temp_gadgets, name='docker-ce')
+        if temp_version and server_version == temp_version:
             return True
         return False
     except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
         return False
+
+
+def containerd_specified_installed(temp_gadgets, verbose=False):
+    """Check whether Containerd with specified version has been installed.
+
+    Args:
+        temp_gadgets: Docker gadgets (e.g. containerd).
+        verbose: Verbose or not.
+
+    Returns:
+        If Containerd with specified version has been installed, return True,
+        else False.
+    """
+    _, stderr = verbose_func.verbose_output(verbose)
+    try:
+        temp_cmd = 'ctr version'.split()
+        res = subprocess.run(
+            temp_cmd,
+            stdout=subprocess.PIPE,
+            stderr=stderr,
+            check=True)
+        server_string = res.stdout.decode('utf-8').split('Server')[1]
+        server_version = re.search(
+            r'Version:\s*(.*)\s+',
+            server_string).group(1)
+        temp_version = _get_gadget_version_from_gadgets(
+            gadgets=temp_gadgets, name='containerd')
+        if temp_version and server_version.startswith(temp_version):
+            return True
+        return False
+    except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
+        return False
+
+
+def _get_gadget_version_from_gadgets(gadgets, name, verbose=False):
+    for gadget in gadgets:
+        if gadget['name'] == name:
+            return gadget['version']
+    return None
+
+
+def gadget_in_gadgets(gadgets, name, verbose=False):
+    for gadgets in gadgets:
+        if gadgets['name'] == name:
+            return True
+    return False
 
 
 def kernel_specified_installed(temp_gadget, verbose=False):
@@ -202,7 +250,8 @@ def kata_specified_installed(temp_gadget, kata_runtime_type, verbose=False):
                     color_print.warning(
                         'your expected kata runtime type is {expected}, while current type is {actual}'.format(
                             expected=kata_runtime_type, actual=actual_runtime_type))
-                    color_print.warning('you can configure runtime type manually')
+                    color_print.warning(
+                        'you can configure runtime type manually')
             except (FileNotFoundError, OSError):
                 color_print.warning(
                     'configuration.toml does not exist or is not an effective symbol link to real configurations')

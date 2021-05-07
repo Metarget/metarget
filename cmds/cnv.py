@@ -55,16 +55,23 @@ def install(args):
         internal_cmds.deploy_vuln_resources_in_k8s(vuln, verbose=args.verbose)
 
     if vuln['class'].startswith('docker'):
+        installed_flag = True  # add a flag because more than one gadgets may be checked
         if checkers.docker_specified_installed(
                 vuln['dependencies'], verbose=args.verbose):
-            color_print.debug(
-                '{vuln} already installed'.format(
-                    vuln=vuln['name']))
-            return
+            if checkers.gadget_in_gadgets(
+                    vuln['dependencies'], name='containerd', verbose=args.verbose):
+                if not checkers.containerd_specified_installed(
+                        vuln['dependencies'], verbose=args.verbose):
+                    installed_flag = False
+            if installed_flag:
+                color_print.debug(
+                    '{vuln} already installed'.format(
+                        vuln=vuln['name']))
+                return
         color_print.debug(
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
-        color_print.debug('uninstalling current docker if applicable')
+        color_print.debug('uninstalling current docker gadgets if applicable')
         DockerInstaller.uninstall(verbose=args.verbose)
         if not DockerInstaller.install_by_version(
                 vuln['dependencies'], verbose=args.verbose):
