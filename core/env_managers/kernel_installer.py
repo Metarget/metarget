@@ -4,6 +4,7 @@ Linux Kernel Installer
 
 import copy
 import subprocess
+import os
 import yaml
 import yaml.scanner
 import re
@@ -83,8 +84,8 @@ class KernelInstaller(Installer):
             temp_cmd = copy.copy(cls.cmd_dpkg_install)
             version_suffix = None
             for deb in debs:
-                cls.download_file(deb, config.kernel_packages_dir)
                 filename = deb.split('/')[-1]
+                cls.download_file(url=deb, save_path=os.path.join(config.kernel_packages_dir, filename))
                 temp_cmd.append(
                     '{prefix}/{filename}'.format(prefix=config.kernel_packages_dir, filename=filename))
                 if 'linux-image-' in filename:  # get full version for further modification in grub
