@@ -52,7 +52,7 @@ def generate_deployments_with_host_path_volume(yamls):
     # yaml_path is like:
     # vulns_app/php/CVE-2018-19518/cve-2018-19518-deployment.yaml
     new_yamls = list()
-    for yaml_path, port in yamls:
+    for yaml_path in yamls:
         with open(yaml_path, 'r') as fr:
             resource = yaml.load(fr, Loader=yaml.SafeLoader)
             # cluster -> nodeport
@@ -64,7 +64,7 @@ def generate_deployments_with_host_path_volume(yamls):
                     # e.g. /root/metarget/vulns_app
                     base_path = os.getcwd()
                     # e.g. /root/metarget/vulns_app/php/CVE-2018-19518/www
-                    volume['hostPath']['path'] = os.path.join(base_path, dest)
+                    volume['hostPath']['path'] = os.path.join(base_path, config.vuln_app_dir_prefix, dest)
             except (TypeError, IndexError, KeyError):
                 continue
             new_yaml_path = os.path.join(config.runtime_data_dir, yaml_path.split('/')[-1])
