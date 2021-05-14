@@ -2,7 +2,7 @@ import platform
 
 
 # metarget version
-VERSION = '0.1'
+VERSION = '0.3'
 # default CNI plugin
 DEFAULT_CNI_PLUGIN = 'flannel'
 # default kata runtime type

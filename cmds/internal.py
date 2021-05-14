@@ -31,6 +31,22 @@ def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
             vuln=vuln['name']))
     yamls = [os.path.join(vuln['path'], dependency)
              for dependency in vuln['dependencies']['yamls']]
+    # some appv need hostPath volumes
+    # for these situations, metarget must generate host path dynamically
+    # and update the deployment
+    if vuln.get('hostPath', False):
+        yamls_deployment = [
+            temp_yaml for temp_yaml in yamls if temp_yaml.endswith('-deployment.yaml')]
+        if yamls_deployment:
+            # remove deployments from yamls
+            yamls = [
+                temp_yaml for temp_yaml in yamls if not temp_yaml.endswith('-deployment.yaml')]
+            # generate new yamls
+            new_yamls_deployment = resource_modifier.generate_deployments_with_host_path_volume(
+                yamls=yamls_deployment)
+            # add updated services into original yamls
+            yamls.extend(new_yamls_deployment)
+
     # if services need to be exposed externally, modify yaml
     # and change type from ClusterIP to NodePort
     if external:

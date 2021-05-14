@@ -367,6 +367,11 @@ Metarget将以上项目中的靶机统一转化为Kubernetes中的Deployment和S
 - [ ] 实现多节点云原生靶场集群自动化生成
 - 实现其他云原生脆弱场景集成（长期更新）
 
-## 7 关于Logo
+## 7 主要维护者
+
+- @brant-ruan
+- @ListenerMoya
+
+## 8 关于Logo
 
 Metarget logo的灵感来源于Kubernetes的logo，我们将Kubernetes的舵作为齿轮，三个齿轮组成一个正在运转的基础设施系统。然而，如果仔细观察，会发现齿轮的方向是矛盾的，系统无法正常运转（vulnerable）。

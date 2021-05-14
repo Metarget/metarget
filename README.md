@@ -346,6 +346,11 @@ To list vulnerable scenes related to cloud native applications supported by Meta
 - [ ] automatic construction of multi-node cloud native target cluster
 - integrations of other cloud native vulnerable scenes (long term)
 
-## 7 About Logo
+## 7 Maintainers
+
+- @brant-ruan
+- @ListenerMoya
+
+## 8 About Logo
 
 It is not a Kubernetes, but a vulnerable infrastructure with three gears which could not work well (vulnerable) :)
