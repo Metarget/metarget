@@ -42,10 +42,10 @@ spec:
         resources: {}
         volumeMounts:
         - mountPath: /var/www/html/index.php
-          name: imagetragick-web-claim0
+          name: imagetragick-web-hostpath0
       restartPolicy: Always
       volumes:
-      - name: imagetragick-web-claim0
-        persistentVolumeClaim:
-          claimName: imagetragick-web-claim0
+      - name: imagetragick-web-hostpath0
+        hostPath:
+          path: imagemagick/imagetragick/index.php
 status: {}

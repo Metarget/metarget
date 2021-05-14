@@ -1,9 +1,9 @@
 name: imagemagick-imagetragick
 class: imagemagick
+hostPath: true
 type: rce
 dependencies:
   yamls:
-    - imagetragick-web-claim0-persistentvolumeclaim.yaml
     - imagetragick-web-deployment.yaml
     - imagetragick-web-service.yaml
 links:
