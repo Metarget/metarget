@@ -369,8 +369,8 @@ Metarget将以上项目中的靶机统一转化为Kubernetes中的Deployment和S
 
 ## 7 主要维护者
 
-- @brant-ruan
-- @ListenerMoya
+- [@brant-ruan](https://github.com/brant-ruan)
+- [@ListenerMoya](https://github.com/ListenerMoya)
 
 ## 8 关于Logo
 

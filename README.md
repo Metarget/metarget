@@ -348,8 +348,8 @@ To list vulnerable scenes related to cloud native applications supported by Meta
 
 ## 7 Maintainers
 
-- @brant-ruan
-- @ListenerMoya
+- [@brant-ruan](https://github.com/brant-ruan)
+- [@ListenerMoya](https://github.com/ListenerMoya)
 
 ## 8 About Logo
 
