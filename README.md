@@ -315,6 +315,7 @@ Currently unsupported.
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|mount|container_escape|✅|
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|mount|container_escape|✅|
 |[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|✅|
+|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|intercept_traffic|✅|
 
 ### 4.2 Vulnerable Scenes Related to Cloud Native Applications
 

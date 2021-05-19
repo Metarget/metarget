@@ -334,6 +334,7 @@ pip install -r requirements.txt
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|危险挂载|容器逃逸|✅|
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|危险挂载|容器逃逸|✅|
 |[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|容器逃逸|✅|
+|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|拦截流量|✅|
 
 ### 4.2 云原生应用脆弱场景
 
