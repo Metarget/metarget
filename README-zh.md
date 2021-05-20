@@ -327,6 +327,7 @@ pip install -r requirements.txt
 |[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|kubernetes|拒绝服务|✅|
 |[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|中间人攻击|✅|
 |[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|服务暴露|✅|
+|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|拦截流量|✅|
 |[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|容器逃逸|✅|
 |[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|容器逃逸|✅|
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|危险配置|容器逃逸|✅|
