@@ -305,6 +305,7 @@ Currently unsupported.
 |[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|kubernetes|denial_of_service|✅|
 |[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|kubernetes|denial_of_service|✅|
 |[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|exposure_of_service|✅|
+|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|intercept_traffic|✅|
 |[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|container_escape|✅|
 |[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|container_escape|✅|
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape|✅|
@@ -315,7 +316,6 @@ Currently unsupported.
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|mount|container_escape|✅|
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|mount|container_escape|✅|
 |[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|✅|
-|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|intercept_traffic|✅|
 
 ### 4.2 Vulnerable Scenes Related to Cloud Native Applications
 

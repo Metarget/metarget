@@ -324,6 +324,7 @@ pip install -r requirements.txt
 |[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|kubernetes|拒绝服务|✅|
 |[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|kubernetes|拒绝服务|✅|
 |[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|服务暴露|✅|
+|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|拦截流量|✅|
 |[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|容器逃逸|✅|
 |[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|容器逃逸|✅|
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|危险配置|容器逃逸|✅|
@@ -334,7 +335,6 @@ pip install -r requirements.txt
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|危险挂载|容器逃逸|✅|
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|危险挂载|容器逃逸|✅|
 |[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|容器逃逸|✅|
-|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|拦截流量|✅|
 
 ### 4.2 云原生应用脆弱场景
 
