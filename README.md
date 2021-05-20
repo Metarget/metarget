@@ -292,31 +292,31 @@ Currently unsupported.
 
 ### 4.1 Vulnerable Scenes Related to Cloud Native Components
 
-|Name|Class|Type|Status|
-|:-:|:-:|:-:|:-:|
-|[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|container_escape|✅|
-|[cve-2019-13139](vulns_cn/docker/cve-2019-13139.yaml)|docker|command_execution|✅|
-|[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|container_escape|✅|
-|[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|container_escape|✅|
-|[cve-2019-5736](vulns_cn/docker/cve-2019-5736.yaml)|docker/runc|container_escape|✅|
-|[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|kubernetes|container_escape|✅|
-|[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|kubernetes|privilege_escalation|✅|
-|[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|kubernetes|denial_of_service|✅|
-|[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|kubernetes|denial_of_service|✅|
-|[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|kubernetes|denial_of_service|✅|
-|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|man_in_the_middle|✅|
-|[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|kubernetes|denial_of_service|✅|
-|[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|exposure_of_service|✅|
-|[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|container_escape|✅|
-|[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|container_escape|✅|
-|[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape|✅|
-|[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|config|container_escape|✅|
-|[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|config|container_escape|✅|
-|[privileged-container](vulns_cn/configs/privileged-container.yaml)|config|container_escape|✅|
-|[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|mount|container_escape|✅|
-|[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|mount|container_escape|✅|
-|[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|mount|container_escape|✅|
-|[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|✅|
+|Name|Class|Type|CVSS 3.x|Status|
+|:-:|:-:|:-:|:-:|:-:|
+|[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|container_escape|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)|✅|
+|[cve-2019-13139](vulns_cn/docker/cve-2019-13139.yaml)|docker|command_execution|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2019-13139)|✅|
+|[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|container_escape|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2019-14271)|✅|
+|[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|container_escape|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)|✅|
+|[cve-2019-5736](vulns_cn/docker/cve-2019-5736.yaml)|docker/runc|container_escape|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2019-5736)|✅|
+|[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|kubernetes|container_escape|[9.6](https://nvd.nist.gov/vuln/detail/CVE-2017-1002101)|✅|
+|[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|kubernetes|privilege_escalation|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)|✅|
+|[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11253)|✅|
+|[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9512)|✅|
+|[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9514)|✅|
+|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|man_in_the_middle|[5.0](https://nvd.nist.gov/vuln/detail/CVE-2020-8554)|✅|
+|[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|kubernetes|denial_of_service|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2020-8557)|✅|
+|[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|exposure_of_service|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8558)|✅|
+|[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-5195)|✅|
+|[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2020-14386)|✅|
+|[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape||✅|
+|[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|config|container_escape||✅|
+|[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|config|container_escape||✅|
+|[privileged-container](vulns_cn/configs/privileged-container.yaml)|config|container_escape||✅|
+|[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|mount|container_escape||✅|
+|[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|mount|container_escape||✅|
+|[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|mount|container_escape||✅|
+|[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|[5.0](https://nvd.nist.gov/vuln/detail/|✅|
 
 ### 4.2 Vulnerable Scenes Related to Cloud Native Applications
 
