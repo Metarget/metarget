@@ -330,6 +330,7 @@ pip install -r requirements.txt
 |[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|服务暴露|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8558)|✅|
 |[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-5195)|✅|
 |[cve-2017-7308](vulns_cn/kernel/cve-2017-7308.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-7308)|✅|
+|[cve-2017-1000112](vulns_cn/kernel/cve-2017-1000112.yaml)|kernel|权限提升|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2017-1000112)|✅|
 |[cve-2018-18955](vulns_cn/kernel/cve-2018-18955.yaml)|kernel|权限提升|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2018-18955)|✅|
 |[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2020-14386)|✅|
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|危险配置|容器逃逸|-|✅|
