@@ -315,6 +315,7 @@ Currently unsupported.
 |[cve-2017-1000112](vulns_cn/kernel/cve-2017-1000112.yaml)|kernel|privilege_escalation|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2017-1000112)|✅|
 |[cve-2018-18955](vulns_cn/kernel/cve-2018-18955.yaml)|kernel|privilege_escalation|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2018-18955)|✅|
 |[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2020-14386)|✅|
+|[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2025)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)|✅|
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape|-|✅|
 |[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|config|container_escape|-|✅|
 |[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|config|container_escape|-|✅|
@@ -322,7 +323,6 @@ Currently unsupported.
 |[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|mount|container_escape|-|✅|
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|mount|container_escape|-|✅|
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|mount|container_escape|-|✅|
-|[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2025)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)|✅|
 
 ### 4.2 Vulnerable Scenes Related to Cloud Native Applications
 
