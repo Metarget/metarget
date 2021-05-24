@@ -2539,35 +2539,35 @@ v4.13/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.13/linux-headers-4.13.0-041300-generic_4.13.0-041300.201709031731_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.13/linux-image-4.13.0-041300-generic_4.13.0-041300.201709031731_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.13/linux-headers-4.13.0-041300_4.13.0-041300.201709031731_all.deb
-v4.14-rc1/:
+v4.14.0-041400rc1/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc1/linux-image-4.14.0-041400rc1-generic_4.14.0-041400rc1.201709162031_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc1/linux-headers-4.14.0-041400rc1_4.14.0-041400rc1.201709162031_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc1/linux-headers-4.14.0-041400rc1-generic_4.14.0-041400rc1.201709162031_amd64.deb
-v4.14-rc2/:
+v4.14.0-041400rc2/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc2/linux-image-4.14.0-041400rc2-generic_4.14.0-041400rc2.201709242031_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc2/linux-headers-4.14.0-041400rc2-generic_4.14.0-041400rc2.201709242031_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc2/linux-headers-4.14.0-041400rc2_4.14.0-041400rc2.201709242031_all.deb
-v4.14-rc3/:
+v4.14.0-041400rc3/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc3/linux-headers-4.14.0-041400rc3_4.14.0-041400rc3.201710011930_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc3/linux-image-4.14.0-041400rc3-generic_4.14.0-041400rc3.201710011930_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc3/linux-headers-4.14.0-041400rc3-generic_4.14.0-041400rc3.201710011930_amd64.deb
-v4.14-rc4/:
+v4.14.0-041400rc4/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc4/linux-headers-4.14.0-041400rc4-generic_4.14.0-041400rc4.201710130854_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc4/linux-image-4.14.0-041400rc4-generic_4.14.0-041400rc4.201710130854_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc4/linux-headers-4.14.0-041400rc4_4.14.0-041400rc4.201710130854_all.deb
-v4.14-rc5/:
+v4.14.0-041400rc5/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc5/linux-image-4.14.0-041400rc5-generic_4.14.0-041400rc5.201710152230_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc5/linux-headers-4.14.0-041400rc5-generic_4.14.0-041400rc5.201710152230_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc5/linux-headers-4.14.0-041400rc5_4.14.0-041400rc5.201710152230_all.deb
-v4.14-rc6/:
+v4.14.0-041400rc6/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc6/linux-headers-4.14.0-041400rc6-generic_4.14.0-041400rc6.201710230731_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc6/linux-image-4.14.0-041400rc6-generic_4.14.0-041400rc6.201710230731_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc6/linux-headers-4.14.0-041400rc6_4.14.0-041400rc6.201710230731_all.deb
-v4.14-rc7/:
+v4.14.0-041400rc7/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc7/linux-headers-4.14.0-041400rc7-generic_4.14.0-041400rc7.201711051952_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc7/linux-headers-4.14.0-041400rc7_4.14.0-041400rc7.201711051952_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc7/linux-image-4.14.0-041400rc7-generic_4.14.0-041400rc7.201711051952_amd64.deb
-v4.14-rc8/:
+v4.14.0-041400rc8/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc8/linux-image-4.14.0-041400rc8-generic_4.14.0-041400rc8.201711052313_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc8/linux-headers-4.14.0-041400rc8-generic_4.14.0-041400rc8.201711052313_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v4.14-rc8/linux-headers-4.14.0-041400rc8_4.14.0-041400rc8.201711052313_all.deb
@@ -8064,37 +8064,37 @@ v5.7/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/amd64/linux-headers-5.7.0-050700-generic_5.7.0-050700.202006082127_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/amd64/linux-modules-5.7.0-050700-generic_5.7.0-050700.202006082127_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.7/amd64/linux-image-unsigned-5.7.0-050700-generic_5.7.0-050700.202006082127_amd64.deb
-v5.8-rc1/:
+v5.8.0-050800rc1/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc1/amd64/linux-headers-5.8.0-050800rc1-generic_5.8.0-050800rc1.202007141143_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc1/amd64/linux-modules-5.8.0-050800rc1-generic_5.8.0-050800rc1.202007141143_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc1/amd64/linux-headers-5.8.0-050800rc1_5.8.0-050800rc1.202007141143_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc1/amd64/linux-image-unsigned-5.8.0-050800rc1-generic_5.8.0-050800rc1.202007141143_amd64.deb
-v5.8-rc2/:
+v5.8.0-050800rc2/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc2/amd64/linux-image-unsigned-5.8.0-050800rc2-generic_5.8.0-050800rc2.202007140743_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc2/amd64/linux-modules-5.8.0-050800rc2-generic_5.8.0-050800rc2.202007140743_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc2/amd64/linux-headers-5.8.0-050800rc2_5.8.0-050800rc2.202007140743_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc2/amd64/linux-headers-5.8.0-050800rc2-generic_5.8.0-050800rc2.202007140743_amd64.deb
-v5.8-rc3/:
+v5.8.0-050800rc3/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc3/amd64/linux-image-unsigned-5.8.0-050800rc3-generic_5.8.0-050800rc3.202007141143_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc3/amd64/linux-modules-5.8.0-050800rc3-generic_5.8.0-050800rc3.202007141143_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc3/amd64/linux-headers-5.8.0-050800rc3-generic_5.8.0-050800rc3.202007141143_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc3/amd64/linux-headers-5.8.0-050800rc3_5.8.0-050800rc3.202007141143_all.deb
-v5.8-rc4/:
+v5.8.0-050800rc4/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc4/amd64/linux-headers-5.8.0-050800rc4_5.8.0-050800rc4.202007140746_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc4/amd64/linux-image-unsigned-5.8.0-050800rc4-generic_5.8.0-050800rc4.202007140746_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc4/amd64/linux-headers-5.8.0-050800rc4-generic_5.8.0-050800rc4.202007140746_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc4/amd64/linux-modules-5.8.0-050800rc4-generic_5.8.0-050800rc4.202007140746_amd64.deb
-v5.8-rc5/:
+v5.8.0-050800rc5/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc5/amd64/linux-headers-5.8.0-050800rc5_5.8.0-050800rc5.202007140715_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc5/amd64/linux-modules-5.8.0-050800rc5-generic_5.8.0-050800rc5.202007140715_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc5/amd64/linux-image-unsigned-5.8.0-050800rc5-generic_5.8.0-050800rc5.202007140715_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc5/amd64/linux-headers-5.8.0-050800rc5-generic_5.8.0-050800rc5.202007140715_amd64.deb
-v5.8-rc6/:
+v5.8.0-050800rc6/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc6/amd64/linux-image-unsigned-5.8.0-050800rc6-generic_5.8.0-050800rc6.202007192331_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc6/amd64/linux-headers-5.8.0-050800rc6-generic_5.8.0-050800rc6.202007192331_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc6/amd64/linux-headers-5.8.0-050800rc6_5.8.0-050800rc6.202007192331_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc6/amd64/linux-modules-5.8.0-050800rc6-generic_5.8.0-050800rc6.202007192331_amd64.deb
-v5.8-rc7/:
+v5.8.0-050800rc7/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc7/amd64/linux-headers-5.8.0-050800rc7_5.8.0-050800rc7.202007262231_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc7/amd64/linux-image-unsigned-5.8.0-050800rc7-generic_5.8.0-050800rc7.202007262231_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.8-rc7/amd64/linux-headers-5.8.0-050800rc7-generic_5.8.0-050800rc7.202007262231_amd64.deb
