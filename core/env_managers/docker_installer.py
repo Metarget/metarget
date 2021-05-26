@@ -91,6 +91,8 @@ class DockerInstaller(Installer):
         for repo in config.containerd_apt_repo_entries:
             cls._add_apt_repository(repo_entry=repo, verbose=verbose)
 
+        cls._apt_update(verbose=verbose)
+
         return True
 
 
