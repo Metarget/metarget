@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./aria2/rce/docker-compose.yml.backup
+      -o vul_app/aria2/rce/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rce-aria2
+  name: rce-aria2
+spec:
+  ports:
+  - name: "6800"
+    port: 6800
+    targetPort: 6800
+  selector:
+    io.kompose.service: rce-aria2
+status:
+  loadBalancer: {}

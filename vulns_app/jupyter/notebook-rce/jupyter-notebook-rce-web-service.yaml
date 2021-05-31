@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./jupyter/notebook-rce/docker-compose.yml.backup
+      -o vul_app/jupyter/notebook-rce/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: jupyter-notebook-rce-web
+  name: jupyter-notebook-rce-web
+spec:
+  ports:
+  - name: "8888"
+    port: 8888
+    targetPort: 8888
+  selector:
+    io.kompose.service: jupyter-notebook-rce-web
+status:
+  loadBalancer: {}

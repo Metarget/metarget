@@ -1,0 +1,9 @@
+name: jupyter-notebook-rce
+class: jupyter
+type: rce
+dependencies:
+  yamls:
+    - jupyter-notebook-rce-web-deployment.yaml
+    - jupyter-notebook-rce-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/jupyter/notebook-rce

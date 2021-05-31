@@ -1,0 +1,9 @@
+name: phpmyadmin-wooyun-2016-199433
+class: phpmyadmin
+type: rce
+dependencies:
+  yamls:
+    - wooyun-2016-199433-web-deployment.yaml
+    - wooyun-2016-199433-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/phpmyadmin/WooYun-2016-199433

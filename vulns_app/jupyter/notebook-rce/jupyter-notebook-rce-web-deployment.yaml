@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./jupyter/notebook-rce/docker-compose.yml.backup
+      -o vul_app/jupyter/notebook-rce/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: jupyter-notebook-rce-web
+  name: jupyter-notebook-rce-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: jupyter-notebook-rce-web
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./jupyter/notebook-rce/docker-compose.yml.backup
+          -o vul_app/jupyter/notebook-rce/ --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: jupyter-notebook-rce-web
+    spec:
+      containers:
+      - args:
+        - start-notebook.sh
+        - --NotebookApp.token=
+        image: vulhub/jupyter-notebook:5.2.2
+        imagePullPolicy: ""
+        name: jupyter-notebook-rce-web
+        ports:
+        - containerPort: 8888
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

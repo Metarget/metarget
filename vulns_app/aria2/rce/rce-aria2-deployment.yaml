@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./aria2/rce/docker-compose.yml.backup
+      -o vul_app/aria2/rce/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: rce-aria2
+  name: rce-aria2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: rce-aria2
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./aria2/rce/docker-compose.yml.backup
+          -o vul_app/aria2/rce/ --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: rce-aria2
+    spec:
+      containers:
+      - image: vulhub/aria2:1.18.8
+        imagePullPolicy: ""
+        name: rce-aria2
+        ports:
+        - containerPort: 6800
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

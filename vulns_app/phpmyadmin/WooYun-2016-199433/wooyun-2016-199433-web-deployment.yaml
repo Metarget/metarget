@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./phpmyadmin/WooYun-2016-199433/docker-compose.yml.backup
+      -o vul_app/phpmyadmin/WooYun-2016-199433/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: wooyun-2016-199433-web
+  name: wooyun-2016-199433-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: wooyun-2016-199433-web
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./phpmyadmin/WooYun-2016-199433/docker-compose.yml.backup
+          -o vul_app/phpmyadmin/WooYun-2016-199433/ --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: wooyun-2016-199433-web
+    spec:
+      containers:
+      - image: vulhub/phpmyadmin:2.8.0.4
+        imagePullPolicy: ""
+        name: wooyun-2016-199433-web
+        ports:
+        - containerPort: 80
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
