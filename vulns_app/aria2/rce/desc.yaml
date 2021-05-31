@@ -1,0 +1,9 @@
+name: aria2-rce
+class: aria2
+type: rce
+dependencies:
+  yamls:
+    - rce-aria2-deployment.yaml
+    - rce-aria2-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/aria2/rce
