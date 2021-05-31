@@ -348,7 +348,7 @@ pip install -r requirements.txt
 
 注意：
 
-- 对于*cve-2021-30465*来说，在`cnv install cve-2021-30465`（安装了Docker）之后，
+- 对于**cve-2021-30465**来说，在`cnv install cve-2021-30465`（安装了Docker）之后，
     - 你需要手动安装一个K8s（利用Metarget执行`cnv install cve-2018-1002105`或`gadget install k8s --version 1.16.5`），从而实现漏洞利用。
 
 ### 4.2 云原生应用脆弱场景

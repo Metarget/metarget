@@ -327,7 +327,7 @@ Currently unsupported.
 
 Note:
 
-- For *cve-2021-30465*, after `cnv install cve-2021-30465` (which installs Docker),
+- For **cve-2021-30465**, after `cnv install cve-2021-30465` (which installs Docker),
     - you'd better install a K8s manually, for exploitation (e.g. `cnv install cve-2018-1002105` or `gadget install k8s --version 1.16.5` with Metarget).
 
 ### 4.2 Vulnerable Scenes Related to Cloud Native Applications
