@@ -102,7 +102,8 @@ class KubernetesInstaller(Installer):
         worker_template_mappings = dict()  # used to generate install_k8s_worker_script
         worker_template_mappings['domestic'] = context.get('domestic', False)
         cls._pre_configure(verbose=verbose)
-        cls._pre_install(worker_template_mappings, verbose=verbose)
+        if not cls._pre_install(worker_template_mappings, verbose=verbose):
+            color_print.error_and_exit('failed to finish pre-installation')
         # firstly install kubernetes-cni, because of:
         # issue: https://github.com/kubernetes/kubernetes/issues/75701
         # note that the solution below is unstable and ugly to some extent...
@@ -319,18 +320,25 @@ class KubernetesInstaller(Installer):
         color_print.debug('pre-installing')
         stdout, stderr = verbose_func.verbose_output(verbose)
         # install requirements
-        cls._apt_update(verbose=verbose)
-        subprocess.run(
-            cls.cmd_apt_install +
-            cls._kubernetes_requirements,
-            stdout=stdout,
-            stderr=stderr,
-            check=True)
-        cls._add_apt_repository(gpg_url=config.k8s_apt_repo_gpg,
-                                repo_entry=config.k8s_apt_repo_entry, verbose=verbose)
+        if not cls._apt_update(verbose=verbose):
+            return False
+        try:
+            subprocess.run(
+                cls.cmd_apt_install +
+                cls._kubernetes_requirements,
+                stdout=stdout,
+                stderr=stderr,
+                check=True)
+        except subprocess.CalledProcessError:
+            return False
+        if not cls._add_apt_repository(gpg_url=config.k8s_apt_repo_gpg,
+                                       repo_entry=config.k8s_apt_repo_entry, verbose=verbose):
+            return False
         # incompatible with ustc repo because it has no gpg currently
         mappings['gpg_url'] = config.k8s_apt_repo_gpg
         mappings['repo_entry'] = config.k8s_apt_repo_entry
+
+        return True
 
     @classmethod
     def _update_k8s_worker_script(cls, mappings, context, verbose=False):
