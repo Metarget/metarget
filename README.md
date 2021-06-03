@@ -292,6 +292,8 @@ Currently unsupported.
 
 ### 4.1 Vulnerable Scenes Related to Cloud Native Components
 
+If there is an asterisk (\*) following the name of one vulnerable scene, you need to read the note related to it below the whole table for further details.
+
 |Name|Class|Type|CVSS 3.x|Status|
 |:-:|:-:|:-:|:-:|:-:|
 |[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|container_escape|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)|✅|
@@ -299,7 +301,7 @@ Currently unsupported.
 |[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|container_escape|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2019-14271)|✅|
 |[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|container_escape|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)|✅|
 |[cve-2019-5736](vulns_cn/docker/cve-2019-5736.yaml)|docker/runc|container_escape|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2019-5736)|✅|
-|[cve-2021-30465](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|container_escape|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)|✅|
+|[cve-2021-30465\*](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|container_escape|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)|✅|
 |[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|kubernetes|container_escape|[9.6](https://nvd.nist.gov/vuln/detail/CVE-2017-1002101)|✅|
 |[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|kubernetes|privilege_escalation|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)|✅|
 |[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11253)|✅|

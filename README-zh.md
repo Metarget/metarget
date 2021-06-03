@@ -313,6 +313,8 @@ pip install -r requirements.txt
 
 ### 4.1 云原生组件脆弱场景
 
+如果某个脆弱场景名称的末尾带了星号（\*），你还需要关注表格下面提供的关于此场景的其他说明。
+
 |场景名称|涉及组件|场景类型|CVSS 3.x|状态|
 |:-:|:-:|:-:|:-:|:-:|
 |[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|容器逃逸|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)|✅|
@@ -320,7 +322,7 @@ pip install -r requirements.txt
 |[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|容器逃逸|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2019-14271)|✅|
 |[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|容器逃逸|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)|✅|
 |[cve-2019-5736](vulns_cn/docker/cve-2019-5736.yaml)|docker/runc|容器逃逸|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2019-5736)|✅|
-|[cve-2021-30465](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|容器逃逸|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)|✅|
+|[cve-2021-30465\*](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|容器逃逸|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)|✅|
 |[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|kubernetes|容器逃逸|[9.6](https://nvd.nist.gov/vuln/detail/CVE-2017-1002101)|✅|
 |[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|kubernetes|权限提升|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)|✅|
 |[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11253)|✅|
