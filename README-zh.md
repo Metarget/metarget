@@ -327,6 +327,7 @@ pip install -r requirements.txt
 |[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9512)|✅|
 |[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9514)|✅|
 |[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|中间人攻击|[5.0](https://nvd.nist.gov/vuln/detail/CVE-2020-8554)|✅|
+|[cve-2020-8555](vulns_cn/kubernetes/cve-2020-8555.yaml)|kubernetes|服务端请求伪造（SSRF）|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-8555)|✅|
 |[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|kubernetes|拒绝服务|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2020-8557)|✅|
 |[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|服务暴露|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8558)|✅|
 |[cve-2020-8559](vulns_cn/kubernetes/cve-2020-8559.yaml)|kubernetes|权限提升|[6.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8559)|✅|
