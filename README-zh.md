@@ -326,6 +326,7 @@ pip install -r requirements.txt
 |[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11253)|✅|
 |[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9512)|✅|
 |[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9514)|✅|
+|[cve-2019-9946](vulns_cn/kubernetes/cve-2019-9946.yaml)|kubernetes|流量劫持|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9946)|✅|
 |[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|中间人攻击|[5.0](https://nvd.nist.gov/vuln/detail/CVE-2020-8554)|✅|
 |[cve-2020-8555](vulns_cn/kubernetes/cve-2020-8555.yaml)|kubernetes|服务端请求伪造（SSRF）|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-8555)|✅|
 |[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|kubernetes|拒绝服务|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2020-8557)|✅|

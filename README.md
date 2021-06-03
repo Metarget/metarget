@@ -305,6 +305,7 @@ Currently unsupported.
 |[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11253)|✅|
 |[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9512)|✅|
 |[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9514)|✅|
+|[cve-2019-9946](vulns_cn/kubernetes/cve-2019-9946.yaml)|kubernetes|traffic_interception|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9946)|✅|
 |[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|man_in_the_middle|[5.0](https://nvd.nist.gov/vuln/detail/CVE-2020-8554)|✅|
 |[cve-2020-8555](vulns_cn/kubernetes/cve-2020-8555.yaml)|kubernetes|server_side_request_forgery|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-8555)|✅|
 |[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|kubernetes|denial_of_service|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2020-8557)|✅|
