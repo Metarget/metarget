@@ -20,15 +20,15 @@ Metarget的初衷之一是方便安全研究人员在漏洞出现的第一时间
 ### cve-2019-5736：runC相关容器逃逸漏洞
 
 ```yaml
-name: cve-2019-5736		# 漏洞名称（统一小写）
-class: docker/runc		# 漏洞相关组件（统一小写）
+name: cve-2019-5736		  # 漏洞名称（统一小写）
+class: docker/runc		  # 漏洞相关组件（统一小写）
 type: container_escape	# 漏洞类型
-dependencies:			# 漏洞依赖环境
-  - name: docker-ce		# 组件名称（默认使用apt-get安装）
-    version: 18.03.1	# 存在漏洞的版本
+dependencies:			      # 漏洞依赖环境
+  - name: docker-ce		  # 组件名称（默认使用apt-get安装）
+    version: 18.03.1	  # 存在漏洞的版本
     versions:			
-      - ~				# 漏洞版本范围（该字段暂未使用，置 ~ 即可）
-links:					# 漏洞参考链接（可放置帮助了解该漏洞的链接，如漏洞库信息、issue信息、首发博客等）
+      - ~				        # 漏洞版本范围（该字段暂未使用，置 ~ 即可）
+links:					        # 漏洞参考链接（可放置帮助了解该漏洞的链接，如漏洞库信息、issue信息、首发博客等）
   - https://nvd.nist.gov/vuln/detail/CVE-2019-5736
   - https://github.com/Frichetten/CVE-2019-5736-PoC
 ```
@@ -37,19 +37,19 @@ links:					# 漏洞参考链接（可放置帮助了解该漏洞的链接，如�
 
 ```yaml
 name: cve-2017-1002101	# 漏洞名称（统一小写）
-class: kubernetes		# 漏洞相关组件（统一小写）
+class: kubernetes		    # 漏洞相关组件（统一小写）
 type: container_escape	# 漏洞类型
-dependencies:			# 漏洞依赖环境
-  - name: kubectl		# Kubernetes相关组件名称
-    version: 1.9.3		# 存在漏洞的版本，kubectl、kubelet、kubeadm三者版本一致
-    versions: ~			# 漏洞版本范围（该字段暂未使用，置 ~ 即可）
+dependencies:			      # 漏洞依赖环境
+  - name: kubectl		    # Kubernetes相关组件名称
+    version: 1.9.3		  # 存在漏洞的版本，kubectl、kubelet、kubeadm三者版本一致
+    versions: ~			    # 漏洞版本范围（该字段暂未使用，置 ~ 即可）
   - name: kubelet
     version: 1.9.3
     versions: ~
   - name: kubeadm
     version: 1.9.3
     versions: ~
-links:					# 漏洞参考链接（可放置帮助了解该漏洞的链接，如漏洞库信息、issue信息、首发博客等）
+links:					        # 漏洞参考链接（可放置帮助了解该漏洞的链接，如漏洞库信息、issue信息、首发博客等）
   - https://nvd.nist.gov/vuln/detail/CVE-2017-1002101
   - https://makocchi.medium.com/kubernetes-cve-2017-1002101-en-5a30bf701a3e
 ```
@@ -61,10 +61,10 @@ links:					# 漏洞参考链接（可放置帮助了解该漏洞的链接，如�
 ```yaml
 # 漏洞说明文件
 name: mount-docker-sock		# 漏洞名称
-class: mount				# 漏洞相关行为
+class: mount				      # 漏洞相关行为
 type: container_escape		# 漏洞类型
 dependencies:				
-  yamls:					# pods/ 目录下的资源声明文件路径
+  yamls:					        # pods/ 目录下的资源声明文件路径
     - pods/mount-docker-sock.yaml
 ```
 
@@ -140,14 +140,14 @@ INFO Kubernetes file "vul_app/cve-2012-1823/cve-2012-1823-php-deployment.yaml" c
 
 ```
 name: cve-2012-1823		# 漏洞名称
-class: php				# 漏洞组件
-hostPath: true			# 是否存在卷挂载
-type: rce				# 漏洞类型
-dependencies:			# 漏洞搭建依赖文件
+class: php				    # 漏洞组件
+hostPath: true			  # 是否存在卷挂载
+type: rce				      # 漏洞类型
+dependencies:			    # 漏洞搭建依赖文件
   yamls:
     - cve-2012-1823-php-deployment.yaml
     - cve-2012-1823-php-service.yaml
-links:					# 漏洞参考文献
+links:					      # 漏洞参考文献
   - https://github.com/vulhub/vulhub/tree/master/php/CVE-2012-1823
 ```
 
