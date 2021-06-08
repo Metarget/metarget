@@ -265,6 +265,14 @@ def kata_specified_installed(temp_gadget, kata_runtime_type, verbose=False):
 
 
 def vagrant_installed(verbose=False):
+    """
+
+    Args:
+        verbose:
+
+    Returns:
+
+    """
     try:
         stdout, stderr = verbose_func.verbose_output(verbose)
         temp_cmd = 'vagrant'.split()
@@ -278,5 +286,5 @@ def vagrant_installed(verbose=False):
         return False
 
 
-def vagrant_libvirt_plugin_installed():
+def vagrant_libvirt_plugin_installed(verbose=False):
     pass

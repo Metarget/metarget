@@ -74,40 +74,11 @@ def main():
     parser_gadget_install.add_argument(
         '-v', '--version', dest='version', required=True, help='gadget version')
     # options for k8s
-    parser_gadget_install.add_argument(
-        '--cni-plugin',
-        default=config.DEFAULT_CNI_PLUGIN,
-        help='cni plugin, {default_cni_plugin} by default'.format(default_cni_plugin=config.DEFAULT_CNI_PLUGIN))
-    parser_gadget_install.add_argument(
-        '--pod-network-cidr',
-        dest='pod_network_cidr',
-        default='',  # determined later by cni plugin
-        help='pod network cidr, default cidr for each plugin by default')
-    parser_gadget_install.add_argument(
-        '--taint-master',
-        action='store_true',
-        help='taint master node or not')
-    parser_gadget_install.add_argument(
-        '--domestic', action='store_true', help='magic')
+    _add_k8s_options(parser=parser_gadget_install)
     # options for kata
-    parser_gadget_install.add_argument(
-        '--kata-runtime-type',
-        action='store',
-        help='type of kata runtime, {default_runtime} by default'.format(
-            default_runtime=config.DEFAULT_KATA_RUNTIME_TYPE),
-        default=config.DEFAULT_KATA_RUNTIME_TYPE)
-    # options common
-    parser_gadget_install.add_argument(
-        '--http-proxy', action='store', help='set http proxy', default='')
-    parser_gadget_install.add_argument(
-        '--https-proxy', action='store', help='set https proxy', default='')
-    parser_gadget_install.add_argument(
-        '--no-proxy', action='store', help='do not proxy for some sites', default='')
-    parser_gadget_install.add_argument(
-        '--verbose',
-        action='store_true',
-        help='print output verbosely',
-    )
+    _add_kata_options(parser=parser_gadget_install)
+    _add_common_options(parser=parser_gadget_install)
+    _add_verbose_option(parser=parser_gadget_install)
     parser_gadget_install.set_defaults(func=cmds.gadget.install)
 
     # sub-subcommand `gadget remove`
@@ -116,11 +87,7 @@ def main():
     parser_gadget_remove.add_argument(
         'gadget',
         help='installed gadget name, run `metarget gadget list` to retrieve gadget supported')
-    parser_gadget_remove.add_argument(
-        '--verbose',
-        action='store_true',
-        help='print output verbosely',
-    )
+    _add_verbose_option(parser=parser_gadget_remove)
     parser_gadget_remove.set_defaults(func=cmds.gadget.remove)
 
     # subcommand `cnv`
@@ -141,44 +108,15 @@ def main():
     parser_cnv_install.add_argument(
         'cnv',
         help='cnv name, run `metarget cnv list` to retrieve cnvs supported')
-    # options for k8s
-    parser_cnv_install.add_argument(
-        '--domestic', action='store_true', help='magic')
-    parser_cnv_install.add_argument(
-        '--cni-plugin',
-        default=config.DEFAULT_CNI_PLUGIN,
-        help='cni plugin, {default_cni_plugin} by default'.format(default_cni_plugin=config.DEFAULT_CNI_PLUGIN))
-    parser_cnv_install.add_argument(
-        '--pod-network-cidr',
-        dest='pod_network_cidr',
-        default='10.244.0.0/16',
-        help='pod network cidr, {default_cidr} by default'.format(default_cidr=config.cni_plugin_cidrs['flannel']))
-    parser_cnv_install.add_argument(
-        '--taint-master',
-        action='store_true',
-        help='taint master node or not')
-    # options common
-    parser_cnv_install.add_argument(
-        '--http-proxy', action='store', help='set http proxy', default='')
-    parser_cnv_install.add_argument(
-        '--https-proxy', action='store', help='set https proxy', default='')
-    parser_cnv_install.add_argument(
-        '--no-proxy', action='store', help='do not proxy for some sites', default='')
-    parser_cnv_install.add_argument(
-        '--verbose',
-        action='store_true',
-        help='print output verbosely',
-    )
+    _add_k8s_options(parser=parser_cnv_install)
+    _add_common_options(parser=parser_cnv_install)
+    _add_verbose_option(parser=parser_cnv_install)
     parser_cnv_install.set_defaults(func=cmds.cnv.install)
 
     # sub-subcommand `cnv remove`
     parser_cnv_remove = subparsers_cnv.add_parser(
         'remove', help='uninstall cloud native vulnerabilities')
-    parser_cnv_remove.add_argument(
-        '--verbose',
-        action='store_true',
-        help='print output verbosely',
-    )
+    _add_verbose_option(parser=parser_cnv_remove)
     parser_cnv_remove.add_argument(
         'cnv',
         help='installed cnv name, run `metarget cnv list` to retrieve cnv supported')
@@ -204,11 +142,7 @@ def main():
         action='store_true',
         help='expose service through NodePort (ClusterIP by default)',
     )
-    parser_appv_install.add_argument(
-        '--verbose',
-        action='store_true',
-        help='print output verbosely',
-    )
+    _add_verbose_option(parser=parser_appv_install)
     parser_appv_install.add_argument(
         'appv',
         help='appv name, run `metarget appv list` to retrieve appv supported')
@@ -217,11 +151,7 @@ def main():
     # sub-subcommand `appv remove`
     parser_appv_remove = subparsers_appv.add_parser(
         'remove', help='uninstall application vulnerabilities')
-    parser_appv_remove.add_argument(
-        '--verbose',
-        action='store_true',
-        help='print output verbosely',
-    )
+    _add_verbose_option(parser=parser_appv_remove)
     parser_appv_remove.add_argument(
         'appv',
         help='running appv name, run `metarget appv list` to retrieve appv supported')
@@ -242,6 +172,12 @@ def main():
     # sub-subcommand `target create`
     parser_target_create = subparsers_target.add_parser(
         'create', help='create a target')
+    parser_target_create.add_argument(
+        'target',
+        help='name of target to be created')
+    _add_k8s_options(parser=parser_target_create)
+    _add_common_options(parser=parser_target_create)
+    _add_verbose_option(parser=parser_target_create)
     parser_target_create.set_defaults(func=cmds.target.create)
 
     # sub-subcommand `target delete`
@@ -270,6 +206,50 @@ def main():
     except (KeyboardInterrupt, AttributeError):
         print("Bye.")
         sys.exit(1)
+
+
+def _add_common_options(parser):
+    parser.add_argument(
+        '--http-proxy', action='store', help='set http proxy', default='')
+    parser.add_argument(
+        '--https-proxy', action='store', help='set https proxy', default='')
+    parser.add_argument(
+        '--no-proxy', action='store', help='do not proxy for some sites', default='')
+
+
+def _add_k8s_options(parser):
+    parser.add_argument(
+        '--domestic', action='store_true', help='magic')
+    parser.add_argument(
+        '--cni-plugin',
+        default=config.DEFAULT_CNI_PLUGIN,
+        help='cni plugin, {default_cni_plugin} by default'.format(default_cni_plugin=config.DEFAULT_CNI_PLUGIN))
+    parser.add_argument(
+        '--pod-network-cidr',
+        dest='pod_network_cidr',
+        default='',  # determined later by cni plugin
+        help='pod network cidr, default cidr for each plugin by default')
+    parser.add_argument(
+        '--taint-master',
+        action='store_true',
+        help='taint master node or not')
+
+
+def _add_kata_options(parser):
+    parser.add_argument(
+        '--kata-runtime-type',
+        action='store',
+        help='type of kata runtime, {default_runtime} by default'.format(
+            default_runtime=config.DEFAULT_KATA_RUNTIME_TYPE),
+        default=config.DEFAULT_KATA_RUNTIME_TYPE)
+
+
+def _add_verbose_option(parser):
+    parser.add_argument(
+        '--verbose',
+        action='store_true',
+        help='print output verbosely',
+    )
 
 
 if __name__ == '__main__':
