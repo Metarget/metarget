@@ -262,3 +262,21 @@ def kata_specified_installed(temp_gadget, kata_runtime_type, verbose=False):
         return False
     except (IndexError, AttributeError, FileNotFoundError, subprocess.CalledProcessError):
         return False
+
+
+def vagrant_installed(verbose=False):
+    try:
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        temp_cmd = 'vagrant'.split()
+        subprocess.run(
+            temp_cmd,
+            stdout=stdout,
+            stderr=stderr,
+            check=True)
+        return True
+    except (FileNotFoundError, AttributeError, subprocess.CalledProcessError):
+        return False
+
+
+def vagrant_libvirt_plugin_installed():
+    pass

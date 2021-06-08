@@ -11,6 +11,7 @@ import utils.system as system_func
 import cmds.gadget
 import cmds.cnv
 import cmds.appv
+import cmds.target
 import config
 from version import VERSION
 
@@ -225,6 +226,43 @@ def main():
         'appv',
         help='running appv name, run `metarget appv list` to retrieve appv supported')
     parser_appv_remove.set_defaults(func=cmds.appv.remove)
+
+    # subcommand `target`
+    parser_target = subparsers.add_parser(
+        'target', help='vulnerable targets management')
+    # add subparsers for `target`
+    subparsers_target = parser_target.add_subparsers(
+        help='description', metavar='subcommand')
+
+    # sub-subcommand `target ps`
+    parser_target_ps = subparsers_target.add_parser(
+        'ps', help='list targets')
+    parser_target_ps.set_defaults(func=cmds.target.ps)
+
+    # sub-subcommand `target create`
+    parser_target_create = subparsers_target.add_parser(
+        'create', help='create a target')
+    parser_target_create.set_defaults(func=cmds.target.create)
+
+    # sub-subcommand `target delete`
+    parser_target_delete = subparsers_target.add_parser(
+        'delete', help='delete a target')
+    parser_target_delete.set_defaults(func=cmds.target.delete)
+
+    # sub-subcommand `target suspend`
+    parser_target_suspend = subparsers_target.add_parser(
+        'suspend', help='suspend a target')
+    parser_target_suspend.set_defaults(func=cmds.target.suspend)
+
+    # sub-subcommand `target resume`
+    parser_target_resume = subparsers_target.add_parser(
+        'resume', help='resume a target')
+    parser_target_resume.set_defaults(func=cmds.target.resume)
+
+    # sub-subcommand `target ssh`
+    parser_target_ssh = subparsers_target.add_parser(
+        'ssh', help='connect to a target with ssh')
+    parser_target_ssh.set_defaults(func=cmds.target.ssh)
 
     args = parser.parse_args()
     try:
