@@ -403,7 +403,7 @@ Metarget的初衷之一是方便安全研究人员在漏洞出现的第一时间
 1. 提交“云原生组件漏洞”的YAML描述文件。
 2. 提交“云原生应用漏洞”的YAML描述文件。
 
-参与方式详见[CONTRIBUTING.md](CONTRIBUTING.md)。
+参与方式详见[CONTRIBUTING-zh.md](CONTRIBUTING-zh.md)。
 
 ## 9 关于Logo
 

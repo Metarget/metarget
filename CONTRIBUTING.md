@@ -1,75 +1,77 @@
-# 参与者指南
+# Contributing Guidelines
 
-Metarget的初衷之一是方便安全研究人员在漏洞出现的第一时间快速搭建漏洞环境（进一步地，随时随地搭建已集成的任意漏洞环境）。
+One of Metarget's goals is to facilitate more rapid construction of vulnerable environments when vulnerabilities occur. Also, it could be used to construct all the integrated vulnerable scenes whenever you want.
 
-为了保持靶场的“新鲜性”，Metarget的漏洞列表将持续更新。Metarget采用YAML文件的形式描述并集成漏洞环境，目前提供“云原生组件漏洞”和“云原生应用漏洞”两个层次的环境，对应描述文件分别位于`vulns_cn`和`vulns_app`目录下。
+To keep Metarget up-to-date, the vulnerable scenes lists (both `cnv` and `appv`) will be maintained. *YAML* is used in Metarget to describe & integrate vulnerable scenes. Currently, scenes in two layers, `cnv` (in `vulns_cn/`) and `appv` (in `vulns_app/`), are supported.
 
-我们希望并鼓励大家参与维护Metarget，一起推进项目，借助Metarget沉淀、分享我们的研究所得，共同促进云原生安全发展。
+Maintenance from the community is appreciated and welcome. Hope that we can gather and share our knowledge and researches in the context of Metarget, and promote the development of cloud native security.
 
-目前来说，您可以通过以下两种方式参与到项目中：
+Currently, you can contribute to Metarget in two ways:
 
-1. 提交“云原生组件漏洞”的YAML描述文件。
-2. 提交“云原生应用漏洞”的YAML描述文件。
+1. Submit YAML files of new cloud native vulnerabilities (cnv).
+2. Submit YAML files of new cloud native application vulnerabilities (appv).
 
-为了帮助大家参与到项目中，我们为漏洞环境的描述文件提供了模板作为参照。
+You may find templates below useful while contributing.
 
-## “云原生组件漏洞”模板
+## Templates of Cloud Native Vulnerable Scenes
 
-以下是几个云原生组件漏洞YAML文件的示例：
 
-### cve-2019-5736：runC相关容器逃逸漏洞
+### cve-2019-5736: Container Escape Related to runC
 
 ```yaml
-name: cve-2019-5736			# 漏洞名称（统一小写）
-class: docker/runc			# 漏洞相关组件（统一小写）
-type: container_escape			# 漏洞类型
-dependencies:				# 漏洞依赖环境
-  - name: docker-ce			# 组件名称（默认使用apt-get安装）
-    version: 18.03.1			# 存在漏洞的版本
+name: cve-2019-5736			# vulnerability name (lowercase)
+class: docker/runc			# vulnerable component (lowercase)
+type: container_escape			# vulnerability type
+dependencies:				
+  - name: docker-ce			# component's name (installed with apt-get by default)
+    version: 18.03.1			# vulnerable version
     versions:			
-      - ~				# 漏洞版本范围（该字段暂未使用，置 ~ 即可）
-links:					# 漏洞参考链接（可放置帮助了解该漏洞的链接，如漏洞库信息、issue信息、首发博客等）
+      - ~				# vulnerable version range (currently unused; set to ~)
+links:					# references
   - https://nvd.nist.gov/vuln/detail/CVE-2019-5736
   - https://github.com/Frichetten/CVE-2019-5736-PoC
 ```
 
-### cve-2017-1002101：Kubernetes的文件系统逃逸漏洞
+### cve-2017-1002101: Container Escape Related to Kubernetes
 
 ```yaml
-name: cve-2017-1002101			# 漏洞名称（统一小写）
-class: kubernetes			# 漏洞相关组件（统一小写）
-type: container_escape			# 漏洞类型
-dependencies:				# 漏洞依赖环境
-  - name: kubectl		    	# Kubernetes相关组件名称
-    version: 1.9.3		  	# 存在漏洞的版本，kubectl、kubelet、kubeadm三者版本一致
-    versions: ~				# 漏洞版本范围（该字段暂未使用，置 ~ 即可）
+name: cve-2017-1002101			# vulnerability name (lowercase)
+class: kubernetes			# vulnerable component (lowercase)
+type: container_escape			# vulnerability type
+dependencies:				
+  - name: kubectl		    	# name of K8s component (installed with apt-get by default)
+    version: 1.9.3		  	# vulnerable version
+    versions: ~				# vulnerable version range (currently unused; set to ~)
   - name: kubelet
     version: 1.9.3
     versions: ~
   - name: kubeadm
     version: 1.9.3
     versions: ~
-links:					# 漏洞参考链接（可放置帮助了解该漏洞的链接，如漏洞库信息、issue信息、首发博客等）
+links:					# references
   - https://nvd.nist.gov/vuln/detail/CVE-2017-1002101
   - https://makocchi.medium.com/kubernetes-cve-2017-1002101-en-5a30bf701a3e
 ```
 
-### mount-docker-sock：docker.sock危险挂载导致容器逃逸
+### mount-docker-sock: Container Escape with mounted docker.sock
 
-这类危险配置、危险挂载脆弱场景由两个文件组成：`mount-docker-sock.yaml`（漏洞说明文件）和`pods/`目录下的同名文件（Kubernetes资源文件）：
+All vulnerable scenes related to danger mount or danger configurations compose of two files:
+
+1. description file, e.g. `mount-docker-sock.yaml`
+2. resource file, e.g. `pods/mount-docker-sock.yaml`
 
 ```yaml
-# 漏洞说明文件
-name: mount-docker-sock		# 漏洞名称
-class: mount			# 漏洞相关行为
-type: container_escape		# 漏洞类型
+# description file
+name: mount-docker-sock		# vulnerability name (lowercase)
+class: mount			# vulnerable behavior (lowercase, mount or config)
+type: container_escape		# vulnerability type
 dependencies:				
-  yamls:			# pods/ 目录下的资源声明文件路径
+  yamls:			# resource file in pods/
     - pods/mount-docker-sock.yaml
 ```
 
 ```yaml
-# pods/ 目录下的资源声明文件
+# resource file in pods/
 apiVersion: v1
 kind: Pod
 metadata:
@@ -92,17 +94,17 @@ spec:
         path: /var/run/docker.sock
 ```
 
-## “云原生应用漏洞”模板
+## Templates of Cloud Native Applications Scenes
 
-Metarget中对接了许多[Vulhub](https://github.com/vulhub/vulhub)项目中的漏洞环境（以RCE环境为主），再次对其表示感谢！
+Many application vulnerabilities (mainly RCE) in Metarget come from [Vulhub](https://github.com/vulhub/vulhub).
 
-[Vulhub](https://github.com/vulhub/vulhub)中的漏洞环境以`docker-compose.yml`文件启动，我们使用[kompose](https://github.com/kubernetes/kompose)将其转换为Kubernetes环境下的资源声明文件。下面是一个转换示例。
+Vulnerabilities in [Vulhub](https://github.com/vulhub/vulhub) start up from `docker-compose.yml` file. We use [kompose](https://github.com/kubernetes/kompose) to convert that file into resource files in Kubernetes.
 
-您可以以类似的方式将其他优秀容器化漏洞环境开源项目的内容提交至Metarget（在原项目开源许可证允许的前提下），借助Metarget来对所有这些环境进行统一管理（在一个集群中进行创建和销毁）。
+You could also integrate other excellent containerized vulnerability environment into Metarget (if the origin license allows), and unify the managements with Metarget (e.g. manage all scenes in the same cluster).
 
 ### CVE-2012-1823
 
-原`docker-compose.yaml`文件如下：
+`docker-compose.yaml` before modification:
 
 ```yaml
 version: '2'
@@ -115,7 +117,9 @@ services:
     - "8080:80"
 ```
 
-为了满足Metarget搭建复杂漏洞环境的需求，需要更改创建的services资源，使其具有唯一性，方法是在漏洞的services名称前加上漏洞编号，如php更改为cve-2012-1823-php（所有字符均为小写），修改后的`docker-compose.yml`文件内容为：
+Prefix service name with vulnerability ID, e.g. php -> cve-2012-1823-php (lowercase).
+
+`docker-compose.yml` after modification:
 
 ```yaml
 version: '2'
@@ -128,7 +132,7 @@ services:
     - "8080:80"
 ```
 
-然后使用tools下的`docker_to_k8s.sh`快速将其转换为Kubernetes资源文件，运行后会在`vul_app`目录下生成service、deployment和`desc.yaml`文件：
+Then use `docker_to_k8s.sh` in `tools/` to convert the file above into Kubernetes resource files. Service, deployment and `desc.yaml` files will be generated in `vul_app/`:
 
 ```
 bash docker_to_k8s.sh list.txt
@@ -136,27 +140,27 @@ INFO Kubernetes file "vul_app/cve-2012-1823/cve-2012-1823-php-service.yaml" crea
 INFO Kubernetes file "vul_app/cve-2012-1823/cve-2012-1823-php-deployment.yaml" created
 ```
 
-`desc.yaml`文件内容如下：
+`desc.yaml`:
 
 ```
-name: cve-2012-1823		# 漏洞名称
-class: php			# 漏洞组件
-hostPath: true			# 是否存在卷挂载
-type: rce			# 漏洞类型
-dependencies:			# 漏洞搭建依赖文件
+name: cve-2012-1823		# vulnerability name (lowercase)
+class: php			# vulnerable component (lowercase)
+hostPath: true			# need volume mount or not
+type: rce			# vulnerability type
+dependencies:			
   yamls:
     - cve-2012-1823-php-deployment.yaml
     - cve-2012-1823-php-service.yaml
-links:				# 漏洞参考文献
+links:				# references
   - https://github.com/vulhub/vulhub/tree/master/php/CVE-2012-1823
 ```
 
-注意：
+Note:
 
-- deployment文件中`hostPath`内容会生成程序相关路径，删除前缀部分使其为`php/CVE-2012-1823/www`。
-- 原目录下文件——即`www/`目录内容应一同拷贝至`desc.yaml`文件同目录下。
+- prefix of `hostPath` in deployment file should be stripped and finally become something like `php/CVE-2012-1823/www`.
+- Files to be mounted (e.g. `www/`) should be put into the same directory of `desc.yaml`.
 
-最终文件目录结构如下：
+Files structure:
 
 ```
 .
@@ -170,11 +174,11 @@ links:				# 漏洞参考文献
             └── info.php
 ```
 
-## 提交PR
+## Submit PR
 
-在完成描述文件的准备工作后，就可以将上述描述文件放入对应的目录中（云原生组件漏洞在`vulns_cn/`目录下，云原生应用漏洞在`vulns_app`目录下，放在具体的分类路径下面即可）。
+After preparations of description files, you can put them into `vulns_cn/` or `vulns_app/` directories.
 
-我们鼓励贡献者按照社区规范PR流程进行贡献，在PR时请写好备注说明。
+Contributions following the standardized PR process in open-source community are encouraged. Please attach enough and exact descriptions.
 
-十分感谢大家对Metarget项目的关注，我们将认真对待大家的PR并及时反馈。
+Thanks for your interest on Metarget. We will take your PRs seriously.
 
