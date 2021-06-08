@@ -1,8 +1,5 @@
 import platform
 
-
-# metarget version
-VERSION = '0.3'
 # default CNI plugin
 DEFAULT_CNI_PLUGIN = 'flannel'
 # default kata runtime type
@@ -24,6 +21,12 @@ vuln_app_desc_file = 'desc.yaml'
 runtime_data_dir = 'data/'
 runtime_host_ports_usage_file = 'data/host_ports_usage.yaml'
 runtime_host_port_lower_bound = 30000
+
+# for `metarget target`
+runtime_target_dir = 'data/targets'
+runtime_target_meta_dir = 'data/targets/metadata/'
+runtime_target_active_dir = 'data/targets/active/'
+runtime_target_vm_dir = 'data/targets/vms/'
 
 k8s_metarget_namespace = 'metarget'
 k8s_metarget_namespace_file = 'yamls/k8s_metarget_namespace.yaml'

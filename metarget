@@ -12,6 +12,7 @@ import cmds.gadget
 import cmds.cnv
 import cmds.appv
 import config
+from version import VERSION
 
 
 def _initialize():
@@ -25,6 +26,12 @@ def _initialize():
     """
     # create data/ if necessary
     system_func.mkdir_if_not_exist(config.runtime_data_dir)
+    # create dirs related to `metarget target`
+    system_func.mkdir_if_not_exist(config.runtime_target_dir)
+    system_func.mkdir_if_not_exist(config.runtime_target_meta_dir)
+    system_func.mkdir_if_not_exist(config.runtime_target_active_dir)
+    system_func.mkdir_if_not_exist(config.runtime_target_vm_dir)
+
     # create data/host_ports_usage.yaml if necessary
     system_func.create_file_if_not_exist(config.runtime_host_ports_usage_file)
 
@@ -39,7 +46,7 @@ def main():
         '-v',
         '--version',
         action='version',
-        version='metarget {ver}'.format(ver=config.VERSION))
+        version='metarget {ver}'.format(ver=VERSION))
 
     parser.set_defaults(func=lambda x: parser.print_help())
     # add subparsers
