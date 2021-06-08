@@ -369,6 +369,23 @@ To list vulnerable scenes related to cloud native applications supported by Meta
 - [@brant-ruan](https://github.com/brant-ruan)
 - [@ListenerMoya](https://github.com/ListenerMoya)
 
-## 8 About Logo
+## 8 Contribution
+
+One of Metarget's goals is to facilitate more rapid construction of vulnerable environments when vulnerabilities occur. Also, it could be used to construct all the integrated vulnerable scenes whenever you want.
+
+To keep Metarget up-to-date, the vulnerable scenes lists (both `cnv` and `appv`) will be maintained.
+
+*YAML* is used in Metarget to describe & integrate vulnerable scenes. Currently, scenes in two layers, `cnv` (`in vulns_cn/`) and `appv` (`in vulns_app/`), are supported.
+
+Maintenance from the community is appreciated and welcome. Hope that we can gather and share our knowledge and researches in the context of Metarget, and promote the development of cloud native security.
+
+Currently, you can contribute to Metarget in two ways:
+
+1. Submit YAML files of new cloud native vulnerabilities (cnv).
+2. Submit YAML files of new cloud native application vulnerabilities (appv).
+
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+
+## 9 About Logo
 
 It is not a Kubernetes, but a vulnerable infrastructure with three gears which could not work well (vulnerable) :)

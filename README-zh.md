@@ -390,6 +390,21 @@ Metarget将以上项目中的靶机统一转化为Kubernetes中的Deployment和S
 - [@brant-ruan](https://github.com/brant-ruan)
 - [@ListenerMoya](https://github.com/ListenerMoya)
 
-## 8 关于Logo
+## 8 参与项目
+
+Metarget的初衷之一是方便安全研究人员在漏洞出现的第一时间快速搭建漏洞环境（进一步地，随时随地搭建已集成的任意漏洞环境）。
+
+为了保持靶场的“新鲜性”，Metarget的漏洞列表将持续更新。Metarget采用YAML文件的形式描述并集成漏洞环境，目前提供“云原生组件漏洞”和“云原生应用漏洞”两个层次的环境，对应描述文件分别位于`vulns_cn`和`vulns_app`目录下。
+
+我们希望并鼓励大家参与维护Metarget，一起推进项目，借助Metarget沉淀、分享我们的研究所得，共同促进云原生安全发展。
+
+目前来说，您可以通过以下两种方式参与到项目中：
+
+1. 提交“云原生组件漏洞”的YAML描述文件。
+2. 提交“云原生应用漏洞”的YAML描述文件。
+
+参与方式详见[CONTRIBUTING.md](CONTRIBUTING.md)。
+
+## 9 关于Logo
 
 Metarget logo的灵感来源于Kubernetes的logo，我们将Kubernetes的舵作为齿轮，三个齿轮组成一个正在运转的基础设施系统。然而，如果仔细观察，会发现齿轮的方向是矛盾的，系统无法正常运转（vulnerable）。
