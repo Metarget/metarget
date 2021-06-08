@@ -375,7 +375,7 @@ One of Metarget's goals is to facilitate more rapid construction of vulnerable e
 
 To keep Metarget up-to-date, the vulnerable scenes lists (both `cnv` and `appv`) will be maintained.
 
-*YAML* is used in Metarget to describe & integrate vulnerable scenes. Currently, scenes in two layers, `cnv` (`in vulns_cn/`) and `appv` (`in vulns_app/`), are supported.
+*YAML* is used in Metarget to describe & integrate vulnerable scenes. Currently, scenes in two layers, `cnv` (in `vulns_cn/`) and `appv` (in `vulns_app/`), are supported.
 
 Maintenance from the community is appreciated and welcome. Hope that we can gather and share our knowledge and researches in the context of Metarget, and promote the development of cloud native security.
 
