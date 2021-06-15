@@ -46,6 +46,7 @@ kubectl exec -it -n metarget mount-host-procfs /bin/bash
 ```
 root@mount-host-procfs:/# cat /proc/mounts | grep docker
 overlay / overlay rw,relatime,lowerdir=/var/lib/docker/overlay2/l/SDXPXVSYNB3RPWJYHAD5RIIIMO:/var/lib/docker/overlay2/l/QJFV62VKQFBRS5T5ZW4SEMZQC6:/var/lib/docker/overlay2/l/SSCMLZUT23WUSPXAOVLGLRRP7W:/var/lib/docker/overlay2/l/IBTHKEVQBPDIYMRIVBSVOE2A6Y:/var/lib/docker/overlay2/l/YYE5TPGYGPOWDNU7KP3JEWWSQM,upperdir=/var/lib/docker/overlay2/4aac278b06d86b0d7b6efa4640368820c8c16f1da8662997ec1845f3cc69ccee/diff,workdir=/var/lib/docker/overlay2/4aac278b06d86b0d7b6efa4640368820c8c16f1da8662997ec1845f3cc69ccee/work 0 0```
+```
 
 从`workdir`可以得到基础路径，结合背景知识可知当前容器在宿主机上的`merged`目录绝对路径如下：
 
