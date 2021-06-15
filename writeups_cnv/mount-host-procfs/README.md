@@ -1,7 +1,5 @@
 # 挂载宿主机Procfs系统导致容器逃逸
 
-内容部分摘录自[《容器逃逸技术概览》](https://wohin.me/rong-qi-tao-yi-gong-fang-xi-lie-yi-tao-yi-ji-zhu-gai-lan)。
-
 ## 场景介绍
 
 对于熟悉Linux和云计算的朋友来说，procfs绝对不是一个陌生的概念，不熟悉的朋友可以参考网络上相关文章或直接在Linux命令行下执行`man proc`查看文档。
