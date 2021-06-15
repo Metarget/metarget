@@ -1,7 +1,5 @@
 # 特权容器导致容器逃逸
 
-内容部分摘录自[《容器逃逸技术概览》](https://wohin.me/rong-qi-tao-yi-gong-fang-xi-lie-yi-tao-yi-ji-zhu-gai-lan)。
-
 ## 场景介绍
 
 最初，容器特权模式的出现是为了帮助开发者实现Docker-in-Docker特性[1]。然而，在特权模式下运行不完全受控容器将给宿主机带来极大安全威胁。
