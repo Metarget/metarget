@@ -315,41 +315,41 @@ pip install -r requirements.txt
 
 如果某个脆弱场景名称的末尾带了星号（\*），你还需要关注表格下面提供的关于此场景的其他说明。
 
-|场景名称|涉及组件|场景类型|CVSS 3.x|状态|
+|场景名称|涉及组件|场景类型|CVSS 3.x|Writeup|
 |:-:|:-:|:-:|:-:|:-:|
-|[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|容器逃逸|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)|✅|
-|[cve-2019-13139](vulns_cn/docker/cve-2019-13139.yaml)|docker|命令执行|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2019-13139)|✅|
-|[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|容器逃逸|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2019-14271)|✅|
-|[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|容器逃逸|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)|✅|
-|[cve-2019-5736](vulns_cn/docker/cve-2019-5736.yaml)|docker/runc|容器逃逸|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2019-5736)|✅|
-|[cve-2021-30465\*](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|容器逃逸|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)|✅|
-|[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|kubernetes|容器逃逸|[9.6](https://nvd.nist.gov/vuln/detail/CVE-2017-1002101)|✅|
-|[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|kubernetes|权限提升|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)|✅|
-|[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11253)|✅|
-|[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9512)|✅|
-|[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9514)|✅|
-|[cve-2019-9946](vulns_cn/kubernetes/cve-2019-9946.yaml)|kubernetes|流量劫持|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9946)|✅|
-|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|中间人攻击|[5.0](https://nvd.nist.gov/vuln/detail/CVE-2020-8554)|✅|
-|[cve-2020-8555](vulns_cn/kubernetes/cve-2020-8555.yaml)|kubernetes|服务端请求伪造（SSRF）|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-8555)|✅|
-|[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|kubernetes|拒绝服务|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2020-8557)|✅|
-|[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|服务暴露|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8558)|✅|
-|[cve-2020-8559](vulns_cn/kubernetes/cve-2020-8559.yaml)|kubernetes|权限提升|[6.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8559)|✅|
-|[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-5195)|✅|
-|[cve-2016-8655](vulns_cn/kernel/cve-2016-8655.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-8655)|✅|
-|[cve-2017-6074](vulns_cn/kernel/cve-2017-6074.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-6074)|✅|
-|[cve-2017-7308](vulns_cn/kernel/cve-2017-7308.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-7308)|✅|
-|[cve-2017-16995](vulns_cn/kernel/cve-2017-16995.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-16995)|✅|
-|[cve-2017-1000112](vulns_cn/kernel/cve-2017-1000112.yaml)|kernel|权限提升|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2017-1000112)|✅|
-|[cve-2018-18955](vulns_cn/kernel/cve-2018-18955.yaml)|kernel|权限提升|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2018-18955)|✅|
-|[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2020-14386)|✅|
+|[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|容器逃逸|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)||
+|[cve-2019-13139](vulns_cn/docker/cve-2019-13139.yaml)|docker|命令执行|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2019-13139)||
+|[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|容器逃逸|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2019-14271)||
+|[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|容器逃逸|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)||
+|[cve-2019-5736](vulns_cn/docker/cve-2019-5736.yaml)|docker/runc|容器逃逸|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2019-5736)||
+|[cve-2021-30465\*](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|容器逃逸|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)||
+|[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|kubernetes|容器逃逸|[9.6](https://nvd.nist.gov/vuln/detail/CVE-2017-1002101)||
+|[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|kubernetes|权限提升|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)||
+|[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11253)||
+|[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9512)||
+|[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9514)||
+|[cve-2019-9946](vulns_cn/kubernetes/cve-2019-9946.yaml)|kubernetes|流量劫持|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9946)||
+|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|中间人攻击|[5.0](https://nvd.nist.gov/vuln/detail/CVE-2020-8554)||
+|[cve-2020-8555](vulns_cn/kubernetes/cve-2020-8555.yaml)|kubernetes|服务端请求伪造（SSRF）|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-8555)||
+|[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|kubernetes|拒绝服务|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2020-8557)||
+|[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|服务暴露|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8558)||
+|[cve-2020-8559](vulns_cn/kubernetes/cve-2020-8559.yaml)|kubernetes|权限提升|[6.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8559)||
+|[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-5195)||
+|[cve-2016-8655](vulns_cn/kernel/cve-2016-8655.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-8655)||
+|[cve-2017-6074](vulns_cn/kernel/cve-2017-6074.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-6074)||
+|[cve-2017-7308](vulns_cn/kernel/cve-2017-7308.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-7308)||
+|[cve-2017-16995](vulns_cn/kernel/cve-2017-16995.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-16995)||
+|[cve-2017-1000112](vulns_cn/kernel/cve-2017-1000112.yaml)|kernel|权限提升|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2017-1000112)||
+|[cve-2018-18955](vulns_cn/kernel/cve-2018-18955.yaml)|kernel|权限提升|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2018-18955)||
+|[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2020-14386)||
 |[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|容器逃逸|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2025)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)|✅|
-|[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|危险配置|容器逃逸|-|✅|
-|[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|危险配置|容器逃逸|-|✅|
-|[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|危险配置|容器逃逸|-|✅|
-|[privileged-container](vulns_cn/configs/privileged-container.yaml)|危险配置|容器逃逸|-|✅|
-|[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|危险挂载|容器逃逸|-|✅|
-|[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|危险挂载|容器逃逸|-|✅|
-|[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|危险挂载|容器逃逸|-|✅|
+|[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|危险配置|容器逃逸|-||
+|[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|危险配置|容器逃逸|-||
+|[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|危险配置|容器逃逸|-||
+|[privileged-container](vulns_cn/configs/privileged-container.yaml)|危险配置|容器逃逸|-|[链接](writeups/config-privileged-container)|
+|[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|危险挂载|容器逃逸|-||
+|[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|危险挂载|容器逃逸|-||
+|[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|危险挂载|容器逃逸|-||
 
 注意：
 
