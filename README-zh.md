@@ -411,3 +411,7 @@ Metarget的初衷之一是方便安全研究人员在漏洞出现的第一时间
 ## 9 关于Logo
 
 Metarget logo的灵感来源于Kubernetes的logo，我们将Kubernetes的舵作为齿轮，三个齿轮组成一个正在运转的基础设施系统。然而，如果仔细观察，会发现齿轮的方向是矛盾的，系统无法正常运转（vulnerable）。
+
+## 10 开源许可证
+
+Metarget采用的开源许可证是MIT License，阅读[LICENSE](LICENSE)文件了解更多。

@@ -390,6 +390,12 @@ Currently, you can contribute to Metarget in two ways:
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
+Thanks to 
+
 ## 9 About Logo
 
 It is not a Kubernetes, but a vulnerable infrastructure with three gears which could not work well (vulnerable) :)
+
+## 10 License
+
+Metarget is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text.
