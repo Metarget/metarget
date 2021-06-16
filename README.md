@@ -53,7 +53,7 @@ More awesome functions are coming! Stay tuned :)
 
 Note:
 
-Thie project aims to provide vulnerable scenes for security research. The security of scenes generated is not guaranteed. It is **NOT** recommended to deploy components or scenes with Metarget on the Internet.
+This project aims to provide vulnerable scenes for security research. The security of scenes generated is not guaranteed. It is **NOT** recommended to deploy components or scenes with Metarget on the Internet.
 
 ## 2 Usage
 
@@ -389,8 +389,6 @@ Currently, you can contribute to Metarget in two ways:
 2. Submit YAML files of new cloud native application vulnerabilities (appv).
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
-
-Thanks to 
 
 ## 9 About Logo
 
