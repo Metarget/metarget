@@ -294,9 +294,9 @@ Currently unsupported.
 
 If there is an asterisk (\*) following the name of one vulnerable scene, you need to read the note related to it below the whole table for further details.
 
-|Name|Class|Type|CVSS 3.x|Status|
+|Name|Class|Type|CVSS 3.x|Writeup\*|
 |:-:|:-:|:-:|:-:|:-:|
-|[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|container_escape|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)|Writeup\*|
+|[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|container_escape|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)||
 |[cve-2019-13139](vulns_cn/docker/cve-2019-13139.yaml)|docker|command_execution|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2019-13139)||
 |[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|container_escape|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2019-14271)||
 |[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|container_escape|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)||
