@@ -333,6 +333,9 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 Note:
 
 - Currently writeups are in Chinese.
+- You might find that some kernel vulnerabilities are marked as `privilege_escalation`, while others `container_escape`. The essential difference is the payload (get a shell with high privilege or escape first).
+    - Thanks to default security mechanisms (e.g. Seccomp, Capabilities) in containers, some kernel vulnerabilities may be hard or almost not to exploit.
+    - Hence, vulnerabilities are marked as `container_escape` if we could reproduce the whole process with Metarget, others temporarily marked as `privilege_escalation`.
 - For **cve-2021-30465**, after `cnv install cve-2021-30465` (which installs Docker),
     - you'd better install a K8s manually, for exploitation (e.g. `cnv install cve-2018-1002105` or `gadget install k8s --version 1.16.5` with Metarget).
 
