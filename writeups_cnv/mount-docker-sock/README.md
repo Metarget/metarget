@@ -13,9 +13,9 @@ Docker Socket是Docker守护进程监听的Unix域套接字，用来与守护进
 ./metarget gadget install k8s --version 1.16.5 --domestic
 ```
 
-漏洞环境准备
+漏洞环境准备：
 
-```
+```bash
 ./metarget cnv install mount-docker-sock
 ```
 
@@ -34,7 +34,7 @@ Docker Socket是Docker守护进程监听的Unix域套接字，用来与守护进
 
 执行以下命令进入容器:
 
-```
+```bash
 kubectl exec -it mount-docker-sock -n metarget bash
 ```
 
@@ -53,8 +53,8 @@ cd /docker
 成功安装Docker客户端:
 
 ```
-root@mount-docker-sock:/#cd /docker
-root@mount-docker-sock:/docker#ls
+root@mount-docker-sock:/# cd /docker
+root@mount-docker-sock:/docker# ls
 docker  docker-containerd  docker-containerd-ctr  docker-containerd-shim  docker-init  docker-proxy  docker-runc  dockerd
 ```
 
@@ -75,4 +75,4 @@ cloudplay
 
 ## 参考文献
 
-https://mp.weixin.qq.com/s/_GwGS0cVRmuWEetwMesauQ
+1. https://mp.weixin.qq.com/s/_GwGS0cVRmuWEetwMesauQ
