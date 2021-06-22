@@ -134,7 +134,7 @@ Kubernetes通常需要配置大量参数，Metarget项目提供了部分参数�
 
 **考虑到特殊的网络环境，国内的朋友如果无法访问Kubernetes官方镜像源，可以指定以下参数，以顺利完成Kubernetes的部署：**
 
-- domestic：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理（偶尔会下载失败，需多次尝试）
+- `--domestic`：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理（偶尔会下载失败，需多次尝试）
 
 如果主机能够直接访问Kubernetes官方镜像源，则不必指定该参数。
 
@@ -214,7 +214,7 @@ optional arguments:
 
 **考虑到特殊的网络环境，国内的朋友如果无法访问Kubernetes官方镜像源，可以指定以下参数，以顺利完成Kubernetes的部署：**
 
-- domestic：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理（偶尔会下载失败，需多次尝试）
+- `--domestic`：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理（偶尔会下载失败，需多次尝试）
 
 如果主机能够直接访问Kubernetes官方镜像源，则不必指定该参数。
 

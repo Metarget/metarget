@@ -155,7 +155,7 @@ If the command above completes successfully, 5.7.5 kernel will be installed.
 
 Note:
 
-Currently, Metarget install kernels in 2 ways:
+Currently, Metarget installs kernels in 2 ways:
 
 1. apt
 2. if apt package is not available, download \*.deb remotely from Ubuntu and try to install
