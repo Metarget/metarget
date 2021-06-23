@@ -12,12 +12,12 @@ from core.env_managers.installer import Installer
 
 class DockerInstaller(Installer):
     _docker_gadgets = [
+        'docker-ce',
         'docker',
         'docker-engine',
         'docker.io',
         'containerd',
         'runc',
-        'docker-ce',
     ]
     _docker_requirements = [
         'apt-transport-https',
