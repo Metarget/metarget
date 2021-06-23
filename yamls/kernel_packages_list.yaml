@@ -7664,37 +7664,37 @@ v5.4/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4/linux-modules-5.4.0-050400-generic_5.4.0-050400.201911242031_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4/linux-headers-5.4.0-050400_5.4.0-050400.201911242031_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.4/linux-image-unsigned-5.4.0-050400-generic_5.4.0-050400.201911242031_amd64.deb
-v5.5-rc1/:
+v5.5.0-050500rc1/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc1/linux-headers-5.5.0-050500rc1_5.5.0-050500rc1.201912081930_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc1/linux-modules-5.5.0-050500rc1-generic_5.5.0-050500rc1.201912081930_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc1/linux-image-unsigned-5.5.0-050500rc1-generic_5.5.0-050500rc1.201912081930_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc1/linux-headers-5.5.0-050500rc1-generic_5.5.0-050500rc1.201912081930_amd64.deb
-v5.5-rc2/:
+v5.5.0-050500rc2/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc2/linux-modules-5.5.0-050500rc2-generic_5.5.0-050500rc2.201912151930_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc2/linux-headers-5.5.0-050500rc2-generic_5.5.0-050500rc2.201912151930_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc2/linux-image-unsigned-5.5.0-050500rc2-generic_5.5.0-050500rc2.201912151930_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc2/linux-headers-5.5.0-050500rc2_5.5.0-050500rc2.201912151930_all.deb
-v5.5-rc3/:
+v5.5.0-050500rc3/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc3/linux-headers-5.5.0-050500rc3-generic_5.5.0-050500rc3.201912230230_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc3/linux-modules-5.5.0-050500rc3-generic_5.5.0-050500rc3.201912230230_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc3/linux-headers-5.5.0-050500rc3_5.5.0-050500rc3.201912230230_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc3/linux-image-unsigned-5.5.0-050500rc3-generic_5.5.0-050500rc3.201912230230_amd64.deb
-v5.5-rc4/:
+v5.5.0-050500rc4/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc4/linux-modules-5.5.0-050500rc4-generic_5.5.0-050500rc4.201912291930_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc4/linux-headers-5.5.0-050500rc4_5.5.0-050500rc4.201912291930_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc4/linux-headers-5.5.0-050500rc4-generic_5.5.0-050500rc4.201912291930_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc4/linux-image-unsigned-5.5.0-050500rc4-generic_5.5.0-050500rc4.201912291930_amd64.deb
-v5.5-rc5/:
+v5.5.0-050500rc5/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc5/linux-headers-5.5.0-050500rc5-generic_5.5.0-050500rc5.202001051940_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc5/linux-image-unsigned-5.5.0-050500rc5-generic_5.5.0-050500rc5.202001051940_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc5/linux-headers-5.5.0-050500rc5_5.5.0-050500rc5.202001051940_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc5/linux-modules-5.5.0-050500rc5-generic_5.5.0-050500rc5.202001051940_amd64.deb
-v5.5-rc6/:
+v5.5.0-050500rc6/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc6/linux-modules-5.5.0-050500rc6-generic_5.5.0-050500rc6.202001122031_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc6/linux-image-unsigned-5.5.0-050500rc6-generic_5.5.0-050500rc6.202001122031_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc6/linux-headers-5.5.0-050500rc6_5.5.0-050500rc6.202001122031_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc6/linux-headers-5.5.0-050500rc6-generic_5.5.0-050500rc6.202001122031_amd64.deb
-v5.5-rc7/:
+v5.5.0-050500rc7/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc7/linux-headers-5.5.0-050500rc7-generic_5.5.0-050500rc7.202001192030_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc7/linux-modules-5.5.0-050500rc7-generic_5.5.0-050500rc7.202001192030_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.5-rc7/linux-headers-5.5.0-050500rc7_5.5.0-050500rc7.202001192030_all.deb
