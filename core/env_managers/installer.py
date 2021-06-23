@@ -44,7 +44,7 @@ class Installer(object):
             return None
         entries = res.stdout.decode('utf-8').split('\n')
         complete_version = None
-        entries.pop()  # remove ''
+        entries.pop(-1)  # remove ''
         version_candidates = [entry.split('|')[1].strip() for entry in entries]
         version_candidates.sort()
         for candidate in version_candidates:
