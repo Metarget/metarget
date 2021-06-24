@@ -252,9 +252,9 @@ If the command above completes successfully, [DVWA](https://github.com/digininja
 
 Note:
 
-You can specify `--external` option, then the service will be exposed as `NodePort`, so that you can visit it by IP of the host node.
-
-By default, the type of service is `ClusterIP`.
+- You can specify `--external` option, then the service will be exposed as `NodePort`, so that you can visit it by IP of the host node (By default, the type of service is `ClusterIP`).
+- You can specify `--host-net` option, then the appv will share the host network namespace.
+- You can specify `--host-pid` option, then the appv will share the host pid namespace.
 
 ### 2.5 Manage Vulnerable Cloud Native Target Cluster
 
