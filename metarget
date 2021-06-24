@@ -197,6 +197,16 @@ def main():
         help='expose service through NodePort (ClusterIP by default)',
     )
     parser_appv_install.add_argument(
+        '--host-net',
+        action='store_true',
+        help='share host network namespace',
+    )
+    parser_appv_install.add_argument(
+        '--host-pid',
+        action='store_true',
+        help='share host PID namespace',
+    )
+    parser_appv_install.add_argument(
         '--verbose',
         action='store_true',
         help='print output verbosely',

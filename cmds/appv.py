@@ -23,6 +23,8 @@ def install(args):
     Args:
         args.appv: Name of the specified application vulnerability.
         args.external: Expose service through NodePort or not (ClusterIP by default).
+        args.host_net: Share host network namespace or not.
+        args.host_pid: Share host PID namespace or not.
         args.verbose: Verbose or not.
 
     Returns:
@@ -38,7 +40,12 @@ def install(args):
             verbose=args.verbose):  # should install docker or k8s firstly
         return
 
-    internal_cmds.deploy_vuln_resources_in_k8s(vuln, external=args.external, verbose=args.verbose)
+    internal_cmds.deploy_vuln_resources_in_k8s(
+        vuln,
+        external=args.external,
+        host_net=args.host_net,
+        host_pid=args.host_pid,
+        verbose=args.verbose)
 
 
 def remove(args):
