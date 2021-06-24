@@ -11,7 +11,8 @@ from core.vuln_app_manager import port_manager
 from core.vuln_app_manager import resource_modifier
 
 
-def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
+def deploy_vuln_resources_in_k8s(
+        vuln, external=False, host_net=False, host_pid=False, verbose=False):
     """Deploy resources related to one vulnerability.
 
      Deploy resources related to one vulnerability specified by args.vuln
@@ -19,7 +20,9 @@ def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
 
     Args:
         vuln: Information dict about one vulnerability and its resources' locations.
-        external: Expose service through NodePort or not (ClusterIP by default)..
+        external: Expose service through NodePort or not (ClusterIP by default).
+        host_net: Share host network namespace or not.
+        host_pid: Share host PID namespace or not.
         verbose: Verbose or not.
 
     Returns:
@@ -34,7 +37,9 @@ def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
     # some appv need hostPath volumes
     # for these situations, metarget must generate host path dynamically
     # and update the deployment
-    if vuln.get('hostPath', False):
+    # also for those needing host-net and host-pid
+    modifiers = [vuln.get('hostPath', False), host_net, host_pid]
+    if True in modifiers:
         yamls_deployment = [
             temp_yaml for temp_yaml in yamls if temp_yaml.endswith('-deployment.yaml')]
         if yamls_deployment:
@@ -42,8 +47,12 @@ def deploy_vuln_resources_in_k8s(vuln, external=False, verbose=False):
             yamls = [
                 temp_yaml for temp_yaml in yamls if not temp_yaml.endswith('-deployment.yaml')]
             # generate new yamls
-            new_yamls_deployment = resource_modifier.generate_deployments_with_host_path_volume(
-                yamls=yamls_deployment)
+            new_yamls_deployment = resource_modifier.generate_deployments_with_modifications(
+                yamls=yamls_deployment,
+                host_path=vuln.get('hostPath', False),
+                host_net=host_net,
+                host_pid=host_pid,
+            )
             # add updated services into original yamls
             yamls.extend(new_yamls_deployment)
 
