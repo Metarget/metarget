@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: no-vuln
+  namespace: metarget
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: no-vuln
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        io.kompose.service: no-vuln
+    spec:
+      containers:
+        image: ubuntu:latest
+        imagePullPolicy: IfNotPresent
+        name: main
+        command: [ "/bin/bash", "-c", "--" ]
+        args: [ "while true; do sleep 30; done;" ]
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
