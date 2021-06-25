@@ -15,7 +15,7 @@ spec:
         io.kompose.service: no-vuln
     spec:
       containers:
-        image: ubuntu:latest
+      - image: ubuntu:latest
         imagePullPolicy: IfNotPresent
         name: main
         command: [ "/bin/bash", "-c", "--" ]
