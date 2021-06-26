@@ -53,7 +53,7 @@ More awesome functions are coming! Stay tuned :)
 
 Note:
 
-Thie project aims to provide vulnerable scenes for security research. The security of scenes generated is not guaranteed. It is **NOT** recommended to deploy components or scenes with Metarget on the Internet.
+This project aims to provide vulnerable scenes for security research. The security of scenes generated is not guaranteed. It is **NOT** recommended to deploy components or scenes with Metarget on the Internet.
 
 ## 2 Usage
 
@@ -155,7 +155,7 @@ If the command above completes successfully, 5.7.5 kernel will be installed.
 
 Note:
 
-Currently, Metarget install kernels in 2 ways:
+Currently, Metarget installs kernels in 2 ways:
 
 1. apt
 2. if apt package is not available, download \*.deb remotely from Ubuntu and try to install
@@ -252,9 +252,9 @@ If the command above completes successfully, [DVWA](https://github.com/digininja
 
 Note:
 
-You can specify `--external` option, then the service will be exposed as `NodePort`, so that you can visit it by IP of the host node.
-
-By default, the type of service is `ClusterIP`.
+- You can specify `--external` option, then the service will be exposed as `NodePort`, so that you can visit it by IP of the host node (By default, the type of service is `ClusterIP`).
+- You can specify `--host-net` option, then the appv will share the host network namespace.
+- You can specify `--host-pid` option, then the appv will share the host pid namespace.
 
 ### 2.5 Manage Vulnerable Cloud Native Target Cluster
 
@@ -294,44 +294,48 @@ Currently unsupported.
 
 If there is an asterisk (\*) following the name of one vulnerable scene, you need to read the note related to it below the whole table for further details.
 
-|Name|Class|Type|CVSS 3.x|Status|
+|Name|Class|Type|CVSS 3.x|Writeup\*|
 |:-:|:-:|:-:|:-:|:-:|
-|[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|container_escape|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)|✅|
-|[cve-2019-13139](vulns_cn/docker/cve-2019-13139.yaml)|docker|command_execution|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2019-13139)|✅|
-|[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|container_escape|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2019-14271)|✅|
-|[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|container_escape|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)|✅|
-|[cve-2019-5736](vulns_cn/docker/cve-2019-5736.yaml)|docker/runc|container_escape|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2019-5736)|✅|
-|[cve-2021-30465\*](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|container_escape|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)|✅|
-|[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|kubernetes|container_escape|[9.6](https://nvd.nist.gov/vuln/detail/CVE-2017-1002101)|✅|
-|[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|kubernetes|privilege_escalation|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)|✅|
-|[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11253)|✅|
-|[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9512)|✅|
-|[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9514)|✅|
-|[cve-2019-9946](vulns_cn/kubernetes/cve-2019-9946.yaml)|kubernetes|traffic_interception|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9946)|✅|
-|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|man_in_the_middle|[5.0](https://nvd.nist.gov/vuln/detail/CVE-2020-8554)|✅|
-|[cve-2020-8555](vulns_cn/kubernetes/cve-2020-8555.yaml)|kubernetes|server_side_request_forgery|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-8555)|✅|
-|[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|kubernetes|denial_of_service|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2020-8557)|✅|
-|[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|exposure_of_service|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8558)|✅|
-|[cve-2020-8559](vulns_cn/kubernetes/cve-2020-8559.yaml)|kubernetes|privilege_escalation|[6.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8559)|✅|
-|[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-5195)|✅|
-|[cve-2016-8655](vulns_cn/kernel/cve-2016-8655.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-8655)|✅|
-|[cve-2017-6074](vulns_cn/kernel/cve-2017-6074.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-6074)|✅|
-|[cve-2017-7308](vulns_cn/kernel/cve-2017-7308.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-7308)|✅|
-|[cve-2017-16995](vulns_cn/kernel/cve-2017-16995.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-16995)|✅|
-|[cve-2017-1000112](vulns_cn/kernel/cve-2017-1000112.yaml)|kernel|privilege_escalation|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2017-1000112)|✅|
-|[cve-2018-18955](vulns_cn/kernel/cve-2018-18955.yaml)|kernel|privilege_escalation|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2018-18955)|✅|
-|[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2020-14386)|✅|
-|[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2025)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)|✅|
-|[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape|-|✅|
-|[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|config|container_escape|-|✅|
-|[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|config|container_escape|-|✅|
-|[privileged-container](vulns_cn/configs/privileged-container.yaml)|config|container_escape|-|✅|
-|[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|mount|container_escape|-|✅|
-|[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|mount|container_escape|-|✅|
-|[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|mount|container_escape|-|✅|
+|[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|container_escape|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)||
+|[cve-2019-13139](vulns_cn/docker/cve-2019-13139.yaml)|docker|command_execution|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2019-13139)|[link](writeups_cnv/docker-cve-2019-13139)|
+|[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|container_escape|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2019-14271)|[link](writeups_cnv/docker-cve-2019-14271)|
+|[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|container_escape|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)|[link](writeups_cnv/docker-containerd-cve-2020-15257)|
+|[cve-2019-5736](vulns_cn/docker/cve-2019-5736.yaml)|docker/runc|container_escape|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2019-5736)||
+|[cve-2021-30465\*](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|container_escape|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)|[link](writeups_cnv/docker-runc-cve-2021-30465)|
+|[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|kubernetes|container_escape|[9.6](https://nvd.nist.gov/vuln/detail/CVE-2017-1002101)||
+|[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|kubernetes|privilege_escalation|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)||
+|[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11253)||
+|[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9512)||
+|[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|kubernetes|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9514)||
+|[cve-2019-9946](vulns_cn/kubernetes/cve-2019-9946.yaml)|kubernetes|traffic_interception|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9946)||
+|[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|kubernetes|man_in_the_middle|[5.0](https://nvd.nist.gov/vuln/detail/CVE-2020-8554)||
+|[cve-2020-8555](vulns_cn/kubernetes/cve-2020-8555.yaml)|kubernetes|server_side_request_forgery|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-8555)||
+|[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|kubernetes|denial_of_service|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2020-8557)||
+|[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|exposure_of_service|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8558)||
+|[cve-2020-8559](vulns_cn/kubernetes/cve-2020-8559.yaml)|kubernetes|privilege_escalation|[6.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8559)||
+|[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-5195)||
+|[cve-2016-8655](vulns_cn/kernel/cve-2016-8655.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-8655)||
+|[cve-2017-6074](vulns_cn/kernel/cve-2017-6074.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-6074)||
+|[cve-2017-7308](vulns_cn/kernel/cve-2017-7308.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-7308)|[link](writeups_cnv/kernel-cve-2017-7308)|
+|[cve-2017-16995](vulns_cn/kernel/cve-2017-16995.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-16995)||
+|[cve-2017-1000112](vulns_cn/kernel/cve-2017-1000112.yaml)|kernel|privilege_escalation|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2017-1000112)||
+|[cve-2018-18955](vulns_cn/kernel/cve-2018-18955.yaml)|kernel|privilege_escalation|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2018-18955)||
+|[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2020-14386)||
+|[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2025)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)||
+|[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape|-||
+|[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|config|container_escape|-||
+|[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|config|container_escape|-||
+|[privileged-container](vulns_cn/configs/privileged-container.yaml)|config|container_escape|-|[link](writeups_cnv/config-privileged-container)|
+|[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|mount|container_escape|-|[link](writeups_cnv/mount-docker-sock)|
+|[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|mount|container_escape|-||
+|[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|mount|container_escape|-|[link](writeups_cnv/mount-host-procfs)|
 
 Note:
 
+- Currently writeups are in Chinese.
+- You might find that some kernel vulnerabilities are marked as `privilege_escalation`, while others `container_escape`. The essential difference is the payload (get a shell with high privilege or escape first).
+    - Thanks to default security mechanisms (e.g. Seccomp, Capabilities) in containers, some kernel vulnerabilities may be hard or almost not to exploit.
+    - Hence, vulnerabilities are marked as `container_escape` if we could reproduce the whole process with Metarget, others temporarily marked as `privilege_escalation`.
 - For **cve-2021-30465**, after `cnv install cve-2021-30465` (which installs Docker),
     - you'd better install a K8s manually, for exploitation (e.g. `cnv install cve-2018-1002105` or `gadget install k8s --version 1.16.5` with Metarget).
 
@@ -389,3 +393,7 @@ Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 ## 9 About Logo
 
 It is not a Kubernetes, but a vulnerable infrastructure with three gears which could not work well (vulnerable) :)
+
+## 10 License
+
+Metarget is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text.

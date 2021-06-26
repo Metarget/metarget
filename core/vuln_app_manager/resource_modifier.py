@@ -32,7 +32,8 @@ def generate_svcs_with_clusterip_to_nodeport(yamls, ports):
             # if service uses more than one port,
             # only one of ports it uses is exposed through node port
             resource['spec']['ports'][0]['nodePort'] = int(port)
-            new_yaml_path = os.path.join(config.runtime_data_dir, yaml_path.split('/')[-1])
+            new_yaml_path = os.path.join(
+                config.runtime_data_dir, yaml_path.split('/')[-1])
             # save new yaml under data/
             with open(new_yaml_path, 'w') as fw:
                 yaml.dump(resource, fw)
@@ -40,11 +41,15 @@ def generate_svcs_with_clusterip_to_nodeport(yamls, ports):
     return new_yamls
 
 
-def generate_deployments_with_host_path_volume(yamls):
-    """Generate deployments' YAMLs with absolute hostPath volumes.
+def generate_deployments_with_modifications(
+        yamls, host_path=False, host_net=False, host_pid=False):
+    """Generate deployments' YAMLs with modifications.
 
     Args:
         yamls: Paths list of deployments' YAMLs.
+        host_path: Add hostPath volume or not.
+        host_net: Share host network namespace or not.
+        host_pid: Share host PID namespace or not.
 
     Returns:
         New YAMLs' paths.
@@ -55,19 +60,23 @@ def generate_deployments_with_host_path_volume(yamls):
     for yaml_path in yamls:
         with open(yaml_path, 'r') as fr:
             resource = yaml.load(fr, Loader=yaml.SafeLoader)
-            # cluster -> nodeport
             try:
-                volumes = resource['spec']['template']['spec']['volumes']
-                for volume in volumes:
-                    # e.g. php/CVE-2018-19518/www
-                    dest = volume['hostPath']['path']
-                    # e.g. /root/metarget/vulns_app
-                    base_path = os.getcwd()
-                    # e.g. /root/metarget/vulns_app/php/CVE-2018-19518/www
-                    volume['hostPath']['path'] = os.path.join(base_path, config.vuln_app_dir_prefix, dest)
+                if host_path:
+                    volumes = resource['spec']['template']['spec']['volumes']
+                    for volume in volumes:
+                        # e.g. php/CVE-2018-19518/www
+                        dest = volume['hostPath']['path']
+                        # e.g. /root/metarget/vulns_app
+                        base_path = os.getcwd()
+                        # e.g. /root/metarget/vulns_app/php/CVE-2018-19518/www
+                        volume['hostPath']['path'] = os.path.join(
+                            base_path, config.vuln_app_dir_prefix, dest)
+                resource['spec']['template']['spec']['hostNetwork'] = host_net
+                resource['spec']['template']['spec']['hostPID'] = host_pid
             except (TypeError, IndexError, KeyError):
                 continue
-            new_yaml_path = os.path.join(config.runtime_data_dir, yaml_path.split('/')[-1])
+            new_yaml_path = os.path.join(
+                config.runtime_data_dir, yaml_path.split('/')[-1])
             # save new yaml under data/
             with open(new_yaml_path, 'w') as fw:
                 yaml.dump(resource, fw)

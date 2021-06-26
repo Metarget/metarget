@@ -1,0 +1,6 @@
+name: no-vuln
+class: no-vuln
+type: test
+dependencies:
+  yamls:
+    - no-vuln-deployment.yaml

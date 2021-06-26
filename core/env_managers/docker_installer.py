@@ -1,7 +1,7 @@
 """
 Docker Installer
 """
-
+import copy
 import subprocess
 
 import utils.color_print as color_print
@@ -12,12 +12,12 @@ from core.env_managers.installer import Installer
 
 class DockerInstaller(Installer):
     _docker_gadgets = [
+        'docker-ce',
         'docker',
         'docker-engine',
         'docker.io',
         'containerd',
         'runc',
-        'docker-ce',
     ]
     _docker_requirements = [
         'apt-transport-https',
@@ -37,13 +37,15 @@ class DockerInstaller(Installer):
             None.
         """
         stdout, stderr = verbose_func.verbose_output(verbose)
-        subprocess.run(
-            cls.cmd_apt_uninstall +
-            cls._docker_gadgets,
-            stdout=stdout,
-            stderr=stderr,
-            check=False
-        )
+        for gadget in cls._docker_gadgets:
+            temp_cmd = copy.copy(cls.cmd_apt_uninstall)
+            temp_cmd.append(gadget)
+            subprocess.run(
+                temp_cmd,
+                stdout=stdout,
+                stderr=stderr,
+                check=False
+            )
 
     @classmethod
     def install_by_version(cls, gadgets, context=None, verbose=False):

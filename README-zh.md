@@ -134,7 +134,7 @@ Kubernetes通常需要配置大量参数，Metarget项目提供了部分参数�
 
 **考虑到特殊的网络环境，国内的朋友如果无法访问Kubernetes官方镜像源，可以指定以下参数，以顺利完成Kubernetes的部署：**
 
-- domestic：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理（偶尔会下载失败，需多次尝试）
+- `--domestic`：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理（偶尔会下载失败，需多次尝试）
 
 如果主机能够直接访问Kubernetes官方镜像源，则不必指定该参数。
 
@@ -214,7 +214,7 @@ optional arguments:
 
 **考虑到特殊的网络环境，国内的朋友如果无法访问Kubernetes官方镜像源，可以指定以下参数，以顺利完成Kubernetes的部署：**
 
-- domestic：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理（偶尔会下载失败，需多次尝试）
+- `--domestic`：当使用该选项时，Metarget将自动从国内源（阿里云）下载Kubernetes系统组件镜像，无需代理（偶尔会下载失败，需多次尝试）
 
 如果主机能够直接访问Kubernetes官方镜像源，则不必指定该参数。
 
@@ -273,9 +273,9 @@ optional arguments:
 
 注意：
 
-你可以通过指定`--external`选项让服务以`Nodeport`形式暴露出来，这样一来，你就能够通过工作节点的IP访问到该服务。
-
-默认情况下，服务类型为`ClusterIP`。
+- 你可以通过指定`--external`选项让服务以`Nodeport`形式暴露出来，这样一来，你就能够通过工作节点的IP访问到该服务（默认情况下，服务类型为`ClusterIP`）。
+- 你可以指定`--host-net`选项，这样一来，该脆弱应用将共享宿主机网络命名空间。
+- 你可以指定`--host-pid`选项，这样一来，该脆弱应用将共享宿主机PID命名空间。
 
 ### 2.5 管理“云原生靶机集群”的脆弱场景
 
@@ -318,11 +318,11 @@ pip install -r requirements.txt
 |场景名称|涉及组件|场景类型|CVSS 3.x|Writeup|
 |:-:|:-:|:-:|:-:|:-:|
 |[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|容器逃逸|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)||
-|[cve-2019-13139](vulns_cn/docker/cve-2019-13139.yaml)|docker|命令执行|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2019-13139)||
-|[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|容器逃逸|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2019-14271)||
-|[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|容器逃逸|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)||
+|[cve-2019-13139](vulns_cn/docker/cve-2019-13139.yaml)|docker|命令执行|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2019-13139)|[链接](writeups_cnv/docker-cve-2019-13139)|
+|[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|容器逃逸|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2019-14271)|[链接](writeups_cnv/docker-cve-2019-14271)|
+|[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|容器逃逸|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)|[链接](writeups_cnv/docker-containerd-cve-2020-15257)|
 |[cve-2019-5736](vulns_cn/docker/cve-2019-5736.yaml)|docker/runc|容器逃逸|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2019-5736)||
-|[cve-2021-30465\*](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|容器逃逸|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)||
+|[cve-2021-30465\*](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|容器逃逸|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)|[链接](writeups_cnv/docker-runc-cve-2021-30465)|
 |[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|kubernetes|容器逃逸|[9.6](https://nvd.nist.gov/vuln/detail/CVE-2017-1002101)||
 |[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|kubernetes|权限提升|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)||
 |[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|kubernetes|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11253)||
@@ -338,7 +338,7 @@ pip install -r requirements.txt
 |[cve-2016-8655](vulns_cn/kernel/cve-2016-8655.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-8655)||
 |[cve-2017-6074](vulns_cn/kernel/cve-2017-6074.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-6074)||
 |[cve-2017-7308](vulns_cn/kernel/cve-2017-7308.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-7308)|[链接](writeups_cnv/kernel-cve-2017-7308)|
-|[cve-2017-16995](vulns_cn/kernel/cve-2017-16995.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-16995)||
+|[cve-2017-16995](vulns_cn/kernel/cve-2017-16995.yaml)|kernel|权限提升|[7.8](https:C//nvd.nist.gov/vuln/detail/CVE-2017-16995)||
 |[cve-2017-1000112](vulns_cn/kernel/cve-2017-1000112.yaml)|kernel|权限提升|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2017-1000112)||
 |[cve-2018-18955](vulns_cn/kernel/cve-2018-18955.yaml)|kernel|权限提升|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2018-18955)||
 |[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2020-14386)||
@@ -347,12 +347,15 @@ pip install -r requirements.txt
 |[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|危险配置|容器逃逸|-||
 |[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|危险配置|容器逃逸|-||
 |[privileged-container](vulns_cn/configs/privileged-container.yaml)|危险配置|容器逃逸|-|[链接](writeups_cnv/config-privileged-container)|
-|[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|危险挂载|容器逃逸|-||
+|[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|危险挂载|容器逃逸|-|[链接](writeups_cnv/mount-docker-sock)|
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|危险挂载|容器逃逸|-||
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|危险挂载|容器逃逸|-|[链接](writeups_cnv/mount-host-procfs)|
 
 注意：
 
+- 关于内核漏洞类型的说明：大家可能会发现有的内核漏洞标注的类型是`权限提升`，有的则是`容器逃逸`。本质上来说，这两者的区别主要在于攻击载荷（获得一个高权限shell还是先逃逸）。
+    - 另外，由于容器默认有一些安全机制（如Seccomp、Capabilities限制），一些内核漏洞可能较难或无法在默认配置下的容器中成功利用。
+    - 因此，我们将基于Metarget验证过能够用于容器逃逸的内核漏洞标记为容器逃逸类型，其他的暂时标记为权限提升类型，后续如果利用该漏洞逃逸成功，则更新为容器逃逸类型。
 - 对于**cve-2021-30465**来说，在`cnv install cve-2021-30465`（安装了Docker）之后，
     - 你需要手动安装一个K8s（利用Metarget执行`cnv install cve-2018-1002105`或`gadget install k8s --version 1.16.5`），从而实现漏洞利用。
 
@@ -408,3 +411,7 @@ Metarget的初衷之一是方便安全研究人员在漏洞出现的第一时间
 ## 9 关于Logo
 
 Metarget logo的灵感来源于Kubernetes的logo，我们将Kubernetes的舵作为齿轮，三个齿轮组成一个正在运转的基础设施系统。然而，如果仔细观察，会发现齿轮的方向是矛盾的，系统无法正常运转（vulnerable）。
+
+## 10 开源许可证
+
+Metarget采用的开源许可证是MIT License，阅读[LICENSE](LICENSE)文件了解更多。
