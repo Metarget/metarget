@@ -240,7 +240,7 @@ int open_by_handle_at(int mount_fd, struct file_handle *handle,int flags);
 
 该参数可以是一个已mount文件系统上的任意一个文件的文件描述符，这就是为什么一开始我们poc中，需要将/.dockerinit 文件名，改为 /etc/hosts，因为我们需要读取宿主机根文件系统中的文件，/etc/resolv.conf，/etc/hostname，/etc/hosts等文件在新版本的docker中，仍然是从宿主机直接挂载的，属于宿主机的根文件系统。
 
-![宿主机根文件系统](image/host-mount-files.png)
+![宿主机根文件系统](images/host-mount-files.png)
 
 `*handle`就非常明确了，我们刚才所分析`name_to_handle_at`所返回的参数。`flags`参数和open类似。
 
@@ -348,7 +348,7 @@ $ ./t_name_to_handle_at /
 而对于根目录下的任意文件，可以先获取根目录的文件描述符，然后读取根目录下的二级目录的inodeid和二级目录名称，匹配需要读取文件的二级目录并拿到inodeid，剩下4个未知的字节直接爆破，进而拿到二级目录的文件描述符。然后继续以同样的方式进行逐层读取。
 
 
-![获取/etc/shadow流程](image/host-mount-files.png)
+![获取/etc/shadow流程](images/host-mount-files.png)
 
 
 ## 参考
