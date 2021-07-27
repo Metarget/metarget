@@ -1,12 +1,15 @@
 # CAP_DAC_READ_SEARCH的capability导致shocker攻击 
 
-## 漏洞简介
+## 场景介绍
+在早期的docker中，容器内是默认拥有`CAP_DAC_READ_SEARCH`的权限的，拥有该capability权限之后，容器内进程可以使用open_by_handle_at系统调用来爆破宿主机的文件内容。
+
 **危害**：容器内可以访问宿主机大部分文件
 
 **漏洞要求**：容器内进程需要`CAP_DAC_READ_SEARCH` capability的权限
 
-<!-- more -->
 
+## 环境搭建
+默认存在漏洞的docker版本过于久远，但是复现漏洞可以使用任意版本的docker，只需要在启动docker时，通过`--cap-add`命令来添加`CAP_DAC_READ_SEARCH` capability的权限即可。
 ## 漏洞复现
 
 在Docker版本< 1.0中，docker内的进程拥有`CAP_DAC_READ_SEARCH` capability的权限，该capability的描述如下 : [link](https://man7.org/linux/man-pages/man7/capabilities.7.html )
@@ -351,7 +354,7 @@ $ ./t_name_to_handle_at /
 ![获取/etc/shadow流程](images/get-etc-shadow.png)
 
 
-## 参考
+## 参考文献
 
 https://github.com/gabrtv/shocker/blob/master/shocker.c
 
