@@ -31,19 +31,23 @@
 
 在Docker版本< 1.0中，docker内的进程拥有`CAP_DAC_READ_SEARCH` capability的权限，该capability的描述如下 : [link](https://man7.org/linux/man-pages/man7/capabilities.7.html )
 
+> ```
 >  CAP_DAC_READ_SEARCH  
 >               * Bypass file read permission checks and directory read  
 >                 and execute permission checks;  
 >               * invoke open_by_handle_at(2);  
 >               * use the linkat(2) AT_EMPTY_PATH flag to create a link to  
 >                 a file referred to by a file descriptor.  
+> ```
 
 从描述中可以看出，拥有该权限，**可以绕过文件的读权限检查和目录的读和执行权限检查。`open_by_handle_at`该系统调用需要该cap的权限才能执行。**
 
 `open_by_handle_at` 解释如下：[link](https://man7.org/linux/man-pages/man2/open_by_handle_at.2.html )
 
+> ```
 > The caller must have the CAP_DAC_READ_SEARCH capability to invoke  
 >        open_by_handle_at().
+> ```
 
 当前docker版本已经远大于1.0了，`CAP_DAC_READ_SEARCH` 权限已经默认不开启。需要复现的话，我们可以在新版本的docker中，手动加上`CAP_DAC_READ_SEARCH`该capability的权限。
 
@@ -114,6 +118,7 @@ $ getcap /usr/bin/dumpcap
 
 `dumpcap`拥有`cap_net_admin`和`cap_net_raw`的两个cap权限，这两个权限的机制解释如下：[Link](https://man7.org/linux/man-pages/man7/capabilities.7.html)
 
+> ```
 > CAP_NET_ADMIN  
 >               Perform various network-related operations:  
 >               * interface configuration;  
@@ -131,6 +136,7 @@ $ getcap /usr/bin/dumpcap
 > CAP_NET_RAW  
 >               * Use RAW and PACKET sockets;  
 >               * bind to any address for transparent proxying.
+> ```
 
 这两个cap包含了大部分网络操作所需要的权限，所以`dumpcap`即使在wireshark用户组的条件下， 仍然能够进行网络数据包的抓取。
 
