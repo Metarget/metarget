@@ -356,6 +356,10 @@ To list vulnerable scenes related to cloud native applications supported by Meta
 ./metarget appv list
 ```
 
+Note:
+
+- For the deployment of [Confluence's vulnerability CVE-2019-3396](vulns_app/confluence/CVE-2019-3396), you may refer to [Vulhub](https://github.com/vulhub/vulhub/blob/master/confluence/CVE-2019-3396/README.zh-cn.md), while the address of PostgreSQL should be `cve-2019-3396-db`, not `db` in Vulhub.
+
 ## 5 DEMO
 
 [![asciicast](https://asciinema.org/a/407107.svg)](https://asciinema.org/a/407107)

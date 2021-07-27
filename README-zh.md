@@ -376,6 +376,10 @@ Metarget将以上项目中的靶机统一转化为Kubernetes中的Deployment和S
 ./metarget appv list
 ```
 
+注意：
+
+- [Confluence漏洞CVE-2019-3396](vulns_app/confluence/CVE-2019-3396)的部署可参考[Vulhub相关页面](https://github.com/vulhub/vulhub/blob/master/confluence/CVE-2019-3396/README.zh-cn.md)，其中PostgreSQL数据库的地址应填写为`cve-2019-3396-db`（Vulhub中为`db`）。
+
 ## 5 DEMO
 
 [![asciicast](https://asciinema.org/a/407107.svg)](https://asciinema.org/a/407107)
