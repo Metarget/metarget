@@ -15,3 +15,23 @@
 ```
 
 后续如添加英文翻译，再进行统一变动。目前为便于导航，将writeup直接写入`README.md`即可。
+
+建议Writeup的大纲及内容如下：
+
+```markdown
+# 题目
+
+## 场景介绍
+
+## 环境搭建
+
+本部分给出使用Metarget搭建目标环境的方法。
+
+## 漏洞复现
+
+## 参考文献
+```
+
+其他诸如漏洞原理等额外内容可酌情附加。
+
+可参考示例：[挂载宿主机Procfs系统导致容器逃逸](https://github.com/brant-ruan/metarget/tree/master/writeups_cnv/mount-host-procfs)。
