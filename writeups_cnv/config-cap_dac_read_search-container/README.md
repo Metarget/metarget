@@ -348,7 +348,7 @@ $ ./t_name_to_handle_at /
 而对于根目录下的任意文件，可以先获取根目录的文件描述符，然后读取根目录下的二级目录的inodeid和二级目录名称，匹配需要读取文件的二级目录并拿到inodeid，剩下4个未知的字节直接爆破，进而拿到二级目录的文件描述符。然后继续以同样的方式进行逐层读取。
 
 
-![获取/etc/shadow流程](images/host-mount-files.png)
+![获取/etc/shadow流程](images/get-etc-shadow.png)
 
 
 ## 参考
