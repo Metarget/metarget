@@ -187,7 +187,7 @@ k8s_stable_versions = {
 k8s_images_extra = {
     '1.19': [
         'k8s.gcr.io/pause:3.2',
-        'k8s.gcr.io/etcd:3.4.13-0',
+        'k8s.gcr.io/etcd:3.4.9-1',
         'k8s.gcr.io/coredns:1.7.0',
     ],
     '1.18': [
