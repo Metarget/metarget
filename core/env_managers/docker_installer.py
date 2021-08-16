@@ -13,6 +13,7 @@ from core.env_managers.installer import Installer
 class DockerInstaller(Installer):
     _docker_gadgets = [
         'docker-ce',
+        'docker-ce-cli',
         'docker',
         'docker-engine',
         'docker.io',

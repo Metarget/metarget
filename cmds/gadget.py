@@ -32,7 +32,13 @@ def install(args):
         None.
     """
     if args.gadget == 'docker':
-        temp_gadgets = [{'name': 'docker-ce', 'version': args.version}]
+        temp_gadgets = [{
+                'name': 'docker-ce',
+                'version': args.version,
+            }, {
+                'name': 'docker-ce-cli',
+                'version': args.version,
+            }]
         if checkers.docker_specified_installed(temp_gadgets):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
