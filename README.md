@@ -407,6 +407,6 @@ Metarget is licensed under the MIT License. See [LICENSE](LICENSE) for the full 
 
 ### OpenInfra Days Asia 2021
 
-Topic: Metarget: Auto-construction of Vulnerable Cloud Native Infrastructure
-URL: https://2021.openinfra.asia/schedule.html
+- Topic: Metarget: Auto-construction of Vulnerable Cloud Native Infrastructure
+- URL: https://2021.openinfra.asia/schedule.html
 
