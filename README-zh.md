@@ -420,3 +420,14 @@ Metarget logo的灵感来源于Kubernetes的logo，我们将Kubernetes的舵作�
 ## 10 开源许可证
 
 Metarget采用的开源许可证是MIT License，阅读[LICENSE](LICENSE)文件了解更多。
+
+## 11 相关事件
+
+### KCon 2021 兵器谱
+
+- 链接：http://kcon.knownsec.com/2021/#/arsenal
+
+### OpenInfra Days Asia 2021
+
+- 议题：Metarget: Auto-construction of Vulnerable Cloud Native Infrastructure
+- 链接：https://2021.openinfra.asia/schedule.html
