@@ -286,7 +286,7 @@ optional arguments:
 ### 3.1 依赖项
 
 - Ubuntu 16.04或18.04
-- Python >= 3.5
+- **Python >= 3.5** (不支持Python 2.x！)
 - pip3
 
 ### 3.2 从源码安装
