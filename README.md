@@ -405,6 +405,10 @@ Metarget is licensed under the MIT License. See [LICENSE](LICENSE) for the full 
 
 ## 11 Events
 
+### KCon 2021 Arsenal
+
+- URL: http://kcon.knownsec.com/2021/#/arsenal
+
 ### OpenInfra Days Asia 2021
 
 - Topic: Metarget: Auto-construction of Vulnerable Cloud Native Infrastructure
