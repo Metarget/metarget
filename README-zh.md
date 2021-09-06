@@ -419,7 +419,7 @@ Metarget logo的灵感来源于Kubernetes的logo，我们将Kubernetes的舵作�
 
 ## 10 开源许可证
 
-Metarget采用的开源许可证是MIT License，阅读[LICENSE](LICENSE)文件了解更多。
+Metarget采用的开源许可证是Apache License 2.0，阅读[LICENSE](LICENSE)文件了解更多。
 
 ## 11 相关事件
 

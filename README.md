@@ -401,7 +401,7 @@ It is not a Kubernetes, but a vulnerable infrastructure with three gears which c
 
 ## 10 License
 
-Metarget is licensed under the MIT License. See [LICENSE](LICENSE) for the full license text.
+Metarget is licensed under Apache License 2.0. See [LICENSE](LICENSE) for the full license text.
 
 ## 11 Events
 
