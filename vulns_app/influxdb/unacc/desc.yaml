@@ -1,0 +1,9 @@
+name:  influxdb-unacc
+class:  influxdb
+type:  unauthorized
+dependencies:
+  yamls:
+    - influxdb-unacc-web-deployment.yaml
+    - influxdb-unacc-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/influxdb/unacc

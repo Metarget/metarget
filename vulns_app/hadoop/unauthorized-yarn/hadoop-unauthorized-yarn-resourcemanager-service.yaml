@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./hadoop/unauthorized-yarn/docker-compose.yml.backup
+      -o vul_app/hadoop/unauthorized-yarn/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: hadoop-unauthorized-yarn-resourcemanager
+  name: hadoop-unauthorized-yarn-resourcemanager
+spec:
+  ports:
+  - name: "8088"
+    port: 8088
+    targetPort: 8088
+  selector:
+    io.kompose.service: hadoop-unauthorized-yarn-resourcemanager
+status:
+  loadBalancer: {}

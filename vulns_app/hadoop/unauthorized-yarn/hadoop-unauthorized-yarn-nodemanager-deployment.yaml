@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./hadoop/unauthorized-yarn/docker-compose.yml.backup
+      -o vul_app/hadoop/unauthorized-yarn/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: hadoop-unauthorized-yarn-nodemanager
+  name: hadoop-unauthorized-yarn-nodemanager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: hadoop-unauthorized-yarn-nodemanager
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./hadoop/unauthorized-yarn/docker-compose.yml.backup
+          -o vul_app/hadoop/unauthorized-yarn/ --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: hadoop-unauthorized-yarn-nodemanager
+    spec:
+      containers:
+      - args:
+        - /nodemanager.sh
+        env:
+        - name: CORE_CONF_fs_defaultFS
+          value: hdfs://namenode:8020
+        - name: YARN_CONF_yarn_log___aggregation___enable
+          value: "true"
+        - name: YARN_CONF_yarn_nodemanager_remote___app___log___dir
+          value: /app-logs
+        - name: YARN_CONF_yarn_resourcemanager_hostname
+          value: resourcemanager
+        image: vulhub/hadoop:2.8.1
+        imagePullPolicy: ""
+        name: hadoop-unauthorized-yarn-nodemanager
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

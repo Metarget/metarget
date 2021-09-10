@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./influxdb/unacc/docker-compose.yml.backup
+      -o vul_app/influxdb/unacc/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: influxdb-unacc-web
+  name: influxdb-unacc-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: influxdb-unacc-web
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./influxdb/unacc/docker-compose.yml.backup
+          -o vul_app/influxdb/unacc/ --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: influxdb-unacc-web
+    spec:
+      containers:
+      - env:
+        - name: INFLUXDB_ADMIN_PASSWORD
+          value: admin
+        - name: INFLUXDB_ADMIN_USER
+          value: admin
+        - name: INFLUXDB_DB
+          value: sample
+        - name: INFLUXDB_HTTP_AUTH_ENABLED
+          value: "true"
+        image: vulhub/influxdb:1.6.6
+        imagePullPolicy: ""
+        name: influxdb-unacc-web
+        ports:
+        - containerPort: 8086
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
