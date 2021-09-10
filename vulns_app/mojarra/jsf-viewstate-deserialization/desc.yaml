@@ -1,0 +1,9 @@
+name:  mojarra-jsf-viewstate-deserialization
+class:  mojarra
+type:  deserialization
+dependencies:
+  yamls:
+    - mojarra-jsf-viewstate-deserialization-web-deployment.yaml
+    - mojarra-jsf-viewstate-deserialization-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/mojarra/jsf-viewstate-deserialization

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./mojarra/jsf-viewstate-deserialization/docker-compose.yml.backup
+      -o vul_app/mojarra/jsf-viewstate-deserialization/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mojarra-jsf-viewstate-deserialization-web
+  name: mojarra-jsf-viewstate-deserialization-web
+spec:
+  ports:
+  - name: "8080"
+    port: 8080
+    targetPort: 8080
+  selector:
+    io.kompose.service: mojarra-jsf-viewstate-deserialization-web
+status:
+  loadBalancer: {}
