@@ -1,0 +1,445 @@
+.
+├── activemq
+│   ├── CVE-2015-5254
+│   │   ├── cve-2015-5254-activemq-deployment.yaml
+│   │   ├── cve-2015-5254-activemq-service.yaml
+│   │   └── desc.yaml
+│   └── CVE-2016-3088
+│       ├── cve-2016-3088-activemq-deployment.yaml
+│       ├── cve-2016-3088-activemq-service.yaml
+│       └── desc.yaml
+├── apereo-cas
+│   └── 4.1-rce
+│       ├── apereo-cas-4-1-rce-web-deployment.yaml
+│       ├── apereo-cas-4-1-rce-web-service.yaml
+│       └── desc.yaml
+├── aria2
+│   └── rce
+│       ├── desc.yaml
+│       ├── rce-aria2-deployment.yaml
+│       └── rce-aria2-service.yaml
+├── coldfusion
+│   └── CVE-2017-3066
+│       ├── cve-2017-3066-coldfusion-deployment.yaml
+│       ├── cve-2017-3066-coldfusion-service.yaml
+│       └── desc.yaml
+├── confluence
+│   └── CVE-2019-3396
+│       ├── cve-2019-3396-db-deployment.yaml
+│       ├── cve-2019-3396-db-service-internal.yaml
+│       ├── cve-2019-3396-web-deployment.yaml
+│       ├── cve-2019-3396-web-service.yaml
+│       └── desc.yaml
+├── couchdb
+│   └── CVE-2017-12636
+│       ├── cve-2017-12636-deployment.yaml
+│       ├── cve-2017-12636-service.yaml
+│       └── desc.yaml
+├── discuz
+│   └── wooyun-2010-080723
+│       ├── desc.yaml
+│       ├── discuz-wooyun-2010-080723-db-deployment.yaml
+│       ├── discuz-wooyun-2010-080723-web-deployment.yaml
+│       └── discuz-wooyun-2010-080723-web-service.yaml
+├── drupal
+│   ├── CVE-2017-6920
+│   │   ├── cve-2017-6920-web-deployment.yaml
+│   │   ├── cve-2017-6920-web-service.yaml
+│   │   └── desc.yaml
+│   ├── CVE-2018-7600
+│   │   ├── cve-2018-7600-web-deployment.yaml
+│   │   ├── cve-2018-7600-web-service.yaml
+│   │   └── desc.yaml
+│   ├── CVE-2018-7602
+│   │   ├── cve-2018-7602-web-deployment.yaml
+│   │   ├── cve-2018-7602-web-service.yaml
+│   │   └── desc.yaml
+│   └── CVE-2019-6339
+│       ├── cve-2019-6339-web-deployment.yaml
+│       ├── cve-2019-6339-web-service.yaml
+│       └── desc.yaml
+├── dvwa
+│   └── dvwa
+│       ├── desc.yaml
+│       ├── dvwa-deployment.yaml
+│       └── dvwa-service.yaml
+├── ecshop
+│   └── xianzhi-2017-02-82239600
+│       ├── desc.yaml
+│       ├── xianzhi-2017-02-82239600-ecshop27-deployment.yaml
+│       ├── xianzhi-2017-02-82239600-ecshop27-service.yaml
+│       ├── xianzhi-2017-02-82239600-ecshop36-deployment.yaml
+│       ├── xianzhi-2017-02-82239600-ecshop36-service.yaml
+│       └── xianzhi-2017-02-82239600-mysql-deployment.yaml
+├── elasticsearch
+│   ├── CVE-2014-3120
+│   │   ├── cve-2014-3120-es-deployment.yaml
+│   │   ├── cve-2014-3120-es-service.yaml
+│   │   └── desc.yaml
+│   └── CVE-2015-1427
+│       ├── cve-2015-1427-es-deployment.yaml
+│       ├── cve-2015-1427-es-service.yaml
+│       └── desc.yaml
+├── electron
+│   ├── CVE-2018-1000006
+│   │   ├── build
+│   │   │   └── index.html
+│   │   ├── cve-2018-1000006-electron-deployment.yaml
+│   │   ├── cve-2018-1000006-web-deployment.yaml
+│   │   ├── cve-2018-1000006-web-service.yaml
+│   │   ├── desc.yaml
+│   │   ├── docker-entrypoint.sh
+│   │   └── src
+│   │       ├── index.html
+│   │       ├── main.js
+│   │       └── package.json
+│   └── CVE-2018-15685
+│       ├── build
+│       ├── cve-2018-15685-electron-deployment.yaml
+│       ├── cve-2018-15685-web-deployment.yaml
+│       ├── cve-2018-15685-web-service.yaml
+│       ├── desc.yaml
+│       ├── docker-entrypoint.sh
+│       └── src
+│           ├── index.html
+│           ├── main.js
+│           └── package.json
+├── fastjson
+│   ├── 1.2.24-rce
+│   │   ├── desc.yaml
+│   │   ├── fastjson-1-2-24-rce-web-deployment.yaml
+│   │   └── fastjson-1-2-24-rce-web-service.yaml
+│   └── 1.2.47-rce
+│       ├── desc.yaml
+│       ├── fastjson-1-2-47-rce-web-deployment.yaml
+│       └── fastjson-1-2-47-rce-web-service.yaml
+├── ghostscript
+│   ├── CVE-2018-16509
+│   │   ├── cve-2018-16509-web-deployment.yaml
+│   │   ├── cve-2018-16509-web-service.yaml
+│   │   ├── desc.yaml
+│   │   └── index.php
+│   ├── CVE-2018-19475
+│   │   ├── cve-2018-19475-web-deployment.yaml
+│   │   ├── cve-2018-19475-web-service.yaml
+│   │   ├── desc.yaml
+│   │   └── index.php
+│   └── CVE-2019-6116
+│       ├── cve-2019-6116-web-deployment.yaml
+│       ├── cve-2019-6116-web-service.yaml
+│       ├── desc.yaml
+│       └── index.php
+├── gitea
+│   └── 1.4-rce
+│       ├── desc.yaml
+│       ├── gitea-1-4-rce-web-deployment.yaml
+│       └── gitea-1-4-rce-web-service.yaml
+├── goahead
+│   └── CVE-2017-17562
+│       ├── cve-2017-17562-web-deployment.yaml
+│       ├── cve-2017-17562-web-service.yaml
+│       ├── desc.yaml
+│       └── index
+├── imagemagick
+│   ├── CVE-2020-29599
+│   │   ├── cve-2020-29599-im-deployment.yaml
+│   │   ├── desc.yaml
+│   │   └── poc.svg
+│   └── imagetragick
+│       ├── desc.yaml
+│       ├── imagetragick-web-deployment.yaml
+│       ├── imagetragick-web-service.yaml
+│       └── index.php
+├── jackson
+│   └── CVE-2017-7525
+│       ├── cve-2017-7525-web-deployment.yaml
+│       ├── cve-2017-7525-web-service.yaml
+│       └── desc.yaml
+├── jboss
+│   ├── CVE-2017-12149
+│   │   ├── cve-2017-12149-jboss-deployment.yaml
+│   │   ├── cve-2017-12149-jboss-service.yaml
+│   │   └── desc.yaml
+│   └── CVE-2017-7504
+│       ├── cve-2017-7504-jboss-deployment.yaml
+│       ├── cve-2017-7504-jboss-service.yaml
+│       └── desc.yaml
+├── jmeter
+│   └── CVE-2018-1297
+│       ├── cve-2018-1297-jmeter-deployment.yaml
+│       ├── cve-2018-1297-jmeter-service.yaml
+│       └── desc.yaml
+├── joomla
+│   └── CVE-2015-8562
+│       ├── cve-2015-8562-mysql-deployment.yaml
+│       ├── cve-2015-8562-web-deployment.yaml
+│       ├── cve-2015-8562-web-service.yaml
+│       └── desc.yaml
+├── jupyter
+│   └── notebook-rce
+│       ├── desc.yaml
+│       ├── jupyter-notebook-rce-web-deployment.yaml
+│       └── jupyter-notebook-rce-web-service.yaml
+├── kibana
+│   └── CVE-2019-7609
+│       ├── cve-2018-1297-elasticsearch-deployment.yaml
+│       ├── cve-2018-1297-kibana-deployment.yaml
+│       ├── cve-2018-1297-kibana-service.yaml
+│       └── desc.yaml
+├── laravel
+│   └── CVE-2021-3129
+│       ├── cve-2021-3129-web-deployment.yaml
+│       ├── cve-2021-3129-web-service.yaml
+│       └── desc.yaml
+├── liferay-portal
+│   └── CVE-2020-7961
+│       ├── cve-2020-7961-web-deployment.yaml
+│       ├── cve-2020-7961-web-service.yaml
+│       └── desc.yaml
+├── log4j
+│   └── CVE-2017-5645
+│       ├── cve-2017-5645-log4j-deployment.yaml
+│       ├── cve-2017-5645-log4j-service.yaml
+│       └── desc.yaml
+├── metarget.txt
+├── mongo-express
+│   └── CVE-2019-10758
+│       ├── cve-2019-10758-mongo-deployment.yaml
+│       ├── cve-2019-10758-web-deployment.yaml
+│       ├── cve-2019-10758-web-service.yaml
+│       └── desc.yaml
+├── nexus
+│   ├── CVE-2019-7238
+│   │   ├── cve-2019-7238-web-deployment.yaml
+│   │   ├── cve-2019-7238-web-service.yaml
+│   │   └── desc.yaml
+│   ├── CVE-2020-10199
+│   │   ├── admin.password
+│   │   ├── cve-2020-10199-web-deployment.yaml
+│   │   ├── cve-2020-10199-web-service.yaml
+│   │   └── desc.yaml
+│   └── CVE-2020-10204
+│       ├── admin.password
+│       ├── cve-2020-10204-web-deployment.yaml
+│       ├── cve-2020-10204-web-service.yaml
+│       └── desc.yaml
+├── no-vuln
+│   └── no-vuln
+│       ├── desc.yaml
+│       └── no-vuln-deployment.yaml
+├── ofbiz
+│   └── CVE-2020-9496
+│       ├── cve-2020-9496-web-deployment.yaml
+│       ├── cve-2020-9496-web-service.yaml
+│       └── desc.yaml
+├── php
+│   ├── CVE-2012-1823
+│   │   ├── cve-2012-1823-php-deployment.yaml
+│   │   ├── cve-2012-1823-php-service.yaml
+│   │   ├── desc.yaml
+│   │   └── www
+│   │       ├── index.php
+│   │       └── info.php
+│   ├── CVE-2018-19518
+│   │   ├── cve-2018-19518-web-deployment.yaml
+│   │   ├── cve-2018-19518-web-service.yaml
+│   │   ├── desc.yaml
+│   │   └── www
+│   │       └── index.php
+│   └── CVE-2019-11043
+│       ├── cve-2019-11043-nginx-deployment.yaml
+│       ├── cve-2019-11043-nginx-service.yaml
+│       ├── cve-2019-11043-php-deployment.yaml
+│       ├── default.conf
+│       ├── desc.yaml
+│       └── www
+│           └── index.php
+├── phpmyadmin
+│   ├── CVE-2016-5734
+│   │   ├── config.inc.php
+│   │   ├── cve-2016-5734-mysql-deployment.yaml
+│   │   ├── cve-2016-5734-web-deployment.yaml
+│   │   ├── cve-2016-5734-web-service.yaml
+│   │   └── desc.yaml
+│   └── WooYun-2016-199433
+│       ├── desc.yaml
+│       ├── wooyun-2016-199433-web-deployment.yaml
+│       └── wooyun-2016-199433-web-service.yaml
+├── phpunit
+│   └── CVE-2017-9841
+│       ├── cve-2017-9841-web-deployment.yaml
+│       ├── cve-2017-9841-web-service.yaml
+│       └── desc.yaml
+├── postgres
+│   └── CVE-2019-9193
+│       ├── cve-2019-9193-postgres-deployment.yaml
+│       ├── cve-2019-9193-postgres-service.yaml
+│       └── desc.yaml
+├── python
+│   ├── PIL-CVE-2017-8291
+│   │   ├── app.py
+│   │   ├── cve-2017-8291-web-deployment.yaml
+│   │   ├── cve-2017-8291-web-service.yaml
+│   │   └── desc.yaml
+│   └── PIL-CVE-2018-16509
+│       ├── cve-2018-16509-web-deployment.yaml
+│       ├── cve-2018-16509-web-service.yaml
+│       └── desc.yaml
+├── saltstack
+│   └── CVE-2020-16846
+│       ├── cve-2020-16846-saltstack-deployment.yaml
+│       ├── cve-2020-16846-saltstack-service.yaml
+│       └── desc.yaml
+├── samba
+│   └── CVE-2017-7494
+│       ├── cve-2017-7494-samba-deployment.yaml
+│       ├── cve-2017-7494-samba-service.yaml
+│       ├── desc.yaml
+│       └── smb.conf
+├── shiro
+│   ├── CVE-2016-4437
+│   │   ├── cve-2016-4437-web-deployment.yaml
+│   │   ├── cve-2016-4437-web-service.yaml
+│   │   └── desc.yaml
+│   └── CVE-2020-1957
+│       ├── cve-2020-1957-web-deployment.yaml
+│       ├── cve-2020-1957-web-service.yaml
+│       └── desc.yaml
+├── solr
+│   ├── CVE-2017-12629-RCE
+│   │   ├── cve-2017-12629-rce-solr-deployment.yaml
+│   │   ├── cve-2017-12629-rce-solr-service.yaml
+│   │   └── desc.yaml
+│   ├── CVE-2019-0193
+│   │   ├── cve-2019-0193-solr-deployment.yaml
+│   │   ├── cve-2019-0193-solr-service.yaml
+│   │   └── desc.yaml
+│   └── CVE-2019-17558
+│       ├── cve-2019-17558-solr-deployment.yaml
+│       ├── cve-2019-17558-solr-service.yaml
+│       └── desc.yaml
+├── spring
+│   ├── CVE-2016-4977
+│   │   ├── cve-2016-4977-spring-deployment.yaml
+│   │   ├── cve-2016-4977-spring-service.yaml
+│   │   └── desc.yaml
+│   ├── CVE-2017-4971
+│   │   ├── cve-2017-4971-spring-deployment.yaml
+│   │   ├── cve-2017-4971-spring-service.yaml
+│   │   └── desc.yaml
+│   ├── CVE-2017-8046
+│   │   ├── cve-2017-8046-spring-deployment.yaml
+│   │   ├── cve-2017-8046-spring-service.yaml
+│   │   └── desc.yaml
+│   ├── CVE-2018-1270
+│   │   ├── cve-2018-1270-spring-deployment.yaml
+│   │   ├── cve-2018-1270-spring-service.yaml
+│   │   └── desc.yaml
+│   └── CVE-2018-1273
+│       ├── cve-2018-1273-spring-deployment.yaml
+│       ├── cve-2018-1273-spring-service.yaml
+│       └── desc.yaml
+├── struts2
+│   ├── s2-032
+│   │   ├── desc.yaml
+│   │   ├── s2-032-struts2-deployment.yaml
+│   │   └── s2-032-struts2-service.yaml
+│   ├── s2-045
+│   │   ├── desc.yaml
+│   │   ├── s2-045-struts2-deployment.yaml
+│   │   └── s2-045-struts2-service.yaml
+│   ├── s2-046
+│   │   ├── desc.yaml
+│   │   ├── s2-046-struts2-deployment.yaml
+│   │   └── s2-046-struts2-service.yaml
+│   ├── s2-048
+│   │   ├── desc.yaml
+│   │   ├── s2-048-struts2-deployment.yaml
+│   │   └── s2-048-struts2-service.yaml
+│   ├── s2-052
+│   │   ├── desc.yaml
+│   │   ├── s2-052-struts2-deployment.yaml
+│   │   └── s2-052-struts2-service.yaml
+│   └── s2-053
+│       ├── desc.yaml
+│       ├── s2-053-struts2-deployment.yaml
+│       └── s2-053-struts2-service.yaml
+├── thinkphp
+│   ├── 2-rce
+│   │   ├── desc.yaml
+│   │   ├── thinkphp-2-rce-web-deployment.yaml
+│   │   └── thinkphp-2-rce-web-service.yaml
+│   ├── 5.0.23-rce
+│   │   ├── desc.yaml
+│   │   ├── thinkphp-5-0-23-rce-web-deployment.yaml
+│   │   └── thinkphp-5-0-23-rce-web-service.yaml
+│   └── 5-rce
+│       ├── desc.yaml
+│       ├── thinkphp-5-rce-web-deployment.yaml
+│       └── thinkphp-5-rce-web-service.yaml
+├── unomi
+│   └── CVE-2020-13942
+│       ├── cve-2020-13942-elasticsearch-deployment.yaml
+│       ├── cve-2020-13942-web-deployment.yaml
+│       ├── cve-2020-13942-web-service.yaml
+│       └── desc.yaml
+├── weblogic
+│   ├── CVE-2017-10271
+│   │   ├── cve-2017-10271-weblogic-deployment.yaml
+│   │   ├── cve-2017-10271-weblogic-service.yaml
+│   │   └── desc.yaml
+│   ├── CVE-2018-2628
+│   │   ├── cve-2018-2628-weblogic-deployment.yaml
+│   │   ├── cve-2018-2628-weblogic-service.yaml
+│   │   └── desc.yaml
+│   └── CVE-2020-14882
+│       ├── cve-2020-14882-weblogic-deployment.yaml
+│       ├── cve-2020-14882-weblogic-service.yaml
+│       └── desc.yaml
+├── webmin
+│   └── CVE-2019-15107
+│       ├── cve-2019-15107-web-deployment.yaml
+│       ├── cve-2019-15107-web-service.yaml
+│       └── desc.yaml
+├── wordpress
+│   └── pwnscriptum
+│       ├── desc.yaml
+│       ├── wordpress-pwnscriptum-mysql-deployment.yaml
+│       ├── wordpress-pwnscriptum-web-deployment.yaml
+│       └── wordpress-pwnscriptum-web-service.yaml
+├── xstream
+│   ├── CVE-2021-21351
+│   │   ├── cve-2021-21351-web-deployment.yaml
+│   │   ├── cve-2021-21351-web-service.yaml
+│   │   └── desc.yaml
+│   └── CVE-2021-29505
+│       ├── cve-2021-29505-web-deployment.yaml
+│       ├── cve-2021-29505-web-service.yaml
+│       └── desc.yaml
+└── zabbix
+    ├── CVE-2017-2824
+    │   ├── cve-2017-2824-agent-deployment.yaml
+    │   ├── cve-2017-2824-mysql-deployment.yaml
+    │   ├── cve-2017-2824-server-deployment.yaml
+    │   ├── cve-2017-2824-server-service.yaml
+    │   ├── cve-2017-2824-web-deployment.yaml
+    │   ├── cve-2017-2824-web-service.yaml
+    │   ├── database
+    │   │   ├── 001_schema.sql
+    │   │   ├── 002_images.sql
+    │   │   └── 003_data.sql
+    │   └── desc.yaml
+    └── CVE-2020-11800
+        ├── cve-2020-11800-agent-deployment.yaml
+        ├── cve-2020-11800-mysql-deployment.yaml
+        ├── cve-2020-11800-server-deployment.yaml
+        ├── cve-2020-11800-server-service.yaml
+        ├── cve-2020-11800-web-deployment.yaml
+        ├── cve-2020-11800-web-service.yaml
+        ├── database
+        │   ├── 001_schema.sql
+        │   ├── 002_images.sql
+        │   └── 003_data.sql
+        └── desc.yaml
+
+140 directories, 302 files
