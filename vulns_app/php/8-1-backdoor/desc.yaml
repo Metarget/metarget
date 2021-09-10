@@ -1,0 +1,10 @@
+name:  php-8-1-backdoor
+class:  php
+type:  rce
+hostPath: true
+dependencies:
+  yamls:
+    - php-8-1-backdoor-web-deployment.yaml
+    - php-8-1-backdoor-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/php/8.1-backdoor
