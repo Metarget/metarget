@@ -1,0 +1,9 @@
+name:  h2database-h2-console-unacc
+class:  h2database
+type:  unauthorized
+dependencies:
+  yamls:
+    - h2-console-unacc-web-deployment.yaml
+    - h2-console-unacc-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/h2database/h2-console-unacc

@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./hadoop/unauthorized-yarn/docker-compose.yml.backup
+      -o vul_app/hadoop/unauthorized-yarn/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: hadoop-unauthorized-yarn-namenode
+  name: hadoop-unauthorized-yarn-namenode
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: hadoop-unauthorized-yarn-namenode
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./hadoop/unauthorized-yarn/docker-compose.yml.backup
+          -o vul_app/hadoop/unauthorized-yarn/ --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: hadoop-unauthorized-yarn-namenode
+    spec:
+      containers:
+      - args:
+        - /namenode.sh
+        env:
+        - name: CLUSTER_NAME
+          value: vulhub
+        - name: HDFS_CONF_dfs_namenode_name_dir
+          value: file:///hadoop/dfs/name
+        - name: HDFS_CONF_dfs_replication
+          value: "1"
+        image: vulhub/hadoop:2.8.1
+        imagePullPolicy: ""
+        name: hadoop-unauthorized-yarn-namenode
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

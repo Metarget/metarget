@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./h2database/h2-console-unacc/docker-compose.yml.backup
+      -o vul_app/h2database/h2-console-unacc/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: h2-console-unacc-web
+  name: h2-console-unacc-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: h2-console-unacc-web
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./h2database/h2-console-unacc/docker-compose.yml.backup
+          -o vul_app/h2database/h2-console-unacc/ --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: h2-console-unacc-web
+    spec:
+      containers:
+      - image: vulhub/spring-with-h2database:1.4.200
+        imagePullPolicy: ""
+        name: h2-console-unacc-web
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

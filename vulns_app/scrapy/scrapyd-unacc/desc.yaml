@@ -1,0 +1,9 @@
+name:  scrapy-scrapyd-unacc
+class:  scrapy
+type:  unauthorized
+dependencies:
+  yamls:
+    - scrapyd-unacc-scrapyd-deployment.yaml
+    - scrapyd-unacc-scrapyd-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/scrapy/scrapyd-unacc

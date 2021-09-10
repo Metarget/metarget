@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./scrapy/scrapyd-unacc/docker-compose.yml.backup
+      -o vul_app/scrapy/scrapyd-unacc/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: scrapyd-unacc-scrapyd
+  name: scrapyd-unacc-scrapyd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: scrapyd-unacc-scrapyd
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./scrapy/scrapyd-unacc/docker-compose.yml.backup
+          -o vul_app/scrapy/scrapyd-unacc/ --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: scrapyd-unacc-scrapyd
+    spec:
+      containers:
+      - image: vulhub/scrapyd:1.2.1
+        imagePullPolicy: ""
+        name: scrapyd-unacc-scrapyd
+        ports:
+        - containerPort: 6800
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

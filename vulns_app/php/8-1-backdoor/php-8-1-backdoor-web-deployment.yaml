@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./php/8.1-backdoor/docker-compose.yml.backup
+      -o vul_app/php/8-1-backdoor/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: php-8-1-backdoor-web
+  name: php-8-1-backdoor-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: php-8-1-backdoor-web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./php/8.1-backdoor/docker-compose.yml.backup
+          -o vul_app/php/8-1-backdoor/ --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: php-8-1-backdoor-web
+    spec:
+      containers:
+      - image: vulhub/php:8.1-backdoor
+        imagePullPolicy: ""
+        name: php-8-1-backdoor-web
+        ports:
+        - containerPort: 80
+        resources: {}
+        volumeMounts:
+        - mountPath: /var/www/html/index.php
+          name: php-8-1-backdoor-web-hostpath0
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - hostPath:
+          path: /home/nsfocus/add/php/8.1-backdoor/index.php
+        name: php-8-1-backdoor-web-hostpath0
+status: {}
