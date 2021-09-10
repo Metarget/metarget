@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./spark/unacc/docker-compose.yml.backup
+      -o vul_app/spark/unacc/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: spark-unacc-slave
+  name: spark-unacc-slave
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: spark-unacc-slave
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./spark/unacc/docker-compose.yml.backup
+          -o vul_app/spark/unacc/ --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: spark-unacc-slave
+    spec:
+      containers:
+      - args:
+        - slave
+        - spark://master:7077
+        image: vulhub/spark:2.3.1
+        imagePullPolicy: ""
+        name: spark-unacc-slave
+        ports:
+        - containerPort: 8081
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

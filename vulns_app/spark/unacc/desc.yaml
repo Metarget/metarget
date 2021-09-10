@@ -1,0 +1,11 @@
+name:  spark-unacc
+class:  spark
+type:  unauthorized
+dependencies:
+  yamls:
+    - spark-unacc-master-deployment.yaml
+    - spark-unacc-master-service.yaml
+    - spark-unacc-slave-deployment.yaml
+    - spark-unacc-slave-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/spark/unacc
