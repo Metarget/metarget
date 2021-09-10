@@ -1,0 +1,9 @@
+name:  redis-4-unacc
+class:  redis
+type:  unauthorized
+dependencies:
+  yamls:
+    - redis-4-unacc-redis-deployment.yaml
+    - redis-4-unacc-redis-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/redis/4-unacc
