@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: spark-unacc-master
   name: spark-unacc-master
+  namespace: metarget
 spec:
   ports:
   - name: "8080"

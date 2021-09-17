@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: influxdb-unacc-web
   name: influxdb-unacc-web
+  namespace: metarget
 spec:
   ports:
   - name: "8086"

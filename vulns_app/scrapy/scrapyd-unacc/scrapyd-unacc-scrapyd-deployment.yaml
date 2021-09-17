@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: scrapyd-unacc-scrapyd
   name: scrapyd-unacc-scrapyd
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -27,7 +28,7 @@ spec:
     spec:
       containers:
       - image: vulhub/scrapyd:1.2.1
-        imagePullPolicy: ""
+        imagePullPolicy: IfNotPresent
         name: scrapyd-unacc-scrapyd
         ports:
         - containerPort: 6800

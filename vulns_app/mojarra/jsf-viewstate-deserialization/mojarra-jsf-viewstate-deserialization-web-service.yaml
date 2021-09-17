@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: mojarra-jsf-viewstate-deserialization-web
   name: mojarra-jsf-viewstate-deserialization-web
+  namespace: metarget
 spec:
   ports:
   - name: "8080"

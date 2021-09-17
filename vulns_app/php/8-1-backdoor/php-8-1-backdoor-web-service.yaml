@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: php-8-1-backdoor-web
   name: php-8-1-backdoor-web
+  namespace: metarget
 spec:
   ports:
   - name: "8080"
