@@ -313,6 +313,7 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 |[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|kubernetes|denial_of_service|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2020-8557)||
 |[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|kubernetes|exposure_of_service|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8558)||
 |[cve-2020-8559](vulns_cn/kubernetes/cve-2020-8559.yaml)|kubernetes|privilege_escalation|[6.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8559)||
+|[cve-2021-25741](vulns_cn/kubernetes/cve-2021-25741.yaml)|kubernetes|container_escape|waiting|
 |[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-5195)||
 |[cve-2016-8655](vulns_cn/kernel/cve-2016-8655.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-8655)||
 |[cve-2017-6074](vulns_cn/kernel/cve-2017-6074.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-6074)||
