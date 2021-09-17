@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./redis/4-unacc/docker-compose.yml.backup
+      -o vul_app/redis/4-unacc/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: redis-4-unacc-redis
+  name: redis-4-unacc-redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: redis-4-unacc-redis
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./redis/4-unacc/docker-compose.yml.backup
+          -o vul_app/redis/4-unacc/ --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: redis-4-unacc-redis
+    spec:
+      containers:
+      - image: vulhub/redis:4.0.14
+        imagePullPolicy: ""
+        name: redis-4-unacc-redis
+        ports:
+        - containerPort: 6379
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}

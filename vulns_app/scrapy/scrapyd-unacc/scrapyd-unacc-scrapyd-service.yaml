@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./scrapy/scrapyd-unacc/docker-compose.yml.backup
+      -o vul_app/scrapy/scrapyd-unacc/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: scrapyd-unacc-scrapyd
+  name: scrapyd-unacc-scrapyd
+spec:
+  ports:
+  - name: "6800"
+    port: 6800
+    targetPort: 6800
+  selector:
+    io.kompose.service: scrapyd-unacc-scrapyd
+status:
+  loadBalancer: {}

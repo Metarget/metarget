@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./influxdb/unacc/docker-compose.yml.backup
+      -o vul_app/influxdb/unacc/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: influxdb-unacc-web
+  name: influxdb-unacc-web
+spec:
+  ports:
+  - name: "8086"
+    port: 8086
+    targetPort: 8086
+  selector:
+    io.kompose.service: influxdb-unacc-web
+status:
+  loadBalancer: {}

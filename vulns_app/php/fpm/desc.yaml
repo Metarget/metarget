@@ -1,0 +1,9 @@
+name:  php-fpm
+class:  php
+type:  unauthorized
+dependencies:
+  yamls:
+    - php-fpm-php-deployment.yaml
+    - php-fpm-php-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/php/fpm

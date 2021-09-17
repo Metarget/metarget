@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./xxl-job/unacc/docker-compose.yml.backup
+      -o vul_app/xxl-job/unacc/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: xxl-job-unacc-executor
+  name: xxl-job-unacc-executor
+spec:
+  ports:
+  - name: "9999"
+    port: 9999
+    targetPort: 9999
+  selector:
+    io.kompose.service: xxl-job-unacc-executor
+status:
+  loadBalancer: {}

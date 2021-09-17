@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./mojarra/jsf-viewstate-deserialization/docker-compose.yml.backup
+      -o vul_app/mojarra/jsf-viewstate-deserialization/ --volumes hostPath
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mojarra-jsf-viewstate-deserialization-web
+  name: mojarra-jsf-viewstate-deserialization-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: mojarra-jsf-viewstate-deserialization-web
+  strategy: {}
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: /snap/kompose/19/kompose-linux-amd64 convert -f ./mojarra/jsf-viewstate-deserialization/docker-compose.yml.backup
+          -o vul_app/mojarra/jsf-viewstate-deserialization/ --volumes hostPath
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: mojarra-jsf-viewstate-deserialization-web
+    spec:
+      containers:
+      - image: vulhub/mojarra:2.1.28
+        imagePullPolicy: ""
+        name: mojarra-jsf-viewstate-deserialization-web
+        ports:
+        - containerPort: 8080
+        resources: {}
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes: null
+status: {}
