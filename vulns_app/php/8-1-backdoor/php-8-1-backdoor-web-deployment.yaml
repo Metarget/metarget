@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: php-8-1-backdoor-web
   name: php-8-1-backdoor-web
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -28,7 +29,7 @@ spec:
     spec:
       containers:
       - image: vulhub/php:8.1-backdoor
-        imagePullPolicy: ""
+        imagePullPolicy: IfNotPresent
         name: php-8-1-backdoor-web
         ports:
         - containerPort: 80

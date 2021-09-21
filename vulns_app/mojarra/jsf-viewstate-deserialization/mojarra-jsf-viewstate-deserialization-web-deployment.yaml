@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: mojarra-jsf-viewstate-deserialization-web
   name: mojarra-jsf-viewstate-deserialization-web
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -27,7 +28,7 @@ spec:
     spec:
       containers:
       - image: vulhub/mojarra:2.1.28
-        imagePullPolicy: ""
+        imagePullPolicy: IfNotPresent
         name: mojarra-jsf-viewstate-deserialization-web
         ports:
         - containerPort: 8080

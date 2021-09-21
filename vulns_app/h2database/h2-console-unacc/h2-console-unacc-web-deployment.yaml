@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: h2-console-unacc-web
   name: h2-console-unacc-web
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -27,7 +28,7 @@ spec:
     spec:
       containers:
       - image: vulhub/spring-with-h2database:1.4.200
-        imagePullPolicy: ""
+        imagePullPolicy: IfNotPresent
         name: h2-console-unacc-web
         ports:
         - containerPort: 8080

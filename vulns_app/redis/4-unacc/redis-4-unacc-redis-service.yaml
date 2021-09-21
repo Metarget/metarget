@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: redis-4-unacc-redis
   name: redis-4-unacc-redis
+  namespace: metarget
 spec:
   ports:
   - name: "6379"

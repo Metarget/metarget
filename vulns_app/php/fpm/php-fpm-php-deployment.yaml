@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: php-fpm-php
   name: php-fpm-php
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -27,7 +28,7 @@ spec:
     spec:
       containers:
       - image: php:fpm
-        imagePullPolicy: ""
+        imagePullPolicy: IfNotPresent
         name: php-fpm-php
         ports:
         - containerPort: 9000

@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: redis-4-unacc-redis
   name: redis-4-unacc-redis
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -27,7 +28,7 @@ spec:
     spec:
       containers:
       - image: vulhub/redis:4.0.14
-        imagePullPolicy: ""
+        imagePullPolicy: IfNotPresent
         name: redis-4-unacc-redis
         ports:
         - containerPort: 6379

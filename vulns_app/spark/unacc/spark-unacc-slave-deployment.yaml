@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: spark-unacc-slave
   name: spark-unacc-slave
+  namespace: metarget
 spec:
   replicas: 1
   selector:
@@ -30,7 +31,7 @@ spec:
         - slave
         - spark://master:7077
         image: vulhub/spark:2.3.1
-        imagePullPolicy: ""
+        imagePullPolicy: IfNotPresent
         name: spark-unacc-slave
         ports:
         - containerPort: 8081

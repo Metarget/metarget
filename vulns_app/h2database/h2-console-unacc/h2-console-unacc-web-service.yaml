@@ -9,6 +9,7 @@ metadata:
   labels:
     io.kompose.service: h2-console-unacc-web
   name: h2-console-unacc-web
+  namespace: metarget
 spec:
   ports:
   - name: "8080"
