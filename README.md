@@ -414,4 +414,5 @@ Metarget is licensed under Apache License 2.0. See [LICENSE](LICENSE) for the fu
 
 - Topic: Metarget: Auto-construction of Vulnerable Cloud Native Infrastructure
 - URL: https://2021.openinfra.asia/schedule.html
+- Video: https://www.youtube.com/watch?v=43UvCHjn8wA
 
