@@ -49,8 +49,6 @@ class KernelInstaller(Installer):
             color_print.warning(
                 'no apt package for kernel %s' %
                 version)
-            if version.endswith('.0'):
-                version = version.rstrip('.0') + '-'
             return cls._install_by_version_with_download(
                 version, verbose=verbose)
 
@@ -79,7 +77,13 @@ class KernelInstaller(Installer):
         try:
             debs = cls._fetch_package_list_by_version(version, verbose=verbose)
             if not debs:
-                return
+                if version.endswith('.0'):
+                    version = version.rstrip('.0') + '-'
+                    debs = cls._fetch_package_list_by_version(version, verbose=verbose)
+                    if not debs:
+                        return
+                else:
+                    return
             # download necessary *.deb and install
             temp_cmd = copy.copy(cls.cmd_dpkg_install)
             version_suffix = None
