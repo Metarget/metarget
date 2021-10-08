@@ -433,3 +433,8 @@ Metarget采用的开源许可证是Apache License 2.0，阅读[LICENSE](LICENSE)
 - 议题：Metarget: Auto-construction of Vulnerable Cloud Native Infrastructure
 - 链接：https://2021.openinfra.asia/schedule.html
 - 视频：https://www.youtube.com/watch?v=43UvCHjn8wA
+
+### OpenInfra Days China 2021
+
+- 议题：Metarget：构建云原生基础设施靶场
+- 链接：https://pages.segmentfault.com/openinfra-2021/agenda

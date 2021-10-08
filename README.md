@@ -416,3 +416,7 @@ Metarget is licensed under Apache License 2.0. See [LICENSE](LICENSE) for the fu
 - URL: https://2021.openinfra.asia/schedule.html
 - Video: https://www.youtube.com/watch?v=43UvCHjn8wA
 
+### OpenInfra Days China 2021
+
+- Topic: Metarget：构建云原生基础设施靶场
+- URL: https://pages.segmentfault.com/openinfra-2021/agenda
