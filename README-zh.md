@@ -12,7 +12,7 @@ Metarget的名称来源于`meta-`（元）加`target`（目标，靶机），是
 
 如果您希望就Metarget项目做进一步的交流，可添加开发者微信：
 
-<img src="https://raw.githubusercontent.com/Metarget/metarget/master/images/metarget-wechat-group.png" width = "300" height = "300" alt="" />
+<img src="https://raw.githubusercontent.com/Metarget/metarget/master/images/metarget-wechat-group.png" width = "200" height = "200" alt="" />
 
 我们会拉您进入Metarget技术交流微信群。
 
