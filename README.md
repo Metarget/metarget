@@ -10,7 +10,7 @@ Metarget = `meta-` + `target`, a framework providing automatic constructions of 
 
 If you want to talk about Metarget with us and other security researchers, please contact us:
 
-<img src="https://raw.githubusercontent.com/Metarget/metarget/master/images/metarget-wechat-group.png" width = "300" height = "300" alt="" />
+<img src="https://raw.githubusercontent.com/Metarget/metarget/master/images/metarget-wechat-group.png" width = "200" height = "200" alt="" />
 
 We will invite you into Metarget Wechat group :-)
 
