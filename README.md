@@ -8,9 +8,11 @@
 
 Metarget = `meta-` + `target`, a framework providing automatic constructions of vulnerable infrastructures, used to deploy simple or complicated vulnerable cloud native targets swiftly and automatically.
 
-If you want to talk about Metarget with us and other security researchers, please join the wechat group:
+If you want to talk about Metarget with us and other security researchers, please contact us:
 
-![metarget-wechat-group-qrcode](images/metarget-wechat-group.png)
+<img src="https://raw.githubusercontent.com/Metarget/metarget/master/images/metarget-wechat-group.png" width = "300" height = "300" alt="" />
+
+We will invite you into Metarget Wechat group :-)
 
 ### 1.1 Why Metarget?
 
