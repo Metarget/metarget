@@ -8,6 +8,10 @@
 
 Metarget = `meta-` + `target`, a framework providing automatic constructions of vulnerable infrastructures, used to deploy simple or complicated vulnerable cloud native targets swiftly and automatically.
 
+If you want to talk about Metarget with us and other security researchers, please join the wechat group:
+
+![metarget-wechat-group-qrcode](images/metarget-wechat-group.jpeg)
+
 ### 1.1 Why Metarget?
 
 During security researches, we might find that the deployment of vulnerable environment often takes much time, while the time spent on testing PoC or ExP is comparatively short. In the field of cloud native security, thanks to the complexity of cloud native systems, this issue is more terrible.
