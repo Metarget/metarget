@@ -10,7 +10,7 @@ Metarget = `meta-` + `target`, a framework providing automatic constructions of 
 
 If you want to talk about Metarget with us and other security researchers, please join the wechat group:
 
-![metarget-wechat-group-qrcode](images/metarget-wechat-group.jpeg)
+![metarget-wechat-group-qrcode](images/metarget-wechat-group.png)
 
 ### 1.1 Why Metarget?
 

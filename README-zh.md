@@ -12,7 +12,7 @@ Metarget的名称来源于`meta-`（元）加`target`（目标，靶机），是
 
 如果您希望就Metarget项目做进一步的交流，欢迎加入Metarget技术交流微信群：
 
-![metarget-wechat-group-qrcode](images/metarget-wechat-group.jpeg)
+![metarget-wechat-group-qrcode](images/metarget-wechat-group.png)
 
 ### 1.1 项目的缘起
 
