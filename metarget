@@ -5,9 +5,11 @@ Metarget - Automatic Constructions of Vulnerable Infrastructures
 """
 
 import argparse
+import os
 import sys
 
 import utils.system as system_func
+import utils.color_print as color_print
 import cmds.gadget
 import cmds.cnv
 import cmds.appv
@@ -15,7 +17,7 @@ import config
 
 
 def _initialize():
-    """Do some initializations.
+    """Do some pre-checks and initializations.
 
     Metarget is a daemon-less tool, so we should ensure
     the runtime environment works well.
@@ -23,6 +25,12 @@ def _initialize():
     Returns:
         None.
     """
+    # check whether Metarget runs as root
+    euid = os.geteuid()
+    if euid != 0:
+        color_print.error("metarget needs to be run as root")
+        sys.exit(1)
+
     # create data/ if necessary
     system_func.mkdir_if_not_exist(config.runtime_data_dir)
     # create data/host_ports_usage.yaml if necessary
