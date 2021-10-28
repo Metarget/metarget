@@ -61,9 +61,37 @@ Note:
 
 This project aims to provide vulnerable scenes for security research. The security of scenes generated is not guaranteed. It is **NOT** recommended to deploy components or scenes with Metarget on the Internet.
 
-## 2 Usage
+## 2 Installation
 
-### 2.1 Basic Usage
+### 2.1 Requirements
+
+- Ubuntu 16.04 or 18.04
+- **Python >= 3.5** (Python 2.x is unsupported!)
+- pip3
+
+### 2.2 From Source
+
+Clone the repository and install requirements:
+
+```bash
+git clone https://github.com/brant-ruan/metarget.git
+cd metarget/
+pip install -r requirements.txt
+```
+
+Begin to use Metarget and construct vulnerable scenes. For example:
+
+```bash
+./metarget cnv install cve-2019-5736
+```
+
+### 2.3 From PyPI
+
+Currently unsupported.
+
+## 3 Usage
+
+### 3.1 Basic Usage
 
 ```
 usage: metarget [-h] [-v] subcommand ...
@@ -83,7 +111,7 @@ optional arguments:
 
 Run `./metarget gadget list` to see cloud native components supported currently.
 
-### 2.2 Manage Cloud Native Components
+### 3.2 Manage Cloud Native Components
 
 ```
 usage: metarget gadget [-h] subcommand ...
@@ -98,7 +126,7 @@ optional arguments:
   -h, --help  show this help message and exit
 ```
 
-#### 2.2.1 Case: Install Docker with Specified Version
+#### 3.2.1 Case: Install Docker with Specified Version
 
 Run:
 
@@ -108,7 +136,7 @@ Run:
 
 If the command above completes successfully, 18.03.1 Docker will be installed.
 
-#### 2.2.2 Case: Install Kubernetes with Specified Version
+#### 3.2.2 Case: Install Kubernetes with Specified Version
 
 Run:
 
@@ -135,7 +163,7 @@ Usually, lots of options need to be configured in Kubernetes. As a security rese
 
 **Metarget supports deployment of multi-node cluster. If you want to add more nodes into the cluster, you can copy `tools/install_k8s_worker.sh` script and run it on each worker nodes after the successful installation of single-node cluster.**
 
-#### 2.2.3 Case: Install Kata-containers with Specified Version
+#### 3.2.3 Case: Install Kata-containers with Specified Version
 
 Run:
 
@@ -149,7 +177,7 @@ Note:
 
 You can also specify the type of kata runtime (qemu/clh/fc/...) with `--kata-runtime-type` option, which is `qemu` by default.
 
-#### 2.2.4 Case: Install Linux Kernel with Specified Version
+#### 3.2.4 Case: Install Linux Kernel with Specified Version
 
 Run:
 
@@ -168,7 +196,7 @@ Currently, Metarget installs kernels in 2 ways:
 
 After successful installation of kernel, reboot of system is needed. Metarget will prompt to reboot automatically.
 
-### 2.3 Manage Vulnerable Scenes Related to Cloud Native Components
+### 3.3 Manage Vulnerable Scenes Related to Cloud Native Components
 
 ```
 usage: metarget cnv [-h] subcommand ...
@@ -185,7 +213,7 @@ optional arguments:
 
 Run `./metarget cnv list` to see vulnerable scenes related to cloud native components supported currently.
 
-#### 2.3.1 Case: CVE-2019-5736
+#### 3.3.1 Case: CVE-2019-5736
 
 Run: 
 
@@ -195,7 +223,7 @@ Run:
 
 If the command above completes successfully, Docker with CVE-2019-5736 will be installed。
 
-#### 2.3.2 Case: CVE-2018-1002105
+#### 3.3.2 Case: CVE-2018-1002105
 
 Run: 
 
@@ -205,7 +233,7 @@ Run:
 
 If the command above completes successfully, Kubernetes with CVE-2018-1002105 will be installed。
 
-#### 2.3.3 Case: Kata-containers Escape
+#### 3.3.3 Case: Kata-containers Escape
 
 Run:
 
@@ -215,7 +243,7 @@ Run:
 
 If the command above completes successfully, Kata-containers with CVE-2020-2023/2025/2026 will be installed。
 
-#### 2.3.4 Case: CVE-2016-5195
+#### 3.3.4 Case: CVE-2016-5195
 
 Run: 
 
@@ -225,7 +253,7 @@ Run:
 
 If the command above completes successfully, kernel with CVE-2016-5195 will be installed。
 
-### 2.4 Manage Vulnerable Scenes Related to Cloud Native Applications
+### 3.4 Manage Vulnerable Scenes Related to Cloud Native Applications
 
 ```
 usage: metarget appv [-h] subcommand ...
@@ -246,7 +274,7 @@ Note:
 
 Before deploying application vulnerable scenes, you should install Docker and Kubernetes firstly. You can use Metarget to install Docker and Kubernetes.
 
-#### 2.4.1 Case: DVWA
+#### 3.4.1 Case: DVWA
 
 Run:
 
@@ -262,37 +290,9 @@ Note:
 - You can specify `--host-net` option, then the appv will share the host network namespace.
 - You can specify `--host-pid` option, then the appv will share the host pid namespace.
 
-### 2.5 Manage Vulnerable Cloud Native Target Cluster
+### 3.5 Manage Vulnerable Cloud Native Target Cluster
 
 Developing, currently not supported.
-
-## 3 Installation
-
-### 3.1 Requirements
-
-- Ubuntu 16.04 or 18.04
-- **Python >= 3.5** (Python 2.x is unsupported!)
-- pip3
-
-### 3.2 From Source
-
-Clone the repository and install requirements:
-
-```bash
-git clone https://github.com/brant-ruan/metarget.git
-cd metarget/
-pip install -r requirements.txt
-```
-
-Begin to use Metarget and construct vulnerable scenes. For example:
-
-```bash
-./metarget cnv install cve-2019-5736
-```
-
-### 3.3 From PyPI
-
-Currently unsupported.
 
 ## 4 Scene List
 
