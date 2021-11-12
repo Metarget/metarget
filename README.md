@@ -66,7 +66,7 @@ This project aims to provide vulnerable scenes for security research. The securi
 ### 2.1 Requirements
 
 - Ubuntu 16.04 or 18.04
-- **Python >= 3.5** (Python 2.x is unsupported!)
+- **Python >= 3.6** (Python 2.x is unsupported!)
 - pip3
 
 ### 2.2 From Source
