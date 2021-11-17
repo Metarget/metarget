@@ -327,7 +327,7 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 |[cve-2017-6074](vulns_cn/kernel/cve-2017-6074.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-6074)||
 |[cve-2017-7308](vulns_cn/kernel/cve-2017-7308.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-7308)|[link](writeups_cnv/kernel-cve-2017-7308)|
 |[cve-2017-16995](vulns_cn/kernel/cve-2017-16995.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-16995)||
-|[cve-2017-1000112](vulns_cn/kernel/cve-2017-1000112.yaml)|kernel|container_escape|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2017-1000112)|[link](https://capsule8.com/blog/practical-container-escape-exercise/)|
+|[cve-2017-1000112](vulns_cn/kernel/cve-2017-1000112.yaml)|kernel|container_escape|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2017-1000112)|[link](writeups_cnv/kernel-cve-2017-1000112)|
 |[cve-2018-18955](vulns_cn/kernel/cve-2018-18955.yaml)|kernel|privilege_escalation|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2018-18955)||
 |[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2020-14386)||
 |[cve-2021-22555](vulns_cn/kernel/cve-2021-22555.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2021-22555)||
