@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: no-vuln-ubuntu
-  namespace: metarget
+  name: no-vuln-ubuntu-2
+  namespace: kube-system
 spec:
   containers:
   - name: main
