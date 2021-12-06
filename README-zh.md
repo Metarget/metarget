@@ -342,7 +342,7 @@ optional arguments:
 |[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|k8s|拒绝服务|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2020-8557)||
 |[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|k8s|服务暴露|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8558)||
 |[cve-2020-8559](vulns_cn/kubernetes/cve-2020-8559.yaml)|k8s|权限提升|[6.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8559)||
-|[cve-2021-25741](vulns_cn/kubernetes/cve-2021-25741.yaml)|k8s|容器逃逸|[8.1](https://nvd.nist.gov/vuln/detail/CVE-2021-25741)|
+|[cve-2021-25741](vulns_cn/kubernetes/cve-2021-25741.yaml)|k8s|容器逃逸|[8.1](https://nvd.nist.gov/vuln/detail/CVE-2021-25741)||
 |[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-5195)||
 |[cve-2016-8655](vulns_cn/kernel/cve-2016-8655.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-8655)||
 |[cve-2017-6074](vulns_cn/kernel/cve-2017-6074.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-6074)||
@@ -360,6 +360,7 @@ optional arguments:
 |[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|危险挂载|容器逃逸|-|[链接](writeups_cnv/mount-docker-sock)|
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|危险挂载|容器逃逸|-||
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|危险挂载|容器逃逸|-|[链接](writeups_cnv/mount-host-procfs)|
+|[mount-var-log](vulns_cn/mounts/mount-var-log.yaml)|危险挂载|容器逃逸|-|[链接](writeups_cnv/mount-var-log)|
 
 注意：
 
