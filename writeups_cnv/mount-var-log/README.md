@@ -10,7 +10,7 @@
 
 ![Kubernetes Cluster](images/1.jpg)
 
-kubelet会在宿主机上的/var/log目录中创建一个目录结构，如图符号①，代表节点上的pod。但它实际上是一个符号链接，指向/var/lib/docker/containers目录中的容器日志文件。当使用`kubectl logs <pod-name\`命令查询指定pod的日志时，实际上是向kubelet的`/logs/pods/<path_to_0.log>`接口发起HTTP请求。对于该请求的处理逻辑如下：
+kubelet会在宿主机上的/var/log目录中创建一个目录结构，如图符号①，代表节点上的pod。但它实际上是一个符号链接，指向/var/lib/docker/containers目录中的容器日志文件。当使用`kubectl logs <pod-name>`命令查询指定pod的日志时，实际上是向kubelet的`/logs/pods/<path_to_0.log>`接口发起HTTP请求。对于该请求的处理逻辑如下：
 
 `kubernetes\pkg\kubelet\kubelet.go:1371`
 
