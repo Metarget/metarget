@@ -335,6 +335,7 @@ optional arguments:
 |[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|k8s|权限提升|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)||
 |[cve-2019-1002101](vulns_cn/kubernetes/cve-2019-1002101.yaml)|k8s/kubectl|容器逃逸|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2019-1002101)||
 |[cve-2019-11246](vulns_cn/kubernetes/cve-2019-11246.yaml)|k8s/kubectl|容器逃逸|[6.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11246)||
+|[cve-2019-11249](vulns_cn/kubernetes/cve-2019-11249.yaml)|k8s/kubectl|容器逃逸|[6.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11249)||
 |[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|k8s|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11253)||
 |[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|k8s|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9512)||
 |[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|k8s|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9514)||
