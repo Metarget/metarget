@@ -312,6 +312,7 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 |[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|k8s|container_escape|[9.6](https://nvd.nist.gov/vuln/detail/CVE-2017-1002101)|[link](https://github.com/brant-ruan/cloud-native-security-book/blob/main/appendix/CVE-2017-1002101：突破隔离访问宿主机文件系统.pdf)|
 |[cve-2018-1002100](vulns_cn/kubernetes/cve-2018-1002100.yaml)|k8s/kubectl|container_escape|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2018-1002100)||
 |[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|k8s|privilege_escalation|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)||
+|[cve-2019-1002101](vulns_cn/kubernetes/cve-2019-1002101.yaml)|k8s/kubectl|container_escape|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2019-1002101)||
 |[cve-2019-11253](vulns_cn/kubernetes/cve-2019-11253.yaml)|k8s|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11253)||
 |[cve-2019-9512](vulns_cn/kubernetes/cve-2019-9512.yaml)|k8s|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9512)||
 |[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|k8s|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9514)||
