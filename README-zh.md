@@ -451,3 +451,8 @@ Metarget采用的开源许可证是Apache License 2.0，阅读[LICENSE](LICENSE)
 
 - 议题：Metarget：构建云原生基础设施靶场
 - 链接：https://pages.segmentfault.com/openinfra-2021/agenda
+
+### CCF BDTC 2021
+
+- 议题：构建云原生基础设施靶场
+- 官网：https://conf.ccf.org.cn/web/api/m9062194968245084161636101164787.action
