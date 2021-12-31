@@ -435,3 +435,13 @@ Metarget is licensed under Apache License 2.0. See [LICENSE](LICENSE) for the fu
 
 - Topic: Metarget：构建云原生基础设施靶场
 - URL: https://pages.segmentfault.com/openinfra-2021/agenda
+
+### CCF BDTC 2021
+
+- Topic: 构建云原生基础设施靶场
+- URL: https://conf.ccf.org.cn/web/api/m9062194968245084161636101164787.action
+
+### Reference in Paper (IEEE TPS-ISA 2021)
+
+- Paper: Security Challenges in the Container Cloud
+- URL: https://github.com/brant-ruan/slides-and-papers/blob/master/TPS21.pdf
