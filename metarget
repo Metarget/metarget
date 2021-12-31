@@ -9,6 +9,7 @@ import os
 import sys
 
 import utils.system as system_func
+import utils.util as util
 import utils.color_print as color_print
 import cmds.gadget
 import cmds.cnv
@@ -47,7 +48,7 @@ def main():
         '-v',
         '--version',
         action='version',
-        version='metarget {ver}'.format(ver=config.VERSION))
+        version='metarget {ver}'.format(ver=util.get_metarget_version()))
 
     parser.set_defaults(func=lambda x: parser.print_help())
     # add subparsers
