@@ -1,5 +1,5 @@
 PyYaml
-docker
+docker==5.0.0
 packaging
 requests
 beautifulsoup4
