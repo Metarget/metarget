@@ -335,7 +335,7 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 |[cve-2018-18955](vulns_cn/kernel/cve-2018-18955.yaml)|kernel|privilege_escalation|[7.0](https://nvd.nist.gov/vuln/detail/CVE-2018-18955)||
 |[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2020-14386)||
 |[cve-2021-22555](vulns_cn/kernel/cve-2021-22555.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2021-22555)||
-|[cve-2022-0847](vulns_cn/kernel/cve-2022-0847.yaml)|kernel|privilege_escalation|[-](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847)|[link](https://dirtypipe.cm4all.com)|
+|[cve-2022-0847](vulns_cn/kernel/cve-2022-0847.yaml)|kernel|privilege_escalation|[-](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847)|[link](writeups_cnv/kernel-cve-2022-0847)|
 |[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2025)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)||
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape|-|[link](writeups_cnv/config-cap_dac_read_search-container)|
 |[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|config|container_escape|-||
