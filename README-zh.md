@@ -342,6 +342,7 @@ optional arguments:
 |[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|k8s|拒绝服务|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9514)||
 |[cve-2019-9946](vulns_cn/kubernetes/cve-2019-9946.yaml)|k8s|流量劫持|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9946)||
 |[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|k8s|中间人攻击|[5.0](https://nvd.nist.gov/vuln/detail/CVE-2020-8554)||
+|[cve-2020-10749](vulns_cn/kubernetes/cve-2020-10749.yaml)|k8s/kubernetes-cni|中间人攻击|[6.0](https://nvd.nist.gov/vuln/detail/CVE-2020-10749)||
 |[cve-2020-8555](vulns_cn/kubernetes/cve-2020-8555.yaml)|k8s|服务端请求伪造（SSRF）|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-8555)||
 |[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|k8s|拒绝服务|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2020-8557)||
 |[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|k8s|服务暴露|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8558)||

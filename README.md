@@ -321,6 +321,7 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 |[cve-2019-9514](vulns_cn/kubernetes/cve-2019-9514.yaml)|k8s|denial_of_service|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9514)||
 |[cve-2019-9946](vulns_cn/kubernetes/cve-2019-9946.yaml)|k8s|traffic_interception|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-9946)||
 |[cve-2020-8554](vulns_cn/kubernetes/cve-2020-8554.yaml)|k8s|man_in_the_middle|[5.0](https://nvd.nist.gov/vuln/detail/CVE-2020-8554)||
+|[cve-2020-10749](vulns_cn/kubernetes/cve-2020-10749.yaml)|k8s/kubernetes-cni|man_in_the_middle|[6.0](https://nvd.nist.gov/vuln/detail/CVE-2020-10749)||
 |[cve-2020-8555](vulns_cn/kubernetes/cve-2020-8555.yaml)|k8s|server_side_request_forgery|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-8555)||
 |[cve-2020-8557](vulns_cn/kubernetes/cve-2020-8557.yaml)|k8s|denial_of_service|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2020-8557)||
 |[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|k8s|exposure_of_service|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8558)||
