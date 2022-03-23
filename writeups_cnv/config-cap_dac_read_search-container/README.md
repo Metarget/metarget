@@ -20,7 +20,7 @@
 漏洞环境准备：
 
 ```bash
-./metarget cnv install cap-dac-read-search-container
+./metarget cnv install cap_dac_read_search-container
 ```
 
 执行完成后，K8s集群内`metarget`命令空间下将会创建一个名为`cap-dac-read-search-container`的带有`CAP_DAC_READ_SEARCH`权限的pod。
