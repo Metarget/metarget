@@ -369,4 +369,4 @@ $ ./t_name_to_handle_at /
 1. https://github.com/gabrtv/shocker/blob/master/shocker.c
 2. https://developer.aliyun.com/article/57803
 3. https://man7.org/linux/man-pages/man2/open_by_handle_at.2.html
-4. https://man7.org/linux/man-pages/man7/capabilities.7.htm
+4. https://man7.org/linux/man-pages/man7/capabilities.7.html
