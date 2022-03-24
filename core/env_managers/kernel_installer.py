@@ -43,8 +43,9 @@ class KernelInstaller(Installer):
         for repo in config.kernel_apt_repo_entries:
             cls._add_apt_repository(repo_entry=repo, verbose=verbose)
 
-        if cls._is_version_available_in_apt(version, verbose=verbose):
-            return cls._install_by_version_with_apt(version, verbose=verbose)
+        apt_package = cls._is_version_available_in_apt(version, verbose=verbose)
+        if apt_package:
+            return cls._install_by_version_with_apt(version, apt_package, verbose=verbose)
         else:
             color_print.warning(
                 'no apt package for kernel %s' %
@@ -53,15 +54,16 @@ class KernelInstaller(Installer):
                 version, verbose=verbose)
 
     @classmethod
-    def _install_by_version_with_apt(cls, version, verbose=False):
+    def _install_by_version_with_apt(cls, version, package_name, verbose=False):
         color_print.debug('switching kernel version with apt')
         stdout, stderr = verbose_func.verbose_output(verbose)
         try:
             # install image package
-            package_name = cls._get_apt_complete_package(
-                'linux-image', ['linux-image-extra-{version}'.format(version=version), 'generic'], verbose=verbose)
             color_print.debug('installing kernel package %s' % package_name)
-            version_suffix = package_name.lstrip('linux-image-extra-')
+            if 'extra' in package_name:
+                version_suffix = package_name.lstrip('linux-image-extra-')
+            else:
+                version_suffix = package_name.lstrip('linux-image-')
             temp_cmd = copy.copy(cls.cmd_apt_install)
             temp_cmd.append(package_name)
             subprocess.run(temp_cmd, stdout=stdout, stderr=stderr, check=True)
@@ -79,7 +81,8 @@ class KernelInstaller(Installer):
             if not debs:
                 if version.endswith('.0'):
                     version = version.rstrip('.0') + '-'
-                    debs = cls._fetch_package_list_by_version(version, verbose=verbose)
+                    debs = cls._fetch_package_list_by_version(
+                        version, verbose=verbose)
                     if not debs:
                         return
                 else:
@@ -89,7 +92,9 @@ class KernelInstaller(Installer):
             version_suffix = None
             for deb in debs:
                 filename = deb.split('/')[-1]
-                cls.download_file(url=deb, save_path=os.path.join(config.kernel_packages_dir, filename))
+                cls.download_file(
+                    url=deb, save_path=os.path.join(
+                        config.kernel_packages_dir, filename))
                 temp_cmd.append(
                     '{prefix}/{filename}'.format(prefix=config.kernel_packages_dir, filename=filename))
                 if 'linux-image-' in filename:  # get full version for further modification in grub
@@ -163,7 +168,9 @@ class KernelInstaller(Installer):
 
     @classmethod
     def _is_version_available_in_apt(cls, version, verbose=False):
-        return cls._get_apt_complete_package(
+        signed_package = cls._get_apt_complete_package(
+            'linux-image', ['linux-image-{version}'.format(version=version), 'generic'], verbose=verbose)
+        return signed_package if signed_package else cls._get_apt_complete_package(
             'linux-image', ['linux-image-extra-{version}'.format(version=version), 'generic'], verbose=verbose)
 
 
