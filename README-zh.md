@@ -95,6 +95,8 @@ pip3 install -r requirements.txt
 
 ## 3 使用方法
 
+Metarget需要以**root**权限运行。
+
 ### 3.1 基本操作
 
 ```

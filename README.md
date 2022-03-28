@@ -91,6 +91,8 @@ Currently unsupported.
 
 ## 3 Usage
 
+Metarget needs to be run as **root**.
+
 ### 3.1 Basic Usage
 
 ```
