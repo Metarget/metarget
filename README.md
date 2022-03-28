@@ -76,7 +76,7 @@ Clone the repository and install requirements:
 ```bash
 git clone https://github.com/brant-ruan/metarget.git
 cd metarget/
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 Begin to use Metarget and construct vulnerable scenes. For example:

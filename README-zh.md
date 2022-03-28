@@ -80,7 +80,7 @@ RCE、容器逃逸、横向移动、隐蔽持久化，统统打包送给你。
 ```bash
 git clone https://github.com/brant-ruan/metarget.git
 cd metarget/
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 使用Metarget，搭建脆弱场景，例如：
