@@ -95,6 +95,8 @@ Currently unsupported.
 
 Metarget needs to be run as **root**.
 
+It is recommended to add `--verbose` option when debugging.
+
 ### 3.1 Basic Usage
 
 ```
@@ -358,6 +360,7 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 Note:
 
 - Currently writeups are in Chinese.
+- It is recommended to add `--verbose` option when debugging.
 - You might find that some kernel vulnerabilities are marked as `privilege_escalation`, while others `container_escape`. The essential difference is the payload (get a shell with high privilege or escape first).
     - Thanks to default security mechanisms (e.g. Seccomp, Capabilities) in containers, some kernel vulnerabilities may be hard or almost not to exploit.
     - Hence, vulnerabilities are marked as `container_escape` if we could reproduce the whole process with Metarget, others temporarily marked as `privilege_escalation`.
