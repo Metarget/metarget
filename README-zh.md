@@ -70,6 +70,8 @@ RCE、容器逃逸、横向移动、隐蔽持久化，统统打包送给你。
 ### 2.1 依赖项
 
 - Ubuntu 16.04或**18.04（推荐）**
+    - 在某些情况下（例如，新的内核漏洞），需要使用特定的Ubuntu发行版s
+    - 可以阅读对应漏洞的提示来选择合适的发行版（后面列表中名字后面带星号的部分漏洞）
 - **Python >= 3.6** (不支持Python 2.x！)
 - pip3
 
@@ -362,6 +364,7 @@ optional arguments:
 |[cve-2021-22555](vulns_cn/kernel/cve-2021-22555.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2021-22555)||
 |[cve-2022-0492](vulns_cn/kernel/cve-2022-0492.yaml)|kernel|容器逃逸|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0492)|[链接](writeups_cnv/kernel-cve-2022-0492)|
 |[cve-2022-0847](vulns_cn/kernel/cve-2022-0847.yaml)|kernel|容器逃逸|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847)|[链接](writeups_cnv/kernel-cve-2022-0847)|
+|[cve-2022-0995\*](vulns_cn/kernel/cve-2022-0995.yaml)|kernel|权限提升|[7.1](https://nvd.nist.gov/vuln/detail/CVE-2022-0995)||
 |[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|容器逃逸|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2025)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)||
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|危险配置|容器逃逸|-|[链接](writeups_cnv/config-cap_dac_read_search-container)|
 |[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|危险配置|容器逃逸|-||
@@ -379,6 +382,8 @@ optional arguments:
     - 因此，我们将基于Metarget验证过能够用于容器逃逸的内核漏洞标记为容器逃逸类型，其他的暂时标记为权限提升类型，后续如果利用该漏洞逃逸成功，则更新为容器逃逸类型。
 - 对于**cve-2021-30465**来说，在`cnv install cve-2021-30465`（安装了Docker）之后，
     - 你需要手动安装一个K8s（利用Metarget执行`cnv install cve-2018-1002105`或`gadget install k8s --version 1.16.5`），从而实现漏洞利用。
+- 对于以下内核漏洞，需要在Ubuntu 21.10上运行Metarget（测试成功）：
+    - cve-2022-0995
 
 ### 4.2 云原生应用脆弱场景
 

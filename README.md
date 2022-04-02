@@ -66,6 +66,8 @@ This project aims to provide vulnerable scenes for security research. The securi
 ### 2.1 Requirements
 
 - Ubuntu 16.04 or **18.04 (recommended)**
+    - for some cases (e.g. new kernel vulnerabilities) specific Ubuntu distributions are needed
+    - you can read the note for specific vulnerabilities (prompted by an asterisk (\*)) for details
 - **Python >= 3.6** (Python 2.x is unsupported!)
 - pip3
 
@@ -341,6 +343,7 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 |[cve-2021-22555](vulns_cn/kernel/cve-2021-22555.yaml)|kernel|container_escape|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2021-22555)||
 |[cve-2022-0492](vulns_cn/kernel/cve-2022-0492.yaml)|kernel|container_escape|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0492)|[link](writeups_cnv/kernel-cve-2022-0492)|
 |[cve-2022-0847](vulns_cn/kernel/cve-2022-0847.yaml)|kernel|container_escape|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847)|[link](writeups_cnv/kernel-cve-2022-0847)|
+|[cve-2022-0995\*](vulns_cn/kernel/cve-2022-0995.yaml)|kernel|privilege_escalation|[7.1](https://nvd.nist.gov/vuln/detail/CVE-2022-0995)||
 |[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2025)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)||
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape|-|[link](writeups_cnv/config-cap_dac_read_search-container)|
 |[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|config|container_escape|-||
@@ -351,8 +354,6 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|mount|container_escape|-|[link](writeups_cnv/mount-host-procfs)|
 |[mount-var-log](vulns_cn/mounts/mount-var-log.yaml)|mount|container_escape|-|[link](writeups_cnv/mount-var-log)|
 
-
-
 Note:
 
 - Currently writeups are in Chinese.
@@ -361,6 +362,8 @@ Note:
     - Hence, vulnerabilities are marked as `container_escape` if we could reproduce the whole process with Metarget, others temporarily marked as `privilege_escalation`.
 - For **cve-2021-30465**, after `cnv install cve-2021-30465` (which installs Docker),
     - you'd better install a K8s manually, for exploitation (e.g. `cnv install cve-2018-1002105` or `gadget install k8s --version 1.16.5` with Metarget).
+- For kernel vulnerabilities below, Ubuntu 21.10 is needed to run Metarget (tested):
+    - cve-2022-0995
 
 ### 4.2 Vulnerable Scenes Related to Cloud Native Applications
 
