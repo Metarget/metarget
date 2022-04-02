@@ -344,6 +344,7 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 |[cve-2022-0492](vulns_cn/kernel/cve-2022-0492.yaml)|kernel|container_escape|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0492)|[link](writeups_cnv/kernel-cve-2022-0492)|
 |[cve-2022-0847](vulns_cn/kernel/cve-2022-0847.yaml)|kernel|container_escape|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847)|[link](writeups_cnv/kernel-cve-2022-0847)|
 |[cve-2022-0995\*](vulns_cn/kernel/cve-2022-0995.yaml)|kernel|privilege_escalation|[7.1](https://nvd.nist.gov/vuln/detail/CVE-2022-0995)||
+|[cve-2022-25636\*](vulns_cn/kernel/cve-2022-25636.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-25636)||
 |[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2025)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)||
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape|-|[link](writeups_cnv/config-cap_dac_read_search-container)|
 |[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|config|container_escape|-||
@@ -364,6 +365,7 @@ Note:
     - you'd better install a K8s manually, for exploitation (e.g. `cnv install cve-2018-1002105` or `gadget install k8s --version 1.16.5` with Metarget).
 - For kernel vulnerabilities below, Ubuntu 21.10 is needed to run Metarget (tested):
     - cve-2022-0995
+    - cve-2022-25636
 
 ### 4.2 Vulnerable Scenes Related to Cloud Native Applications
 
