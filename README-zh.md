@@ -364,7 +364,7 @@ optional arguments:
 |[cve-2020-14386](vulns_cn/kernel/cve-2020-14386.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2020-14386)||
 |[cve-2021-3493](vulns_cn/kernel/cve-2021-3493.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2021-3493)|[链接](writeups_cnv/kernel-cve-2021-3493)|
 |[cve-2021-22555](vulns_cn/kernel/cve-2021-22555.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2021-22555)||
-|[cve-2022-0185](vulns_cn/kernel/cve-2022-0185.yaml)|kernel|权限提升|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2022-0185||
+|[cve-2022-0185](vulns_cn/kernel/cve-2022-0185.yaml)|kernel|权限提升|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2022-0185)||
 |[cve-2022-0492](vulns_cn/kernel/cve-2022-0492.yaml)|kernel|容器逃逸|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0492)|[链接](writeups_cnv/kernel-cve-2022-0492)|
 |[cve-2022-0847](vulns_cn/kernel/cve-2022-0847.yaml)|kernel|容器逃逸|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847)|[链接](writeups_cnv/kernel-cve-2022-0847)|
 |[cve-2022-0995\*](vulns_cn/kernel/cve-2022-0995.yaml)|kernel|权限提升|[7.1](https://nvd.nist.gov/vuln/detail/CVE-2022-0995)||
