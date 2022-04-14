@@ -8239,7 +8239,7 @@ v5.9.1/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9.1/amd64/linux-headers-5.9.1-050901_5.9.1-050901.202010170731_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9.1/amd64/linux-image-unsigned-5.9.1-050901-generic_5.9.1-050901.202010170731_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9.1/amd64/linux-headers-5.9.1-050901-generic_5.9.1-050901.202010170731_amd64.deb
-v5.9.10/:
+v5.9.10-050910/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9.10/amd64/linux-headers-5.9.10-050910-generic_5.9.10-050910.202011221708_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9.10/amd64/linux-headers-5.9.10-050910_5.9.10-050910.202011221708_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9.10/amd64/linux-modules-5.9.10-050910-generic_5.9.10-050910.202011221708_amd64.deb
