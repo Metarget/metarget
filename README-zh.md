@@ -464,20 +464,24 @@ Metarget采用的开源许可证是Apache License 2.0，阅读[LICENSE](LICENSE)
 ### OpenInfra Days Asia 2021
 
 - 议题：Metarget: Auto-construction of Vulnerable Cloud Native Infrastructure
-- 链接：https://2021.openinfra.asia/schedule.html
 - 视频：https://www.youtube.com/watch?v=43UvCHjn8wA
+- PPT：https://github.com/brant-ruan/slides-and-papers/blob/master/OID-Asia-2021-Metarget.pdf
 
 ### OpenInfra Days China 2021
 
 - 议题：Metarget：构建云原生基础设施靶场
-- 链接：https://pages.segmentfault.com/openinfra-2021/agenda
+- PPT：https://github.com/brant-ruan/slides-and-papers/blob/master/OID-China-2021-Metarget.pdf
 
 ### CCF BDTC 2021
 
 - 议题：构建云原生基础设施靶场
-- 官网：https://conf.ccf.org.cn/web/api/m9062194968245084161636101164787.action
 
 ### 论文引用（IEEE TPS-ISA 2021）
 
 - 论文：Security Challenges in the Container Cloud
-- 链接：https://github.com/brant-ruan/slides-and-papers/blob/master/TPS21.pdf
+- PDF：https://github.com/brant-ruan/slides-and-papers/blob/master/TPS21.pdf
+
+### CSDN云原生安全技术峰会 2022
+
+- 议题：攻方视角：从开源靶场看云原生安全
+- PPT：https://github.com/brant-ruan/slides-and-papers/blob/master/CSDN%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF%E5%B3%B0%E4%BC%9A-2022-%E6%94%BB%E6%96%B9%E8%A7%86%E8%A7%92%EF%BC%9A%E4%BB%8E%E5%BC%80%E6%BA%90%E9%9D%B6%E5%9C%BA%E7%9C%8B%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%89%E5%85%A8.pdf
