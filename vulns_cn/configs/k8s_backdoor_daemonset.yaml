@@ -1,0 +1,6 @@
+name: k8s_backdoor_daemonset
+class: config
+type: persistence
+dependencies:
+  yamls:
+    - pods/k8s_backdoor_daemonset.yaml

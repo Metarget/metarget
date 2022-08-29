@@ -1,0 +1,6 @@
+name: k8s_shadow_apiserver
+class: config
+type: persistence
+dependencies:
+  yamls:
+    - pods/k8s_shadow_apiserver.yaml
