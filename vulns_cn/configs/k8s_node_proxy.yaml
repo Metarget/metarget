@@ -1,0 +1,6 @@
+name: k8s_node_proxy
+class: config
+type: privilege_escalation
+dependencies:
+  yamls:
+    - pods/k8s_node_proxy.yaml
