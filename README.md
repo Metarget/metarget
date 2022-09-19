@@ -355,7 +355,12 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape|-|[link](writeups_cnv/config-cap_dac_read_search-container)|
 |[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|config|container_escape|-||
 |[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|config|container_escape|-||
+|[cap_sys_module-container](vulns_cn/configs/cap_sys_module-container.yaml)|config|container_escape|-|[link](writeups_cnv/config-cap_sys_module-container)|
 |[privileged-container](vulns_cn/configs/privileged-container.yaml)|config|container_escape|-|[link](writeups_cnv/config-privileged-container)|
+|[k8s_backdoor_daemonset](vulns_cn/configs/k8s_backdoor_daemonset.yaml)|config|persistence|-|[link](writeups_cnv/config-k8s-backdoor-daemonset)|
+|[k8s_backdoor_cronjob](vulns_cn/configs/k8s_backdoor_cronjob.yaml)|config|persistence|-|[link](writeups_cnv/config-k8s-backdoor-cronjob)|
+|[k8s_shadow_apiserver](vulns_cn/configs/k8s_shadow_apiserver.yaml)|config|persistence|-|[link](writeups_cnv/config-k8s-shadow_apiserver)|
+|[k8s_node_proxy](vulns_cn/configs/k8s_node_proxy.yaml)|config|privilege_escalation|-|[link](writeups_cnv/config-k8s-node-proxy)|
 |[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|mount|container_escape|-|[link](writeups_cnv/mount-docker-sock)|
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|mount|container_escape|-||
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|mount|container_escape|-|[link](writeups_cnv/mount-host-procfs)|

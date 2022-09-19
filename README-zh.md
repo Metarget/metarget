@@ -376,7 +376,12 @@ optional arguments:
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|危险配置|容器逃逸|-|[链接](writeups_cnv/config-cap_dac_read_search-container)|
 |[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|危险配置|容器逃逸|-||
 |[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|危险配置|容器逃逸|-||
+|[cap_sys_module-container](vulns_cn/configs/cap_sys_module-container.yaml)|危险配置|容器逃逸|-|[链接](writeups_cnv/config-cap_sys_module-container)|
 |[privileged-container](vulns_cn/configs/privileged-container.yaml)|危险配置|容器逃逸|-|[链接](writeups_cnv/config-privileged-container)|
+|[k8s_backdoor_daemonset](vulns_cn/configs/k8s_backdoor_daemonset.yaml)|危险配置|持久化|-|[链接](writeups_cnv/config-k8s-backdoor-daemonset)|
+|[k8s_backdoor_cronjob](vulns_cn/configs/k8s_backdoor_cronjob.yaml)|危险配置|持久化|-|[链接](writeups_cnv/config-k8s-backdoor-cronjob)|
+|[k8s_shadow_apiserver](vulns_cn/configs/k8s_shadow_apiserver.yaml)|危险配置|持久化|-|[链接](writeups_cnv/config-k8s-shadow_apiserver)|
+|[k8s_node_proxy](vulns_cn/configs/k8s_node_proxy.yaml)|危险配置|权限提升|-|[链接](writeups_cnv/config-k8s-node-proxy)|
 |[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|危险挂载|容器逃逸|-|[链接](writeups_cnv/mount-docker-sock)|
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|危险挂载|容器逃逸|-||
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|危险挂载|容器逃逸|-|[链接](writeups_cnv/mount-host-procfs)|
