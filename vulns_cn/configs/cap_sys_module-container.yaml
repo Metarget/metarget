@@ -1,0 +1,6 @@
+name: cap_sys_module-container
+class: config
+type: container_escape
+dependencies:
+  yamls:
+    - pods/cap_sys_module-container.yaml
