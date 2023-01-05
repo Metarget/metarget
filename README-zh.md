@@ -471,12 +471,12 @@ Metarget采用的开源许可证是Apache License 2.0，阅读[LICENSE](LICENSE)
 
 - 议题：Metarget: Auto-construction of Vulnerable Cloud Native Infrastructure
 - 视频：https://www.youtube.com/watch?v=43UvCHjn8wA
-- PPT：https://github.com/brant-ruan/slides-and-papers/blob/master/OID-Asia-2021-Metarget.pdf
+- PPT：[OID-Asia-2021-Metarget.pdf](https://github.com/brant-ruan/slides-and-papers/blob/master/OID-Asia-2021-Metarget.pdf)
 
 ### OpenInfra Days China 2021
 
 - 议题：Metarget：构建云原生基础设施靶场
-- PPT：https://github.com/brant-ruan/slides-and-papers/blob/master/OID-China-2021-Metarget.pdf
+- PPT：[OID-China-2021-Metarget.pdf](https://github.com/brant-ruan/slides-and-papers/blob/master/OID-China-2021-Metarget.pdf)
 
 ### CCF BDTC 2021
 
@@ -485,9 +485,20 @@ Metarget采用的开源许可证是Apache License 2.0，阅读[LICENSE](LICENSE)
 ### 论文引用（IEEE TPS-ISA 2021）
 
 - 论文：Security Challenges in the Container Cloud
-- PDF：https://github.com/brant-ruan/slides-and-papers/blob/master/TPS21.pdf
+- PDF：[TPS21.pdf](https://github.com/brant-ruan/slides-and-papers/blob/master/TPS21.pdf)
 
 ### CSDN云原生安全技术峰会 2022
 
 - 议题：攻方视角：从开源靶场看云原生安全
-- PPT：https://github.com/brant-ruan/slides-and-papers/blob/master/CSDN%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF%E5%B3%B0%E4%BC%9A-2022-%E6%94%BB%E6%96%B9%E8%A7%86%E8%A7%92%EF%BC%9A%E4%BB%8E%E5%BC%80%E6%BA%90%E9%9D%B6%E5%9C%BA%E7%9C%8B%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%89%E5%85%A8.pdf
+- PPT：[CSDN云原生安全技术峰会-2022-攻方视角：从开源靶场看云原生安全.pdf](https://github.com/brant-ruan/slides-and-papers/blob/master/CSDN%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%89%E5%85%A8%E6%8A%80%E6%9C%AF%E5%B3%B0%E4%BC%9A-2022-%E6%94%BB%E6%96%B9%E8%A7%86%E8%A7%92%EF%BC%9A%E4%BB%8E%E5%BC%80%E6%BA%90%E9%9D%B6%E5%9C%BA%E7%9C%8B%E4%BA%91%E5%8E%9F%E7%94%9F%E5%AE%89%E5%85%A8.pdf)
+
+### 论文引用（IC2E 2022）
+
+- 论文：PACED: Provenance-based Automated Container Escape Detection
+- PDF：[IC2E-2022.PACED.pdf](http://www.csl.sri.com/users/gehani/papers/IC2E-2022.PACED.pdf)
+
+### CIS 2022
+
+- 议题：Metarget: 云原生安全研究与自动化
+- 链接：https://cis.freebuf.com
+
