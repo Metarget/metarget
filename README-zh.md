@@ -10,12 +10,6 @@ Metarget的名称来源于`meta-`（元）加`target`（目标，靶机），是
 
 「绿盟科技研究通讯」上发布了一篇阐述Metarget的设计理念和技术目标的文章，见[Metarget：云原生攻防靶场开源啦！](https://mp.weixin.qq.com/s?__biz=MzIyODYzNTU2OA==&mid=2247489415&idx=1&sn=4aea7b7ecff51710c79037ab07a889bc)。
 
-如果您希望就Metarget项目做进一步的交流，可添加开发者微信：
-
-<img src="https://raw.githubusercontent.com/Metarget/metarget/master/images/metarget-wechat-group.png" width = "200" height = "200" alt="" />
-
-我们会拉您进入Metarget技术交流微信群。
-
 ### 1.1 项目的缘起
 
 在研究漏洞时，我们经常会发现“环境搭建”这一步骤本身就会占用大量的时间，与之相比，真正测试PoC、ExP的时间可能非常短。由于许多官方镜像在国内的网络环境下并不方便获得，加上云原生组件自身的复杂性，在云原生安全领域，前述问题尤为明显。
