@@ -496,3 +496,7 @@ Metarget采用的开源许可证是Apache License 2.0，阅读[LICENSE](LICENSE)
 - 议题：Metarget: 云原生安全研究与自动化
 - 链接：https://cis.freebuf.com
 
+### Metarget加入CNCF Landscape
+
+- 链接：https://landscape.cncf.io/?selected=metarget
+

@@ -478,3 +478,8 @@ Metarget is licensed under Apache License 2.0. See [LICENSE](LICENSE) for the fu
 - Topic: Metarget: 云原生安全研究与自动化
 - URL: https://cis.freebuf.com
 
+### Metarget Joins CNCF Landscape
+
+- URL: https://landscape.cncf.io/?selected=metarget
+
+
