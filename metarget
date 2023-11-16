@@ -123,7 +123,9 @@ def main():
         help='print output verbosely',
     )
     parser_gadget_remove.set_defaults(func=cmds.gadget.remove)
-
+    parser_gadget_remove.add_argument(
+        '-v', '--version', dest='version', required=True, help='gadget version')
+    
     # subcommand `cnv`
     parser_cnv = subparsers.add_parser(
         'cnv', help='cloud native vulnerabilities management')
