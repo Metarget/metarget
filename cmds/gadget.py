@@ -176,9 +176,24 @@ def remove(args):
                 'failed to remove {gadget}'.format(
                     gadget=args.gadget))
     if args.gadget == 'kernel':
-        color_print.warning(
-            'removal of {gadget} is unsupported'.format(
-                gadget=args.gadget))
+        temp_gadgets = [
+            {'name': 'kernel', 'version': args.version},
+        ]
+        if KernelInstaller.uninstall(temp_gadgets, verbose=args.verbose):
+            color_print.debug(
+                '{gadget} successfully removed'.format(
+                    gadget=args.gadget))
+            # reboot
+            reboot = color_print.debug_input('reboot system now? (y/n) ')
+            if reboot == 'y' or reboot == 'Y':
+                system_func.reboot_system(verbose=args.verbose)
+        else:
+            color_print.error(
+                'failed to remove {gadget}'.format(
+                    gadget=args.gadget))
+        # color_print.warning(
+        #     'removal of {gadget} is unsupported'.format(
+        #         gadget=args.gadget))
 
 
 def retrieve(args):
