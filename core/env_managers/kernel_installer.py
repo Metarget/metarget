@@ -20,6 +20,103 @@ import config
 class KernelInstaller(Installer):
     cmd_update_grub = 'update-grub'.split()
     cmd_dpkg_install = 'dpkg -i'.split()
+    cmd_dpkg_uninstall = 'apt-get --purge remove'.split()
+
+    @classmethod
+    def uninstall(cls, gadgets, context=None, verbose=False):
+        """Uninstall Linux kernel.
+
+        Args:
+            gadgets: Kernel gadgets (e.g. kernel).
+            context: Currently not used.
+            verbose: Verbose or not.
+
+        Returns:
+            None.
+        """
+        version = gadgets[0]['version']
+        color_print.debug('uninstalling kernel')
+        for repo in config.kernel_apt_repo_entries:
+            cls._add_apt_repository(repo_entry=repo, verbose=verbose)
+        apt_package = cls._is_version_available_in_apt(version, verbose=verbose)
+        if apt_package:
+            cls._uninstall_by_version_with_apt(version, apt_package, verbose=verbose)
+        else:
+            cls._uninstall_by_version_with_download(version, verbose=verbose)   
+        return True         
+
+    @classmethod
+    def _uninstall_by_version_with_apt(cls, version, package_name, verbose=False):
+        color_print.debug('uninstalling kernel version with apt')
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        try:
+            # uninstall image package
+            color_print.debug('uninstalling kernel package %s' % package_name)
+            if 'extra' in package_name:
+                version_suffix = package_name.lstrip('linux-image-extra-')
+            else:
+                version_suffix = package_name.lstrip('linux-image-')
+            temp_cmd = copy.copy(cls.cmd_dpkg_uninstall)
+            temp_cmd.append(package_name)
+            subprocess.run(temp_cmd, stdout=stdout, stderr=stderr, check=True)
+            subprocess.run(
+                cls.cmd_update_grub,
+                stdout=stdout,
+                stderr=stderr,
+                check=True)
+            return True
+        except subprocess.CalledProcessError:
+            return False
+
+    @classmethod
+    def _uninstall_by_version_with_download(cls, version, verbose=False):
+        color_print.debug('uninstalling kernel version with downloading packages')
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        try:
+            debs = cls._fetch_package_list_by_version(version, verbose=verbose)
+            if not debs:
+                if version.endswith('.0'):
+                    version = version.rstrip('.0') + '-'
+                    debs = cls._fetch_package_list_by_version(
+                        version, verbose=verbose)
+                    if not debs:
+                        return
+                else:
+                    return
+            # uninstall necessary *.deb
+            temp_cmd = copy.copy(cls.cmd_dpkg_uninstall)
+            version_suffix = None
+            for deb in debs:
+                filename = deb.split('/')[-1]
+                # cls.download_file(
+                #     url=deb, save_path=os.path.join(
+                #         config.kernel_packages_dir, filename))
+                temp_list = [substr.start() for substr in re.finditer(version,filename)]
+                print(version)
+                temp_cmd.append(
+                    '{filename}'.format(filename=filename[:temp_list[1]])+"*")
+                if 'linux-image-' in filename:  # get full version for further modification in grub
+                    try:
+                        version_suffix = re.search(
+                            r'linux-image-[a-z]*-?([\d].*?)_', filename).group(1)
+                    except AttributeError:  # failed to derive complete kernel version
+                        pass
+            color_print.debug('uninstalling kernel packages')
+            # installation of kernel may return nonzero, currently ignore them
+            print(temp_cmd)
+            subprocess.run(temp_cmd, stdout=stdout, stderr=stderr, check=False)
+            if version_suffix:
+                subprocess.run(
+                cls.cmd_update_grub,
+                stdout=stdout,
+                stderr=stderr,
+                check=True)
+            else:
+                color_print.warning('failed to derive complete kernel version')
+                color_print.warning('please update grub manually')
+            return True
+        except subprocess.CalledProcessError:
+            return False
 
     @classmethod
     def install_by_version(cls, gadgets, context=None, verbose=False):
@@ -115,7 +212,6 @@ class KernelInstaller(Installer):
             return True
         except subprocess.CalledProcessError:
             return False
-
     @classmethod
     def _modify_grub(cls, version=None, recover=False, verbose=False):
         stdout, stderr = verbose_func.verbose_output(verbose)
