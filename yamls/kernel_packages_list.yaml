@@ -8303,3 +8303,8 @@ v5.9/:
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9/amd64/linux-headers-5.9.0-050900_5.9.0-050900.202010112230_all.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9/amd64/linux-modules-5.9.0-050900-generic_5.9.0-050900.202010112230_amd64.deb
 - https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.9/amd64/linux-headers-5.9.0-050900-generic_5.9.0-050900.202010112230_amd64.deb
+v6.1.25/:
+- https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.1.25/amd64/linux-image-unsigned-6.1.25-060125-generic_6.1.25-060125.202304201141_amd64.deb
+- https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.1.25/amd64/linux-headers-6.1.25-060125-generic_6.1.25-060125.202304201141_amd64.deb
+- https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.1.25/amd64/linux-headers-6.1.25-060125_6.1.25-060125.202304201141_all.deb
+- https://kernel.ubuntu.com/~kernel-ppa/mainline/v6.1.25/amd64/linux-modules-6.1.25-060125-generic_6.1.25-060125.202304201141_amd64.deb
