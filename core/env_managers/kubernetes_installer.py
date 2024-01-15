@@ -34,7 +34,7 @@ class KubernetesInstaller(Installer):
     _cmd_kubeadm_list_image = 'kubeadm config images list'.split()
     _cmd_kubeadm_reset = 'kubeadm reset'.split()
     _cmd_enable_schedule_master = 'kubectl taint nodes --all node-role.kubernetes.io/master-'.split()
-    _kubeadm_common_options = '--ignore-preflight-errors=NumCPU,cri'
+    _kubeadm_common_options = '--ignore-preflight-errors=NumCPU,cri,SystemVerification'
 
     @classmethod
     def uninstall(cls, verbose=False):
@@ -188,6 +188,7 @@ class KubernetesInstaller(Installer):
         if pod_network_cidr:
             temp_cmd.append(
                 '--pod-network-cidr={cidr}'.format(cidr=pod_network_cidr))
+        print(temp_cmd)
         try:
             subprocess.run(
                 temp_cmd,
@@ -220,6 +221,20 @@ class KubernetesInstaller(Installer):
                     new_prefix=config.k8s_images_prefix_candidate,
                     mappings=mappings,
                     verbose=verbose)
+            elif version.parse(k8s_version) >= version.parse(
+                    config.k8s_stable_versions['1.22']):
+                cls._pull_domestic_images(
+                    images_base,
+                    ori_prefix=config.k8s_images_prefix_official_22,
+                    new_prefix=config.k8s_images_prefix_candidate,
+                    mappings=mappings,
+                    verbose=verbose)
+                cls._pull_domestic_images(
+                    images_extra,
+                    ori_prefix=config.k8s_images_prefix_official_22,
+                    new_prefix=config.k8s_images_prefix_candidate,
+                    mappings=mappings,
+                    verbose=verbose)
             else:
                 cls._pull_domestic_images(
                     images_base,
@@ -242,14 +257,21 @@ class KubernetesInstaller(Installer):
         images_base = [':v'.join((image, k8s_version))
                        for image in images_base_version]
         major_minor = re.search(r'^([\d]+\.[\d]+)', k8s_version).group(1)
+        print(major_minor)
+        print(config.k8s_images_extra)
         images_extra = config.k8s_images_extra[major_minor]
         return images_base, images_extra
 
     @classmethod
     def _get_k8s_images_list_by_version(cls, k8s_version):
-        # k8s version > 1.11
-        if version.parse(k8s_version) > version.parse(
-                config.k8s_stable_versions['1.11']):
+        # k8s version >= 1.22
+        if version.parse(k8s_version) >= version.parse(
+                config.k8s_stable_versions['1.22']):
+            images_base, images_extra = cls._get_k8s_images_list(
+                k8s_version, config.k8s_images_base_from_22)
+        # 1.22 > k8s version > 1.11
+        elif version.parse(k8s_version) > version.parse(
+                config.k8s_stable_versions['1.11']) and version.parse(k8s_version) < version.parse(config.k8s_stable_versions['1.22']):
             images_base, images_extra = cls._get_k8s_images_list(
                 k8s_version, config.k8s_images_base_from_12)
         # 1.10 <= k8s version <= 1.11

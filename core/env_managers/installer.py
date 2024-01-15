@@ -180,6 +180,9 @@ class Installer(object):
     @classmethod
     def _pull_domestic_images(cls, images, ori_prefix,
                               new_prefix, mappings=None, verbose=False):
+        # print(images)
+        # print(ori_prefix)
+        # print(new_prefix)
         for image in images:
             cls._pull_domestic_image(
                 image,
@@ -191,7 +194,15 @@ class Installer(object):
     @classmethod
     def _pull_domestic_image(cls, image, ori_prefix,
                              new_prefix, mappings=None, verbose=False):
+        print(ori_prefix)
+        print(new_prefix)
         temp_image = image.replace(ori_prefix, new_prefix)
+        # 从阿里云pull镜像coredns时，coredns/coredns:v路径会被替换成coredns:
+        if 'coredns/coredns:v' in temp_image:
+            temp_image = temp_image.replace('coredns/coredns:v', 'coredns:')
+        print(temp_image)
+        print("****\n")
+        print(image)
         if mappings:
             mappings[temp_image] = image
         if not cls._image_exist(image):
