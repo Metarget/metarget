@@ -81,6 +81,7 @@ _containerd_apt_repo_entry_bionic_official = 'deb http://archive.ubuntu.com/ubun
 # active k8s components images source
 k8s_images_prefix_official = "k8s.gcr.io/"
 k8s_images_prefix_official_9 = "gcr.io/google_containers/"
+k8s_images_prefix_official_22 = "registry.k8s.io/" ## 1.22版本之后的镜像源
 k8s_images_prefix_candidate = _k8s_images_prefix_aliyun
 
 # active quay images source
@@ -143,6 +144,13 @@ cilium_images = [
     "quay.io/cilium/operator-generic:v1.9.0",
 ]
 
+k8s_images_base_from_22 = [
+    'registry.k8s.io/kube-proxy',
+    'registry.k8s.io/kube-controller-manager',
+    'registry.k8s.io/kube-apiserver',
+    'registry.k8s.io/kube-scheduler',
+]
+
 k8s_images_base_from_12 = [
     'k8s.gcr.io/kube-proxy',
     'k8s.gcr.io/kube-controller-manager',
@@ -180,9 +188,64 @@ k8s_stable_versions = {
     '1.17': 'v1.17.16',
     '1.18': 'v1.18.14',
     '1.19': 'v1.19.6',
+    '1.20': 'v1.20.15',
+    '1.21': 'v1.21.14',  
+    '1.22': 'v1.22.17',
+    '1.23': 'v1.23.17',
+    '1.24': 'v1.24.17',
+    '1.25': 'v1.25.16',
+    '1.26': 'v1.26.11',
+    '1.27': 'v1.27.8',
+    '1.28': 'v1.28.4',
 }
 
+# 此处的版本号按照kubeadm config images list返回的对应k8s版本号
 k8s_images_extra = {
+    '1.28': [
+        'registry.k8s.io/pause:3.7',
+        'registry.k8s.io/etcd:3.5.6-0',
+        'registry.k8s.io/coredns:1.8.6',
+    ],
+    '1.27': [
+        'registry.k8s.io/pause:3.7',
+        'registry.k8s.io/etcd:3.5.6-0',
+        'registry.k8s.io/coredns:1.8.6',
+    ],
+    '1.26': [
+        'registry.k8s.io/pause:3.7',
+        'registry.k8s.io/etcd:3.5.6-0',
+        'registry.k8s.io/coredns:1.8.6',
+    ],
+    '1.25': [ #apt源
+        'registry.k8s.io/pause:3.7',
+        'registry.k8s.io/etcd:3.5.6-0',
+        'registry.k8s.io/coredns:1.8.6',
+    ],
+    '1.24': [ # image pull 没问题，但kubeadm init又去拉取了一遍，拉取超时
+        'registry.k8s.io/pause:3.7',
+        'registry.k8s.io/etcd:3.5.6-0',
+        'registry.k8s.io/coredns/coredns:v1.8.6',
+    ],
+    '1.23': [ #已解决 error:kubelet cgroup driver: \"systemd\" is different from docker cgroup driver: \"cgroupfs\""
+        'registry.k8s.io/pause:3.6',
+        'registry.k8s.io/etcd:3.5.6-0',
+        'registry.k8s.io/coredns:1.8.6',
+    ],
+    '1.22': [ #已解决 error:kubelet cgroup driver: \"systemd\" is different from docker cgroup driver: \"cgroupfs\""
+        'registry.k8s.io/pause:3.5',
+        'registry.k8s.io/etcd:3.5.6-0',
+        'registry.k8s.io/coredns/coredns:v1.8.4',
+    ],
+    '1.21': [ #ok
+        'k8s.gcr.io/pause:3.4.1',
+        'k8s.gcr.io/etcd:3.4.13-0',
+        'k8s.gcr.io/coredns/coredns:v1.8.0',
+    ],
+    '1.20': [
+        'k8s.gcr.io/pause:3.2',
+        'k8s.gcr.io/etcd:3.4.13-0',
+        'k8s.gcr.io/coredns:1.7.0',
+    ],
     '1.19': [
         'k8s.gcr.io/pause:3.2',
         'k8s.gcr.io/etcd:3.4.13-0',
