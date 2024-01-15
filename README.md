@@ -411,6 +411,7 @@ Note:
 
 - [@brant-ruan](https://github.com/brant-ruan)
 - [@ListenerMoya](https://github.com/ListenerMoya)
+- [@Lvzhizheng](https://github.com/Lvzhizheng)
 
 ## 8 Contribution
 
@@ -429,7 +430,27 @@ Currently, you can contribute to Metarget in two ways:
 
 Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-## 9 About Logo
+## 9 Collaboration (Contact us at lvzhizheng@nsfocus.com)
+
+We eagerly welcome collaboration with universities, research institutions, and other academic entities! Metarget is dedicated to being an ideal experimental platform for cutting-edge research in the field of cloud-native security. We believe that cloud-native security will be a forefront topic in the future of network security, and Metarget provides an ideal research environment for this.
+
+Through our robust and flexible framework, you can delve into the security challenges of cloud-native environments, discover and explore innovative solutions, and contribute your expertise and findings to the entire industry's development.
+
+**Metarget offers the following distinctive support to collaborators:**
+
+1. **Diverse experimental scenarios:** Utilize Metarget to effortlessly build various vulnerable cloud-native target environments, covering a spectrum of experiment scenarios from simple to complex.
+
+2. **Support for multiple versions of Kernel, Kubernetes, and other cloud-native components:** Metarget consistently updates to support the latest versions of components, ensuring that you can use the latest technologies in your experiments.
+
+3. **Customization of Ubuntu versions:** We will tailor Ubuntu versions based on your experimental requirements, providing you with a more flexible experimental environment configuration.
+
+4. **Automatic generation of multi-node cloud-native clusters:** Metarget offers the functionality to automatically create multi-node cloud-native target clusters, enhancing the realism and depth of your research.
+
+5. ...
+
+Joining Metarget provides you with comprehensive technical support and abundant collaboration opportunities, allowing you to explore the forefront of cloud-native security and contribute your unique insights to the future development of network security. We look forward to your participation in collectively shaping a new chapter in cybersecurity research!
+
+## 10 About Logo
 
 It is not a Kubernetes, but a vulnerable infrastructure with three gears which could not work well (vulnerable) :)
 

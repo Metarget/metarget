@@ -431,6 +431,7 @@ Metarget将以上项目中的靶机统一转化为Kubernetes中的Deployment和S
 
 - [@brant-ruan](https://github.com/brant-ruan)
 - [@ListenerMoya](https://github.com/ListenerMoya)
+- [@Lvzhizheng](https://github.com/Lvzhizheng)
 
 ## 8 参与项目
 
@@ -447,11 +448,25 @@ Metarget的初衷之一是方便安全研究人员在漏洞出现的第一时间
 
 参与方式详见[CONTRIBUTING-zh.md](CONTRIBUTING-zh.md)。
 
-## 9 关于Logo
+## 9 合作（欢迎联系 lvzhizheng@nsfocus.com）
+
+我们非常欢迎高校、科研院所等单位共同参与进来！我们相信云原生安全是未来网络安全领域的重要研究方向，而Metarget正是为这样的研究提供了理想的实验平台。通过我们强大而灵活的框架，您可以深入研究云原生环境中的安全挑战，探索创新的解决方案，并为行业发展贡献您的智慧和发现。
+
+**Metarget将为合作者提供了以下特色支持：**
+
+1. **丰富的实验场景：** 利用Metarget，您可以轻松构建各种脆弱云原生靶机环境，涵盖从简单到复杂的多样实验场景。
+2. **多版本Kernel、Kubernetes等云原生组件支持：** Metarget持续更新以支持最新版本的组件，确保您在实验中能够使用最新的技术。
+3. **Ubuntu版本定制：** 我们将根据您的实验需求定制Ubuntu版本，使您获得更灵活的实验环境配置。
+4. **多节点云原生集群自动生成：** Metarget将为您提供了自动创建多节点云原生靶场集群的功能，使得研究更加真实、深入。
+5. ...
+
+加入Metarget，您将获得全面的技术支持和合作机会，探索云原生安全的前沿，为未来网络安全的发展添砖加瓦。我们期待您的参与，共同开创网络安全研究的新篇章！
+
+## 10 关于Logo
 
 Metarget logo的灵感来源于Kubernetes的logo，我们将Kubernetes的舵作为齿轮，三个齿轮组成一个正在运转的基础设施系统。然而，如果仔细观察，会发现齿轮的方向是矛盾的，系统无法正常运转（vulnerable）。
 
-## 10 开源许可证
+## 11 开源许可证
 
 Metarget采用的开源许可证是Apache License 2.0，阅读[LICENSE](LICENSE)文件了解更多。
 
