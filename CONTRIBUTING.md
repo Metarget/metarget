@@ -132,12 +132,11 @@ services:
     - "8080:80"
 ```
 
-Then use `docker_to_k8s.sh` in `tools/` to convert the file above into Kubernetes resource files. Service, deployment and `desc.yaml` files will be generated in `vul_app/`:
+Then use `docker_to_k8s.sh` in `tools/` to convert the file above into Kubernetes resource files. `docker-compose-yaml-backup.yaml` including Service and deployment, and `desc.yaml` files will be generated in `vul_app/`:
 
 ```
 bash docker_to_k8s.sh list.txt
-INFO Kubernetes file "vul_app/cve-2012-1823/cve-2012-1823-php-service.yaml" created
-INFO Kubernetes file "vul_app/cve-2012-1823/cve-2012-1823-php-deployment.yaml" created
+INFO Kubernetes file "vul_app/cve-2012-1823/docker-compose-yaml-backup.yaml" created
 ```
 
 `desc.yaml`:
@@ -157,8 +156,9 @@ links:				# references
 
 Note:
 
-- prefix of `hostPath` in deployment file should be stripped and finally become something like `php/CVE-2012-1823/www`.
+- Prefix of `hostPath` in deployment file should be stripped and finally become something like `php/CVE-2012-1823/www`.
 - Files to be mounted (e.g. `www/`) should be put into the same directory of `desc.yaml`.
+- Split `docker-compose-yaml-backup.yaml` into service and deployment files, and add fields like namespace if needed.
 
 Files structure:
 

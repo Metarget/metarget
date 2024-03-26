@@ -128,12 +128,11 @@ services:
     - "8080:80"
 ```
 
-然后使用tools下的`docker_to_k8s.sh`快速将其转换为Kubernetes资源文件，运行后会在`vul_app`目录下生成service、deployment和`desc.yaml`文件：
+然后使用tools下的`docker_to_k8s.sh`快速将其转换为Kubernetes资源文件，运行后会在`vul_app`目录下生成包含service、deployment的`docker-compose-yaml-backup.yaml`和`desc.yaml`文件：
 
 ```
 bash docker_to_k8s.sh list.txt
-INFO Kubernetes file "vul_app/cve-2012-1823/cve-2012-1823-php-service.yaml" created
-INFO Kubernetes file "vul_app/cve-2012-1823/cve-2012-1823-php-deployment.yaml" created
+INFO Kubernetes file "vul_app/cve-2012-1823/docker-compose-yaml-backup.yaml" created
 ```
 
 `desc.yaml`文件内容如下：
@@ -155,6 +154,7 @@ links:				# 漏洞参考文献
 
 - deployment文件中`hostPath`内容会生成程序相关路径，删除前缀部分使其为`php/CVE-2012-1823/www`。
 - 原目录下文件——即`www/`目录内容应一同拷贝至`desc.yaml`文件同目录下。
+- 将`docker-compose-yaml-backup.yaml`拆分为service和deployment两个文件，并根据需要添加namespace等字段。
 
 最终文件目录结构如下：
 
