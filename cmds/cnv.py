@@ -81,7 +81,7 @@ def install(args):
         else:
             color_print.debug(
                 '{v} successfully installed'.format(
-                    v=vuln['name']))
+                    v=vuln['name']), 1)
 
     if vuln['class'] == 'kubernetes':
         if checkers.kubernetes_specified_installed(
@@ -119,7 +119,7 @@ def install(args):
         else:
             color_print.debug(
                 '{v} successfully installed'.format(
-                    v=vuln['name']))
+                    v=vuln['name']), 1)
 
     if vuln['class'] == 'kernel':
         if checkers.kernel_specified_installed(
@@ -140,7 +140,7 @@ def install(args):
         else:
             color_print.debug(
                 '{v} successfully installed'.format(
-                    v=vuln['name']))
+                    v=vuln['name']), 1)
             # reboot
             reboot = color_print.debug_input('reboot system now? (y/n) ')
             if reboot == 'y' or reboot == 'Y':
