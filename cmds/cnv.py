@@ -66,7 +66,7 @@ def install(args):
             if installed_flag:
                 color_print.debug(
                     '{vuln} already installed'.format(
-                        vuln=vuln['name']))
+                        vuln=vuln['name']), 3)
                 return
         color_print.debug(
             '{vuln} is going to be installed'.format(
@@ -88,7 +88,7 @@ def install(args):
                 vuln['dependencies'], verbose=args.verbose):
             color_print.debug(
                 '{vuln} already installed'.format(
-                    vuln=vuln['name']))
+                    vuln=vuln['name']), 3)
             return
         if not checkers.docker_installed(verbose=args.verbose):
             color_print.error(
