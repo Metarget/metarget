@@ -181,7 +181,7 @@ def install(args):
         else:
             color_print.debug(
                 '{v} successfully installed'.format(
-                    v=vuln['name']))
+                    v=vuln['name']), 1)
 
 
 def remove(args):
