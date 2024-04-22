@@ -92,7 +92,7 @@ def install(args):
         else:
             color_print.debug(
                 '{gadget} successfully installed'.format(
-                    gadget=args.gadget))
+                    gadget=args.gadget), 1)
 
     if args.gadget == 'kata':
         temp_gadgets = [
