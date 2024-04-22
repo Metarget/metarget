@@ -66,7 +66,7 @@ def install(args):
                 temp_gadgets, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version))
+                    gadget=args.gadget, version=args.version), 3)
             return
         if not checkers.docker_installed(verbose=args.verbose):
             color_print.error(
@@ -102,7 +102,7 @@ def install(args):
                 temp_gadgets, kata_runtime_type=args.kata_runtime_type, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version))
+                    gadget=args.gadget, version=args.version), 3)
             return
         if not checkers.docker_installed(verbose=args.verbose):
             color_print.error(
@@ -129,7 +129,7 @@ def install(args):
                 temp_gadgets, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version))
+                    gadget=args.gadget, version=args.version), 3)
             return
         if not KernelInstaller.install_by_version(
                 temp_gadgets, verbose=args.verbose):
