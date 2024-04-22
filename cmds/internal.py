@@ -86,7 +86,7 @@ def deploy_vuln_resources_in_k8s(
             'failed to install {v}'.format(
                 v=vuln['name']))
     else:
-        color_print.debug('{v} successfully installed'.format(v=vuln['name']))
+        color_print.debug('{v} successfully installed'.format(v=vuln['name']), 1)
 
 
 def delete_vuln_resources_in_k8s(vuln, verbose=False):
