@@ -11,6 +11,7 @@ YELLOW_STR = "\033[33mwarning: %s\033[0m"
 BLUE_PROMPT = "\033[34m[\033[0m%s\033]34m[\033[0m"
 TYPE_PLUS_ = "\033[32m%s\033[0m"
 TYPE_RMVS_ = "\033[31m%s\033[0m"
+TYPE_USED_ = "\033[33m%s\033[0m"
 
 
 def debug(message, mode=0, type = 0):
@@ -19,8 +20,10 @@ def debug(message, mode=0, type = 0):
             print(GREEN_STR % message)
         elif type == 1:
             print(BLUE_PROMPT % (TYPE_PLUS_ % '+') + GREEN_STR % message)
-        else type == 2:
+        elif type == 2:
             print(BLUE_PROMPT % (TYPE_RMVS_ % '-') + GREEN_STR % message)
+        elif type == 3:
+            print(BLUE_PROMPT % (TYPE_USED_ % '*') + GREEN_STR % message)
     elif mode == 1:
         print(RED_STR % message)
     elif mode == 2:
