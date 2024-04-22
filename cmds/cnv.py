@@ -221,17 +221,17 @@ def remove(args):
 
     if vuln['class'].startswith('docker'):
         DockerInstaller.uninstall(verbose=args.verbose)
-        color_print.debug('{v} successfully removed'.format(v=vuln['name']))
+        color_print.debug('{v} successfully removed'.format(v=vuln['name']), 2)
 
     if vuln['class'] == 'kubernetes':
         KubernetesInstaller.uninstall(verbose=args.verbose)
-        color_print.debug('{v} successfully removed'.format(v=vuln['name']))
+        color_print.debug('{v} successfully removed'.format(v=vuln['name']), 2)
 
     if vuln['class'] == 'kata-containers':
         if KataContainersInstaller.uninstall(verbose=args.verbose):
             color_print.debug(
                 '{v} successfully removed'.format(
-                    v=vuln['name']))
+                    v=vuln['name']), 2)
         else:
             color_print.error('failed to remove {v}'.format(v=vuln['name']))
 
