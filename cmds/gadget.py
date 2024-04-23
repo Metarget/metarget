@@ -42,7 +42,7 @@ def install(args):
         if checkers.docker_specified_installed(temp_gadgets):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version))
+                    gadget=args.gadget, version=args.version), 3)
             return
         color_print.debug('uninstalling current docker if applicable')
         DockerInstaller.uninstall(verbose=args.verbose)
