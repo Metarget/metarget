@@ -32,17 +32,21 @@ def install(args):
         None.
     """
     if args.gadget == 'docker':
+        if args.default_version:
+            install_version = config.docker_default_version
+        else:
+            install_version = args.version
         temp_gadgets = [{
                 'name': 'docker-ce',
-                'version': args.version,
+                'version': install_version,
             }, {
                 'name': 'docker-ce-cli',
-                'version': args.version,
+                'version': install_version,
             }]
         if checkers.docker_specified_installed(temp_gadgets):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version))
+                    gadget=args.gadget, version=install_version))
             return
         color_print.debug('uninstalling current docker if applicable')
         DockerInstaller.uninstall(verbose=args.verbose)
@@ -54,19 +58,23 @@ def install(args):
         else:
             color_print.debug(
                 '{gadget} with version {version} successfully installed'.format(
-                    gadget=args.gadget, version=args.version))
+                    gadget=args.gadget, version=install_version))
 
     if args.gadget == 'k8s':
+        if args.default_version:
+            install_version = config.k8s_default_version
+        else:
+            install_version = args.version
         temp_gadgets = [
-            {'name': 'kubelet', 'version': args.version},
-            {'name': 'kubeadm', 'version': args.version},
-            {'name': 'kubectl', 'version': args.version},
+            {'name': 'kubelet', 'version': install_version},
+            {'name': 'kubeadm', 'version': install_version},
+            {'name': 'kubectl', 'version': install_version},
         ]
         if checkers.kubernetes_specified_installed(
                 temp_gadgets, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version))
+                    gadget=args.gadget, version=install_version))
             return
         if not checkers.docker_installed(verbose=args.verbose):
             color_print.error(
@@ -95,14 +103,18 @@ def install(args):
                     gadget=args.gadget))
 
     if args.gadget == 'kata':
+        if args.default_version:
+            install_version = config.kata_default_version
+        else:
+            install_version = args.version
         temp_gadgets = [
-            {'name': 'kata-containers', 'version': args.version},
+            {'name': 'kata-containers', 'version': install_version},
         ]
         if checkers.kata_specified_installed(
                 temp_gadgets, kata_runtime_type=args.kata_runtime_type, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version))
+                    gadget=args.gadget, version=install_version))
             return
         if not checkers.docker_installed(verbose=args.verbose):
             color_print.error(
@@ -119,17 +131,21 @@ def install(args):
         else:
             color_print.debug(
                 '{gadget} with version {version} (runtime type: {runtime_type}) successfully installed'.format(
-                    gadget=args.gadget, version=args.version, runtime_type=args.kata_runtime_type))
+                    gadget=args.gadget, version=install_version, runtime_type=args.kata_runtime_type))
 
     if args.gadget == 'kernel':
+        if args.default_version:
+            install_version = config.kernel_default_version
+        else:
+            install_version = args.version
         temp_gadgets = [
-            {'name': 'kernel', 'version': args.version},
+            {'name': 'kernel', 'version': install_version},
         ]
         if checkers.kernel_specified_installed(
                 temp_gadgets, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version))
+                    gadget=args.gadget, version=install_version))
             return
         if not KernelInstaller.install_by_version(
                 temp_gadgets, verbose=args.verbose):
@@ -176,8 +192,12 @@ def remove(args):
                 'failed to remove {gadget}'.format(
                     gadget=args.gadget))
     if args.gadget == 'kernel':
+        if args.default_version:
+            install_version = config.kernel_default_version
+        else:
+            install_version = args.version
         temp_gadgets = [
-            {'name': 'kernel', 'version': args.version},
+            {'name': 'kernel', 'version': install_version},
         ]
         if KernelInstaller.uninstall(temp_gadgets, verbose=args.verbose):
             color_print.debug(
