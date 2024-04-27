@@ -44,7 +44,7 @@ def debug(message, mode=0, type=0):
         print(message)
     return
 
-
+# Add prompts related to important confirmations
 def debug_input(message, mode=0, type=0):
     if mode == 0:
         if type == 0:
