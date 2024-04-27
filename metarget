@@ -72,8 +72,16 @@ def main():
         'install', help='install gadgets')
     parser_gadget_install.add_argument(
         'gadget', help='gadget name, run `metarget gadget list` to retrieve gadgets supported')
-    parser_gadget_install.add_argument(
-        '-v', '--version', dest='version', required=True, help='gadget version')
+    # parser_gadget_install.add_argument(
+    #     '-v', '--version', dest='version', required=True, help='gadget version')
+    # parser_gadget_install.add_argument(
+    #     '--default_version',
+    #     action='store_true',
+    #     help='install the default version of the gadget')
+    group = parser_gadget_install.add_mutually_exclusive_group(required=True)
+    group.add_argument('-v', '--version', dest='version', help='gadget version')
+    group.add_argument('--default_version', action='store_true', help='install the default version of the gadget')
+    
     # options for k8s
     parser_gadget_install.add_argument(
         '--cni-plugin',
@@ -123,8 +131,15 @@ def main():
         help='print output verbosely',
     )
     parser_gadget_remove.set_defaults(func=cmds.gadget.remove)
-    parser_gadget_remove.add_argument(
-        '-v', '--version', dest='version', required=True, help='gadget version')
+    # parser_gadget_remove.add_argument(
+    #     '-v', '--version', dest='version', required=True, help='gadget version')
+    # parser_gadget_remove.add_argument(
+    #     '--default_version',
+    #     action='store_true',
+    #     help='remove the default version of the gadget')
+    group = parser_gadget_remove.add_mutually_exclusive_group(required=True)
+    group.add_argument('-v', '--version', dest='version', help='gadget version')
+    group.add_argument('--default_version', action='store_true', help='remove the default version of the gadget')
     
     # subcommand `cnv`
     parser_cnv = subparsers.add_parser(
@@ -239,6 +254,11 @@ def main():
         'appv',
         help='running appv name, run `metarget appv list` to retrieve appv supported')
     parser_appv_remove.set_defaults(func=cmds.appv.remove)
+    
+    # sub-subcommand `appv ps`
+    parser_appv_ps = subparsers_appv.add_parser(
+        'ps', help='show running application vulnerabilities')
+    parser_appv_ps.set_defaults(func=cmds.appv.show_running)
 
     args = parser.parse_args()
     try:
