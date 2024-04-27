@@ -66,11 +66,11 @@ def install(args):
             if installed_flag:
                 color_print.debug(
                     '{vuln} already installed'.format(
-                        vuln=vuln['name']), 3)
+                        vuln=vuln['name']), type=3)
                 return
         color_print.debug(
             '{vuln} is going to be installed'.format(
-                vuln=vuln['name']), 3)
+                vuln=vuln['name']), type=3)
         color_print.debug('uninstalling current docker gadgets if applicable')
         DockerInstaller.uninstall(verbose=args.verbose)
         if not DockerInstaller.install_by_version(
@@ -81,14 +81,14 @@ def install(args):
         else:
             color_print.debug(
                 '{v} successfully installed'.format(
-                    v=vuln['name']), 1)
+                    v=vuln['name']), type=1)
 
     if vuln['class'] == 'kubernetes':
         if checkers.kubernetes_specified_installed(
                 vuln['dependencies'], verbose=args.verbose):
             color_print.debug(
                 '{vuln} already installed'.format(
-                    vuln=vuln['name']), 3)
+                    vuln=vuln['name']), type=3)
             return
         if not checkers.docker_installed(verbose=args.verbose):
             color_print.error(
@@ -97,7 +97,7 @@ def install(args):
                 'you can run `metarget gadget install docker --version 18.03.1` to install one')
         color_print.debug(
             '{vuln} is going to be installed'.format(
-                vuln=vuln['name']), 3)
+                vuln=vuln['name']), type=3)
         color_print.debug('uninstalling current kubernetes if applicable')
         KubernetesInstaller.uninstall(verbose=args.verbose)
         temp_pod_network_cidr = args.pod_network_cidr if args.pod_network_cidr else config.cni_plugin_cidrs[
@@ -119,18 +119,18 @@ def install(args):
         else:
             color_print.debug(
                 '{v} successfully installed'.format(
-                    v=vuln['name']), 1)
+                    v=vuln['name']), type=1)
 
     if vuln['class'] == 'kernel':
         if checkers.kernel_specified_installed(
                 vuln['dependencies'], verbose=args.verbose):
             color_print.debug(
                 '{vuln} already installed'.format(
-                    vuln=vuln['name']), 3)
+                    vuln=vuln['name']), type=3)
             return
         color_print.debug(
             '{vuln} is going to be installed'.format(
-                vuln=vuln['name']), 3)
+                vuln=vuln['name']), type=3)
 
         if not KernelInstaller.install_by_version(
                 gadgets=vuln['dependencies'], verbose=args.verbose):
@@ -140,7 +140,7 @@ def install(args):
         else:
             color_print.debug(
                 '{v} successfully installed'.format(
-                    v=vuln['name']), 1)
+                    v=vuln['name']), type=1)
             # reboot
             reboot = color_print.debug_input('reboot system now? (y/n) ')
             if reboot == 'y' or reboot == 'Y':
@@ -153,7 +153,7 @@ def install(args):
                 verbose=args.verbose):
             color_print.debug(
                 '{vuln} already installed'.format(
-                    vuln=vuln['name']), 3)
+                    vuln=vuln['name']), type=3)
             return
         if not checkers.docker_installed(verbose=args.verbose):
             color_print.error(
@@ -163,7 +163,7 @@ def install(args):
 
         color_print.debug(
             '{vuln} is going to be installed'.format(
-                vuln=vuln['name']), 3)
+                vuln=vuln['name']), type=3)
 
         color_print.debug('uninstalling current kata-containers if applicable')
         KataContainersInstaller.uninstall(verbose=args.verbose)
@@ -181,7 +181,7 @@ def install(args):
         else:
             color_print.debug(
                 '{v} successfully installed'.format(
-                    v=vuln['name']), 1)
+                    v=vuln['name']), type=1)
 
 
 def remove(args):
@@ -217,21 +217,21 @@ def remove(args):
 
     color_print.debug(
         '{vuln} is going to be removed'.format(
-            vuln=vuln['name']), 3)
+            vuln=vuln['name']), type=3)
 
     if vuln['class'].startswith('docker'):
         DockerInstaller.uninstall(verbose=args.verbose)
-        color_print.debug('{v} successfully removed'.format(v=vuln['name']), 2)
+        color_print.debug('{v} successfully removed'.format(v=vuln['name']), type=2)
 
     if vuln['class'] == 'kubernetes':
         KubernetesInstaller.uninstall(verbose=args.verbose)
-        color_print.debug('{v} successfully removed'.format(v=vuln['name']), 2)
+        color_print.debug('{v} successfully removed'.format(v=vuln['name']), type=2)
 
     if vuln['class'] == 'kata-containers':
         if KataContainersInstaller.uninstall(verbose=args.verbose):
             color_print.debug(
                 '{v} successfully removed'.format(
-                    v=vuln['name']), 2)
+                    v=vuln['name']), type=2)
         else:
             color_print.error('failed to remove {v}'.format(v=vuln['name']))
 
