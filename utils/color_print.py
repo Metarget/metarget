@@ -14,9 +14,11 @@ BLUE_PROMPT = "\033[34m[\033[0m%s\033[34m]\033[0m"
 TYPE_PLUS_ = "\033[32m%s\033[0m"
 TYPE_RMVS_ = "\033[31m%s\033[0m"
 TYPE_USED_ = "\033[33m%s\033[0m"
+TYPE_IMPR_ = "\033[95m%s\033[0m"
 
 
-def debug(message, mode=0, type = 0):
+# Add some prompts related the info
+def debug(message, mode=0, type=0):
     if mode == 0:
         if type == 0:
             # TYPE:0 default mode without any prompt message
@@ -43,9 +45,12 @@ def debug(message, mode=0, type = 0):
     return
 
 
-def debug_input(message, mode=0):
+def debug_input(message, mode=0, type=0):
     if mode == 0:
-        res = input(GREEN_STR % message)
+        if type == 0:
+            res = input(GREEN_STR % message)
+        elif type == 1:
+            res = input(BLUE_PROMPT % (TYPE_IMPR % "!") + GREEN_STR % message)
     elif mode == 1:
         res = input(RED_STR % message)
     elif mode == 2:
