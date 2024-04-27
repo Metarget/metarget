@@ -91,3 +91,30 @@ def retrieve(args):
     table.show_table(
         vulns_stripped, sort_key=operator.itemgetter(
             2, 1), sortby='class')
+
+def show_running(args):
+    """
+    Show running application vulnerabilities.
+
+    Args:
+        args: Command-line arguments (not used).
+
+    Returns:
+        None.
+    """
+    running_vulns = internal_cmds.get_running_vulns_in_k8s()
+    if not running_vulns:
+        color_print.warn('No running application vulnerabilities found.')
+        return
+
+    running_vulns_stripped = []
+    for vuln in running_vulns:
+        vuln_stripped = collections.OrderedDict()
+        vuln_stripped['name'] = vuln['name']
+        vuln_stripped['class'] = vuln['class']
+        vuln_stripped['status'] = vuln['status']
+        running_vulns_stripped.append(vuln_stripped)
+
+    table.show_table(
+        running_vulns_stripped, sort_key=operator.itemgetter(
+            2, 1), sortby='class')

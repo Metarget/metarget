@@ -9,7 +9,40 @@ import utils.color_print as color_print
 from core.env_managers.kubernetes_resource_deployer import KubernetesResourceDeployer
 from core.vuln_app_manager import port_manager
 from core.vuln_app_manager import resource_modifier
+import subprocess
+import json
 
+
+def get_running_vulns_in_k8s():
+    """Get the list of running application vulnerabilities in Kubernetes."""
+    try:
+        # Use kubectl to get the list of running pods in the default namespace
+        kubectl_command = "kubectl get pods -o json"
+        output = subprocess.check_output(kubectl_command, shell=True, text=True)
+
+        # Parse the JSON output to extract relevant information
+        pod_info = json.loads(output)
+        running_vulns = []
+
+        for pod in pod_info.get('items', []):
+            vuln_name = pod.get('metadata', {}).get('name', '')
+            vuln_class = pod.get('metadata', {}).get('labels', {}).get('app', '')
+            vuln_status = pod.get('status', {}).get('phase', '')
+
+            # Consider only pods labeled as application vulnerabilities
+            if vuln_class.startswith('vuln-'):
+                vuln_data = {
+                    'name': vuln_name,
+                    'class': vuln_class,
+                    'status': vuln_status
+                }
+                running_vulns.append(vuln_data)
+
+        return running_vulns
+
+    except subprocess.CalledProcessError as e:
+        print(f"Error executing kubectl command: {e}")
+        return []
 
 def deploy_vuln_resources_in_k8s(
         vuln, external=False, host_net=False, host_pid=False, verbose=False):

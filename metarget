@@ -254,6 +254,11 @@ def main():
         'appv',
         help='running appv name, run `metarget appv list` to retrieve appv supported')
     parser_appv_remove.set_defaults(func=cmds.appv.remove)
+    
+    # sub-subcommand `appv ps`
+    parser_appv_ps = subparsers_appv.add_parser(
+        'ps', help='show running application vulnerabilities')
+    parser_appv_ps.set_defaults(func=cmds.appv.show_running)
 
     args = parser.parse_args()
     try:
