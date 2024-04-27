@@ -50,7 +50,7 @@ def debug_input(message, mode=0, type=0):
         if type == 0:
             res = input(GREEN_STR % message)
         elif type == 1:
-            res = input(BLUE_PROMPT % (TYPE_IMPR % "!") + GREEN_STR % message)
+            res = input(BLUE_PROMPT % (TYPE_IMPR_ % "!") + GREEN_STR % message)
     elif mode == 1:
         res = input(RED_STR % message)
     elif mode == 2:
