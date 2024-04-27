@@ -25,3 +25,6 @@ venv/
 # programming languages
 *.pyc
 *.o
+
+README.md
+README-org.md
