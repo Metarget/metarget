@@ -17,12 +17,19 @@ TYPE_USED_ = "\033[33m%s\033[0m"
 def debug(message, mode=0, type = 0):
     if mode == 0:
         if type == 0:
+            # TYPE:0 default mode without any prompt message
             print(GREEN_STR % message)
         elif type == 1:
+            # TYPE:1 with prompt message +
+            # Prompt: successfully installed
             print(BLUE_PROMPT % (TYPE_PLUS_ % '+') + GREEN_STR % message)
         elif type == 2:
+            # TYPE:2 with prompt message -
+            # Prompt: successfully uninstalled/remove
             print(BLUE_PROMPT % (TYPE_RMVS_ % '-') + GREEN_STR % message)
         elif type == 3:
+            # TYPE:3 with prompt message *
+            # Prompt: message about already installed
             print(BLUE_PROMPT % (TYPE_USED_ % '*') + GREEN_STR % message)
     elif mode == 1:
         print(RED_STR % message)
