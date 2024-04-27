@@ -51,7 +51,7 @@ def kubernetes_installed(verbose=False):
             stdout=subprocess.PIPE,
             stderr=stderr,
             check=True)
-        color_print.debug('kubernetes already installed')
+        color_print.debug('kubernetes already installed', type=3)
         return True
     except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
         return False
@@ -74,7 +74,7 @@ def docker_installed(verbose=False):
             stdout=subprocess.PIPE,
             stderr=stderr,
             check=True)
-        color_print.debug('docker already installed')
+        color_print.debug('docker already installed', type=3)
         return True
     except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
         return False
