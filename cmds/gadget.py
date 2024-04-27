@@ -141,7 +141,7 @@ def install(args):
                 '{gadget} successfully installed'.format(
                     gadget=args.gadget), type=1)
             # reboot
-            reboot = color_print.debug_input('reboot system now? (y/n) ')
+            reboot = color_print.debug_input('reboot system now? (y/n) ', type=1)
             if reboot == 'y' or reboot == 'Y':
                 system_func.reboot_system(verbose=args.verbose)
 
@@ -184,7 +184,7 @@ def remove(args):
                 '{gadget} successfully removed'.format(
                     gadget=args.gadget), type=2)
             # reboot
-            reboot = color_print.debug_input('reboot system now? (y/n) ')
+            reboot = color_print.debug_input('reboot system now? (y/n) ', type=1)
             if reboot == 'y' or reboot == 'Y':
                 system_func.reboot_system(verbose=args.verbose)
         else:
