@@ -31,7 +31,7 @@ def deploy_vuln_resources_in_k8s(
 
     color_print.debug(
         '{vuln} is going to be installed'.format(
-            vuln=vuln['name']))
+            vuln=vuln['name']), type=3)
     yamls = [os.path.join(vuln['path'], dependency)
              for dependency in vuln['dependencies']['yamls']]
     # some appv need hostPath volumes
@@ -86,7 +86,7 @@ def deploy_vuln_resources_in_k8s(
             'failed to install {v}'.format(
                 v=vuln['name']))
     else:
-        color_print.debug('{v} successfully installed'.format(v=vuln['name']))
+        color_print.debug('{v} successfully installed'.format(v=vuln['name']), tyype=1)
 
 
 def delete_vuln_resources_in_k8s(vuln, verbose=False):
@@ -104,7 +104,7 @@ def delete_vuln_resources_in_k8s(vuln, verbose=False):
     """
     color_print.debug(
         '{vuln} is going to be removed'.format(
-            vuln=vuln['name']))
+            vuln=vuln['name']), type=3)
     yamls = [os.path.join(vuln['path'], dependency)
              for dependency in vuln['dependencies']['yamls']]
 

@@ -175,7 +175,7 @@ class Installer(object):
             except subprocess.CalledProcessError:
                 return False
         else:
-            color_print.debug('%s already pulled' % image)
+            color_print.debug('%s already pulled' % image, 3)
 
     @classmethod
     def _pull_domestic_images(cls, images, ori_prefix,
@@ -209,7 +209,7 @@ class Installer(object):
             cls._pull_image(temp_image, verbose=verbose)
             cls._tag_image(temp_image, image)
         else:
-            color_print.debug('%s already pulled' % image)
+            color_print.debug('%s already pulled' % image, 3)
 
     @classmethod
     def _tag_images(cls, old_names, new_names):
