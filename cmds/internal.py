@@ -104,7 +104,7 @@ def delete_vuln_resources_in_k8s(vuln, verbose=False):
     """
     color_print.debug(
         '{vuln} is going to be removed'.format(
-            vuln=vuln['name']))
+            vuln=vuln['name']), type=3)
     yamls = [os.path.join(vuln['path'], dependency)
              for dependency in vuln['dependencies']['yamls']]
 
