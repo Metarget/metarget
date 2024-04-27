@@ -49,7 +49,23 @@ def install(args):
                     gadget=args.gadget, version=install_version))
             return
         color_print.debug('uninstalling current docker if applicable')
-        DockerInstaller.uninstall(verbose=args.verbose)
+        
+        # ask user whether to uninstall current docker
+        loop_count = 0
+        while True:
+            if loop_count > 10:
+                color_print.error_and_exit('too many invalid inputs')
+            uninstall = color_print.debug_input(
+                'uninstall current docker gadgets? (y/n) ')
+            if uninstall == 'y' or uninstall == 'Y':
+                DockerInstaller.uninstall(verbose=args.verbose)
+                break
+            elif uninstall == 'n' or uninstall == 'N':
+                break
+            else:
+                color_print.error('invalid input')
+                loop_count += 1
+                
         if not DockerInstaller.install_by_version(
                 temp_gadgets, verbose=args.verbose):
             color_print.error(
