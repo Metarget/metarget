@@ -31,7 +31,7 @@ def debug(message, mode=0, type = 0):
             print(BLUE_PROMPT % (TYPE_RMVS_ % '-') + GREEN_STR % message)
         elif type == 3:
             # TYPE:3 with prompt message *
-            # Prompt: message about already installed
+            # Prompt: message about already installed/going to install/remove
             print(BLUE_PROMPT % (TYPE_USED_ % '*') + GREEN_STR % message)
     elif mode == 1:
         print(RED_STR % message)
