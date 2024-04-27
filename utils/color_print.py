@@ -76,3 +76,4 @@ def warning(message):
 if __name__ == '__main__':
     debug('hello, world')
     debug_input('ready to reboot system? (y/n) ')
+    debug_input('ready to reboot system? (y/n) ', type=1)
