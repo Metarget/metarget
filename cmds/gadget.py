@@ -139,7 +139,7 @@ def install(args):
         else:
             color_print.debug(
                 '{gadget} successfully installed'.format(
-                    gadget=args.gadget), 1)
+                    gadget=args.gadget), type=1)
             # reboot
             reboot = color_print.debug_input('reboot system now? (y/n) ')
             if reboot == 'y' or reboot == 'Y':
