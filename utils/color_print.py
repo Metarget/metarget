@@ -8,6 +8,8 @@ import sys
 RED_STR = "\033[31merror: %s\033[0m"
 GREEN_STR = "\033[32m%s\033[0m"
 YELLOW_STR = "\033[33mwarning: %s\033[0m"
+
+# Add some new color print
 BLUE_PROMPT = "\033[34m[\033[0m%s\033]34m[\033[0m"
 TYPE_PLUS_ = "\033[32m%s\033[0m"
 TYPE_RMVS_ = "\033[31m%s\033[0m"
