@@ -142,7 +142,7 @@ def install(args):
                 '{v} successfully installed'.format(
                     v=vuln['name']), type=1)
             # reboot
-            reboot = color_print.debug_input('reboot system now? (y/n) ')
+            reboot = color_print.debug_input('reboot system now? (y/n) ', type=1)
             if reboot == 'y' or reboot == 'Y':
                 system_func.reboot_system(verbose=args.verbose)
 
