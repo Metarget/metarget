@@ -42,7 +42,7 @@ def install(args):
         if checkers.docker_specified_installed(temp_gadgets):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version), 3)
+                    gadget=args.gadget, version=args.version), type=3)
             return
         color_print.debug('uninstalling current docker if applicable')
         DockerInstaller.uninstall(verbose=args.verbose)
@@ -54,7 +54,7 @@ def install(args):
         else:
             color_print.debug(
                 '{gadget} with version {version} successfully installed'.format(
-                    gadget=args.gadget, version=args.version), 1)
+                    gadget=args.gadget, version=args.version), type=1)
 
     if args.gadget == 'k8s':
         temp_gadgets = [
@@ -66,7 +66,7 @@ def install(args):
                 temp_gadgets, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version), 3)
+                    gadget=args.gadget, version=args.version), type=3)
             return
         if not checkers.docker_installed(verbose=args.verbose):
             color_print.error(
@@ -92,7 +92,7 @@ def install(args):
         else:
             color_print.debug(
                 '{gadget} successfully installed'.format(
-                    gadget=args.gadget), 1)
+                    gadget=args.gadget), type=1)
 
     if args.gadget == 'kata':
         temp_gadgets = [
@@ -102,7 +102,7 @@ def install(args):
                 temp_gadgets, kata_runtime_type=args.kata_runtime_type, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version), 3)
+                    gadget=args.gadget, version=args.version), type=3)
             return
         if not checkers.docker_installed(verbose=args.verbose):
             color_print.error(
@@ -119,7 +119,7 @@ def install(args):
         else:
             color_print.debug(
                 '{gadget} with version {version} (runtime type: {runtime_type}) successfully installed'.format(
-                    gadget=args.gadget, version=args.version, runtime_type=args.kata_runtime_type), 1)
+                    gadget=args.gadget, version=args.version, runtime_type=args.kata_runtime_type), type=1)
 
     if args.gadget == 'kernel':
         temp_gadgets = [
@@ -129,7 +129,7 @@ def install(args):
                 temp_gadgets, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
-                    gadget=args.gadget, version=args.version), 3)
+                    gadget=args.gadget, version=args.version), type=3)
             return
         if not KernelInstaller.install_by_version(
                 temp_gadgets, verbose=args.verbose):
@@ -160,17 +160,17 @@ def remove(args):
         DockerInstaller.uninstall(verbose=args.verbose)
         color_print.debug(
             '{gadget} successfully removed'.format(
-                gadget=args.gadget), 2)
+                gadget=args.gadget), type=2)
     if args.gadget == 'k8s':
         KubernetesInstaller.uninstall(verbose=args.verbose)
         color_print.debug(
             '{gadget} successfully removed'.format(
-                gadget=args.gadget), 2)
+                gadget=args.gadget), type=2)
     if args.gadget == 'kata':
         if KataContainersInstaller.uninstall(verbose=args.verbose):
             color_print.debug(
                 '{gadget} successfully removed'.format(
-                    gadget=args.gadget), 2)
+                    gadget=args.gadget), type=2)
         else:
             color_print.error(
                 'failed to remove {gadget}'.format(
@@ -182,7 +182,7 @@ def remove(args):
         if KernelInstaller.uninstall(temp_gadgets, verbose=args.verbose):
             color_print.debug(
                 '{gadget} successfully removed'.format(
-                    gadget=args.gadget), 2)
+                    gadget=args.gadget), type=2)
             # reboot
             reboot = color_print.debug_input('reboot system now? (y/n) ')
             if reboot == 'y' or reboot == 'Y':
