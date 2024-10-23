@@ -4,7 +4,6 @@ Application Vulnerabilities Commands
 
 import collections
 import operator
-
 import utils.table as table
 import utils.color_print as color_print
 import utils.checkers as checkers
@@ -12,7 +11,6 @@ import utils.filters as filters
 import config
 import cmds.internal as internal_cmds
 from core.vuln_app_manager import vuln_loader
-
 
 def install(args):
     """Install an application vulnerability.
