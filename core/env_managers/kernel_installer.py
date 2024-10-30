@@ -92,7 +92,6 @@ class KernelInstaller(Installer):
                 #     url=deb, save_path=os.path.join(
                 #         config.kernel_packages_dir, filename))
                 temp_list = [substr.start() for substr in re.finditer(version,filename)]
-                print(version)
                 temp_cmd.append(
                     '{filename}'.format(filename=filename[:temp_list[1]])+"*")
                 if 'linux-image-' in filename:  # get full version for further modification in grub
@@ -103,7 +102,6 @@ class KernelInstaller(Installer):
                         pass
             color_print.debug('uninstalling kernel packages')
             # installation of kernel may return nonzero, currently ignore them
-            print(temp_cmd)
             subprocess.run(temp_cmd, stdout=stdout, stderr=stderr, check=False)
             if version_suffix:
                 subprocess.run(
