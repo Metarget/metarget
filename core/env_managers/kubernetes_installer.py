@@ -291,6 +291,7 @@ class KubernetesInstaller(Installer):
         _, stderr = verbose_func.verbose_output(verbose)
         kubelet_complete_version = cls._get_apt_complete_version(
             name, k8s_cni_version, verbose=verbose)
+        print(kubelet_complete_version)
         res = subprocess.run(['apt', 'show', '{name}={version}'.format(
             name=name, version=kubelet_complete_version)], stdout=subprocess.PIPE, stderr=stderr, check=True)
         depends = None
