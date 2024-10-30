@@ -202,9 +202,9 @@ k8s_stable_versions = {
 # 此处的版本号按照kubeadm config images list返回的对应k8s版本号
 k8s_images_extra = {
     '1.28': [
-        'registry.k8s.io/pause:3.7',
-        'registry.k8s.io/etcd:3.5.6-0',
-        'registry.k8s.io/coredns:1.8.6',
+        'registry.k8s.io/pause:3.9',
+        'registry.k8s.io/etcd:3.5.9-0',
+        'registry.k8s.io/coredns/coredns:1.10.1',
     ],
     '1.27': [
         'registry.k8s.io/pause:3.7',
@@ -214,12 +214,12 @@ k8s_images_extra = {
     '1.26': [
         'registry.k8s.io/pause:3.7',
         'registry.k8s.io/etcd:3.5.6-0',
-        'registry.k8s.io/coredns:1.8.6',
+        'registry.k8s.io/coredns/coredns:1.8.6',
     ],
-    '1.25': [ #apt源
-        'registry.k8s.io/pause:3.7',
-        'registry.k8s.io/etcd:3.5.6-0',
-        'registry.k8s.io/coredns:1.8.6',
+    '1.25': [ #apt源 apt list -a kubelet显示没有1.25.16版本
+        'registry.k8s.io/pause:3.8',
+        'registry.k8s.io/etcd:3.5.4-0',
+        'registry.k8s.io/coredns/coredns:v1.9.3',
     ],
     '1.24': [ # image pull 没问题，但kubeadm init又去拉取了一遍，拉取超时
         'registry.k8s.io/pause:3.7',
