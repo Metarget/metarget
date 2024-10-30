@@ -64,7 +64,7 @@ RCE、容器逃逸、横向移动、隐蔽持久化，统统打包送给你。
 ### 2.1 依赖项
 
 - Ubuntu 16.04或**18.04（推荐）**
-    - 在某些情况下（例如，新的内核漏洞），需要使用特定的Ubuntu发行版s
+    - 在某些情况下（例如，新的内核漏洞），需要使用特定的Ubuntu发行版
     - 可以阅读对应漏洞的提示来选择合适的发行版（后面列表中名字后面带星号的部分漏洞）
 - **Python >= 3.6** (不支持Python 2.x！)
 - pip3
@@ -330,6 +330,7 @@ optional arguments:
 |[cve-2019-5736](vulns_cn/docker/cve-2019-5736.yaml)|docker/runc|容器逃逸|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2019-5736)||
 |[cve-2019-16884](vulns_cn/docker/cve-2019-16884.yaml)|docker/runc|容器逃逸|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-16884)||
 |[cve-2021-30465\*](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|容器逃逸|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)|[链接](writeups_cnv/docker-runc-cve-2021-30465)|
+|[cve-2024-21626](vulns_cn/docker/cve-2024-21626.yaml)|docker/runc|容器逃逸|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2024-21626)||
 |[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|k8s|容器逃逸|[9.6](https://nvd.nist.gov/vuln/detail/CVE-2017-1002101)|[链接](https://github.com/brant-ruan/cloud-native-security-book/blob/main/appendix/CVE-2017-1002101：突破隔离访问宿主机文件系统.pdf)|
 |[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|k8s|权限提升|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)||
 |[cve-2018-1002100](vulns_cn/kubernetes/cve-2018-1002100.yaml)|k8s/kubectl|容器逃逸|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2018-1002100)||
@@ -366,7 +367,9 @@ optional arguments:
 |[cve-2022-25636\*](vulns_cn/kernel/cve-2022-25636.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-25636)||
 |[cve-2022-23222](vulns_cn/kernel/cve-2022-23222.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-23222)||
 |[cve-2022-27666\*](vulns_cn/kernel/cve-2022-27666.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-27666)||
+|[cve-2023-3269\*](vulns_cn/kernel/cve-2023-3269.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2023-3269)||
 |[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|容器逃逸|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2025)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)||
+|[cve-2020-27151](vulns_cn/kata-containers/cve-2020-27151.yaml)|kata-containers|容器逃逸|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-27151)||
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|危险配置|容器逃逸|-|[链接](writeups_cnv/config-cap_dac_read_search-container)|
 |[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|危险配置|容器逃逸|-||
 |[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|危险配置|容器逃逸|-||
