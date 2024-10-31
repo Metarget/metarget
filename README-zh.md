@@ -321,18 +321,18 @@ optional arguments:
 
 如果某个脆弱场景名称的末尾带了星号（\*），你还需要关注表格下面提供的关于此场景的其他说明。
 
-|场景名称|涉及组件|场景类型|CVSS 3.x|Writeup|
-|:-:|:-:|:-:|:-:|:-:|
-|[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|容器逃逸|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)||
+|场景名称|涉及组件|场景类型|CVSS 3.x|Writeup|ATT&CK映射|
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|容器逃逸|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)||权限提升/逃逸到宿主机<br>持久化/逃逸到宿主机<br>横向移动/逃逸到宿主机<br>防御绕过/在主机上构建镜像|
 |[cve-2019-13139](vulns_cn/docker/cve-2019-13139.yaml)|docker|命令执行|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2019-13139)|[链接](writeups_cnv/docker-cve-2019-13139)|
 |[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|容器逃逸|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2019-14271)|[链接](writeups_cnv/docker-cve-2019-14271)|
-|[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|容器逃逸|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)|[链接](writeups_cnv/docker-containerd-cve-2020-15257)|
+|[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|容器逃逸|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)|[链接](writeups_cnv/docker-containerd-cve-2020-15257)|权限提升/逃逸到宿主机<br>持久化/逃逸到宿主机<br>横向移动/逃逸到宿主机
 |[cve-2019-5736](vulns_cn/docker/cve-2019-5736.yaml)|docker/runc|容器逃逸|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2019-5736)||
 |[cve-2019-16884](vulns_cn/docker/cve-2019-16884.yaml)|docker/runc|容器逃逸|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-16884)||
 |[cve-2021-30465\*](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|容器逃逸|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)|[链接](writeups_cnv/docker-runc-cve-2021-30465)|
 |[cve-2024-21626](vulns_cn/docker/cve-2024-21626.yaml)|docker/runc|容器逃逸|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2024-21626)||
 |[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|k8s|容器逃逸|[9.6](https://nvd.nist.gov/vuln/detail/CVE-2017-1002101)|[链接](https://github.com/brant-ruan/cloud-native-security-book/blob/main/appendix/CVE-2017-1002101：突破隔离访问宿主机文件系统.pdf)|
-|[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|k8s|权限提升|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)||
+|[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|k8s|权限提升|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)||权限提升/通过漏洞利用实现权限提升<br>获取凭证/不安全凭据<br>横向移动/窃取凭证
 |[cve-2018-1002100](vulns_cn/kubernetes/cve-2018-1002100.yaml)|k8s/kubectl|容器逃逸|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2018-1002100)||
 |[cve-2019-1002101](vulns_cn/kubernetes/cve-2019-1002101.yaml)|k8s/kubectl|容器逃逸|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2019-1002101)||
 |[cve-2019-11246](vulns_cn/kubernetes/cve-2019-11246.yaml)|k8s/kubectl|容器逃逸|[6.5](https://nvd.nist.gov/vuln/detail/CVE-2019-11246)||
@@ -362,7 +362,7 @@ optional arguments:
 |[cve-2021-22555](vulns_cn/kernel/cve-2021-22555.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2021-22555)||
 |[cve-2022-0185](vulns_cn/kernel/cve-2022-0185.yaml)|kernel|容器逃逸|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2022-0185)||
 |[cve-2022-0492](vulns_cn/kernel/cve-2022-0492.yaml)|kernel|容器逃逸|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0492)|[链接](writeups_cnv/kernel-cve-2022-0492)|
-|[cve-2022-0847](vulns_cn/kernel/cve-2022-0847.yaml)|kernel|容器逃逸|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847)|[链接](writeups_cnv/kernel-cve-2022-0847)|
+|[cve-2022-0847](vulns_cn/kernel/cve-2022-0847.yaml)|kernel|容器逃逸|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847)|[链接](writeups_cnv/kernel-cve-2022-0847)|权限提升/通过漏洞利用实现权限提升<br>防御绕过/清除入侵痕迹
 |[cve-2022-0995\*](vulns_cn/kernel/cve-2022-0995.yaml)|kernel|权限提升|[7.1](https://nvd.nist.gov/vuln/detail/CVE-2022-0995)||
 |[cve-2022-25636\*](vulns_cn/kernel/cve-2022-25636.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-25636)||
 |[cve-2022-23222](vulns_cn/kernel/cve-2022-23222.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-23222)||
@@ -375,14 +375,14 @@ optional arguments:
 |[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|危险配置|容器逃逸|-||
 |[cap_sys_module-container](vulns_cn/configs/cap_sys_module-container.yaml)|危险配置|容器逃逸|-|[链接](writeups_cnv/config-cap_sys_module-container)|
 |[privileged-container](vulns_cn/configs/privileged-container.yaml)|危险配置|容器逃逸|-|[链接](writeups_cnv/config-privileged-container)|
-|[k8s_backdoor_daemonset](vulns_cn/configs/k8s_backdoor_daemonset.yaml)|危险配置|持久化|-|[链接](writeups_cnv/config-k8s-backdoor-daemonset)|
-|[k8s_backdoor_cronjob](vulns_cn/configs/k8s_backdoor_cronjob.yaml)|危险配置|持久化|-|[链接](writeups_cnv/config-k8s-backdoor-cronjob)|
-|[k8s_shadow_apiserver](vulns_cn/configs/k8s_shadow_apiserver.yaml)|危险配置|持久化|-|[链接](writeups_cnv/config-k8s-shadow_apiserver)|
+|[k8s_backdoor_daemonset](vulns_cn/configs/k8s_backdoor_daemonset.yaml)|危险配置|持久化|-|[链接](writeups_cnv/config-k8s-backdoor-daemonset)|执行/部署容器<br>持久化/部署后门容器<br>防御绕过/部署容器<br>防御绕过/损害防御
+|[k8s_backdoor_cronjob](vulns_cn/configs/k8s_backdoor_cronjob.yaml)|危险配置|持久化|-|[链接](writeups_cnv/config-k8s-backdoor-cronjob)|执行/计划任务作业<br>持久化/计划任务（容器编排任务）
+|[k8s_shadow_apiserver](vulns_cn/configs/k8s_shadow_apiserver.yaml)|危险配置|持久化|-|[链接](writeups_cnv/config-k8s-shadow_apiserver)|防御绕过/创建shadow api server<br>防御绕过/伪装
 |[k8s_node_proxy](vulns_cn/configs/k8s_node_proxy.yaml)|危险配置|权限提升|-|[链接](writeups_cnv/config-k8s-node-proxy)|
 |[mount-docker-sock](vulns_cn/mounts/mount-docker-sock.yaml)|危险挂载|容器逃逸|-|[链接](writeups_cnv/mount-docker-sock)|
 |[mount-host-etc](vulns_cn/mounts/mount-host-etc.yaml)|危险挂载|容器逃逸|-||
 |[mount-host-procfs](vulns_cn/mounts/mount-host-procfs.yaml)|危险挂载|容器逃逸|-|[链接](writeups_cnv/mount-host-procfs)|
-|[mount-var-log](vulns_cn/mounts/mount-var-log.yaml)|危险挂载|容器逃逸|-|[链接](writeups_cnv/mount-var-log)|
+|[mount-var-log](vulns_cn/mounts/mount-var-log.yaml)|危险挂载|容器逃逸|-|[链接](writeups_cnv/mount-var-log)|权限提升/逃逸到宿主机<br>持久化/逃逸到宿主机<br>横向移动/逃逸到宿主机
 
 注意：
 
@@ -427,7 +427,9 @@ Metarget将以上项目中的靶机统一转化为Kubernetes中的Deployment和S
 - [x] 实现基本云原生组件安装部署
 - [x] 实现经典云原生漏洞场景集成
 - [x] 实现容器内RCE脆弱场景集成
-- [ ] 实现多节点云原生靶场集群自动化生成
+- [x] 云原生漏洞环境镜像
+- [x] 实现多节点云原生靶场集群自动化生成
+- [ ] 实现复杂云原生应用漏洞场景的集成
 - 实现其他云原生脆弱场景集成（长期更新）
 
 ## 7 主要维护者
@@ -457,11 +459,12 @@ Metarget的初衷之一是方便安全研究人员在漏洞出现的第一时间
 
 **Metarget将为合作者提供了以下特色支持：**
 
-1. **丰富的实验场景：** 利用Metarget，您可以轻松构建各种脆弱云原生靶机环境，涵盖从简单到复杂的多样实验场景。
-2. **多版本Kernel、Kubernetes等云原生组件支持：** Metarget持续更新以支持最新版本的组件，确保您在实验中能够使用最新的技术。
-3. **Ubuntu版本定制：** 我们将根据您的实验需求定制Ubuntu版本，使您获得更灵活的实验环境配置。
-4. **多节点云原生集群自动生成：** Metarget将为您提供了自动创建多节点云原生靶场集群的功能，使得研究更加真实、深入。
-5. ...
+1. **丰富且真实的实验场景：** 利用Metarget，您可以轻松构建各种脆弱云原生靶机环境，涵盖从简单到复杂的多样实验场景，例如云原生电商平台、云原生网课系统。
+2. **漏洞环境镜像：** 无需任何脚本辅助，漏洞环境随取随用。
+3. **多版本Kernel、Kubernetes等云原生组件支持：** Metarget持续更新以支持最新版本的组件，确保您在实验中能够使用最新的技术。
+4. **Ubuntu版本定制：** 我们将根据您的实验需求定制Ubuntu版本，使您获得更灵活的实验环境配置。
+5. **多节点云原生集群自动生成：** Metarget将为您提供了自动创建多节点云原生靶场集群的功能，使得研究更加真实、深入。
+6. ...
 
 加入Metarget，您将获得全面的技术支持和合作机会，探索云原生安全的前沿，为未来网络安全的发展添砖加瓦。我们期待您的参与，共同开创网络安全研究的新篇章！
 
@@ -519,4 +522,4 @@ Metarget采用的开源许可证是Apache License 2.0，阅读[LICENSE](LICENSE)
 - 链接：https://landscape.cncf.io/?selected=metarget
 
 ### KCD Shanghai 2024
-https://community.cncf.io/events/details/cncf-kcd-shanghai-presents-kcd-shanghai-2024/
+- https://community.cncf.io/events/details/cncf-kcd-shanghai-presents-kcd-shanghai-2024/

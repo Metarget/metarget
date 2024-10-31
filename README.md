@@ -407,7 +407,9 @@ Note:
 - [x] deployments of basic cloud native components (docker, k8s)
 - [x] integrations of vulnerable scenes related to cloud native components
 - [x] integrations of RCE scenes in containers
-- [ ] automatic construction of multi-node cloud native target cluster
+- [x] cloud native vulnerable images 
+- [x] automatic construction of multi-node cloud native target cluster
+- [ ] integration of complex cloud native application vulnerability scenarios
 - integrations of other cloud native vulnerable scenes (long term)
 
 ## 7 Maintainers
@@ -441,15 +443,17 @@ Through our robust and flexible framework, you can delve into the security chall
 
 **Metarget offers the following distinctive support to collaborators:**
 
-1. **Diverse experimental scenarios:** Utilize Metarget to effortlessly build various vulnerable cloud-native target environments, covering a spectrum of experiment scenarios from simple to complex.
+1. **Diverse experimental scenarios:** Utilize Metarget to effortlessly build various vulnerable cloud-native target environments, covering a spectrum of experiment scenarios from simple to complex, such as cloud-native e-commerce platform and cloud-native online course system.
 
-2. **Support for multiple versions of Kernel, Kubernetes, and other cloud-native components:** Metarget consistently updates to support the latest versions of components, ensuring that you can use the latest technologies in your experiments.
+2. **cloud native vulnerable images：** Without any scripting assistance, the vulnerability environment is readily available
 
-3. **Customization of Ubuntu versions:** We will tailor Ubuntu versions based on your experimental requirements, providing you with a more flexible experimental environment configuration.
+3. **Support for multiple versions of Kernel, Kubernetes, and other cloud-native components:** Metarget consistently updates to support the latest versions of components, ensuring that you can use the latest technologies in your experiments.
 
-4. **Automatic generation of multi-node cloud-native clusters:** Metarget offers the functionality to automatically create multi-node cloud-native target clusters, enhancing the realism and depth of your research.
+4. **Customization of Ubuntu versions:** We will tailor Ubuntu versions based on your experimental requirements, providing you with a more flexible experimental environment configuration.
 
-5. ...
+5. **Automatic generation of multi-node cloud-native clusters:** Metarget offers the functionality to automatically create multi-node cloud-native target clusters, enhancing the realism and depth of your research.
+
+6. ...
 
 Joining Metarget provides you with comprehensive technical support and abundant collaboration opportunities, allowing you to explore the forefront of cloud-native security and contribute your unique insights to the future development of network security. We look forward to your participation in collectively shaping a new chapter in cybersecurity research!
 
@@ -507,4 +511,4 @@ Metarget is licensed under Apache License 2.0. See [LICENSE](LICENSE) for the fu
 - URL: https://landscape.cncf.io/?selected=metarget
 
 ### KCD Shanghai 2024
-https://community.cncf.io/events/details/cncf-kcd-shanghai-presents-kcd-shanghai-2024/
+- https://community.cncf.io/events/details/cncf-kcd-shanghai-presents-kcd-shanghai-2024/
