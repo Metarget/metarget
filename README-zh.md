@@ -518,3 +518,5 @@ Metarget采用的开源许可证是Apache License 2.0，阅读[LICENSE](LICENSE)
 
 - 链接：https://landscape.cncf.io/?selected=metarget
 
+### KCD Shanghai 2024
+https://community.cncf.io/events/details/cncf-kcd-shanghai-presents-kcd-shanghai-2024/
