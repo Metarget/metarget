@@ -314,6 +314,10 @@ optional arguments:
 ### 3.5 漏洞环境镜像
 受用户网络环境、ubuntu版本、Docker版本的影响，通过自动化脚本一键安装漏洞环境偶尔还是会失败，因此我们首次提供漏洞环境镜像。
 
+执行以下命令build 漏洞环境镜像
+```bash
+sudo docker build -t vuln-docker-24.0.7 -f vuln-docker-24.0.7 .
+```
 执行以下命令运行目标漏洞环境镜像：
 
 ```bash

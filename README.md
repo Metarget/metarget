@@ -293,6 +293,11 @@ Note:
 ### 3.5 Vulnerability environment image
 Depending on the user's network environment, ubuntu version, and Docker version, one-click installation of the vulnerability environment through automated scripts still occasionally fails, so we provide the vulnerability environment image for the first time.
 
+Run the following command to build the target vulnerability environment image:
+```bash
+sudo docker build -t vuln-docker-24.0.7 -f vuln-docker-24.0.7 .
+```
+
 Run the following command to run the target vulnerability environment image:
 
 ```bash
