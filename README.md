@@ -290,7 +290,15 @@ Note:
 - You can specify `--host-net` option, then the appv will share the host network namespace.
 - You can specify `--host-pid` option, then the appv will share the host pid namespace.
 
-### 3.5 Manage Vulnerable Cloud Native Target Cluster
+### 3.5 Vulnerability environment image
+Depending on the user's network environment, ubuntu version, and Docker version, one-click installation of the vulnerability environment through automated scripts still occasionally fails, so we provide the vulnerability environment image for the first time.
+
+Run the following command to run the target vulnerability environment image:
+
+```bash
+docker run vuln-XXX
+```
+### 3.6 Manage Vulnerable Cloud Native Target Cluster
 
 Developing, currently not supported.
 
@@ -300,9 +308,9 @@ Developing, currently not supported.
 
 If there is an asterisk (\*) following the name of one vulnerable scene, you need to read the note related to it below the whole table for further details.
 
-|Name|Class|Type|CVSS 3.x|Writeup\*|
-|:-:|:-:|:-:|:-:|:-:|
-|[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|container_escape|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)||
+|Name|Class|Type|CVSS 3.x|Writeup|ATT&CK map|
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|[cve-2018-15664](vulns_cn/docker/cve-2018-15664.yaml)|docker|container_escape|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2018-15664)||privilege escalation/escape to host <br> Persistence/escape to host <br> Lateral movement/escape to host <br> Defense Bypass/Build an image on the host|
 |[cve-2019-13139](vulns_cn/docker/cve-2019-13139.yaml)|docker|command_execution|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2019-13139)|[link](writeups_cnv/docker-cve-2019-13139)|
 |[cve-2019-14271](vulns_cn/docker/cve-2019-14271.yaml)|docker|container_escape|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2019-14271)|[link](writeups_cnv/docker-cve-2019-14271)|
 |[cve-2020-15257](vulns_cn/docker/cve-2020-15257.yaml)|docker/containerd|container_escape|[5.2](https://nvd.nist.gov/vuln/detail/CVE-2020-15257)|[link](writeups_cnv/docker-containerd-cve-2020-15257)|
