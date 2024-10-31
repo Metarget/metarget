@@ -309,6 +309,7 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 |[cve-2019-5736](vulns_cn/docker/cve-2019-5736.yaml)|docker/runc|container_escape|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2019-5736)||
 |[cve-2019-16884](vulns_cn/docker/cve-2019-16884.yaml)|docker/runc|container_escape|[7.5](https://nvd.nist.gov/vuln/detail/CVE-2019-16884)||
 |[cve-2021-30465\*](vulns_cn/docker/cve-2021-30465.yaml)|docker/runc|container_escape|[7.6](https://nvd.nist.gov/vuln/detail/CVE-2021-30465)|[link](writeups_cnv/docker-runc-cve-2021-30465)|
+|[cve-2024-21626](vulns_cn/docker/cve-2024-21626.yaml)|docker/runc|container_escape|[8.6](https://nvd.nist.gov/vuln/detail/CVE-2024-21626)||
 |[cve-2017-1002101](vulns_cn/kubernetes/cve-2017-1002101.yaml)|k8s|container_escape|[9.6](https://nvd.nist.gov/vuln/detail/CVE-2017-1002101)|[link](https://github.com/brant-ruan/cloud-native-security-book/blob/main/appendix/CVE-2017-1002101：突破隔离访问宿主机文件系统.pdf)|
 |[cve-2018-1002105](vulns_cn/kubernetes/cve-2018-1002105.yaml)|k8s|privilege_escalation|[9.8](https://nvd.nist.gov/vuln/detail/CVE-2018-1002105)||
 |[cve-2018-1002100](vulns_cn/kubernetes/cve-2018-1002100.yaml)|k8s/kubectl|container_escape|[5.5](https://nvd.nist.gov/vuln/detail/CVE-2018-1002100)||
@@ -345,7 +346,9 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 |[cve-2022-25636\*](vulns_cn/kernel/cve-2022-25636.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-25636)||
 |[cve-2022-23222](vulns_cn/kernel/cve-2022-23222.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-23222)||
 |[cve-2022-27666\*](vulns_cn/kernel/cve-2022-27666.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-27666)||
+|[cve-2023-3269\*](vulns_cn/kernel/cve-2023-3269.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2023-3269)||
 |[kata-escape-2020](vulns_cn/kata-containers/kata-escape-2020.yaml)|kata-containers|container_escape|[6.3](https://nvd.nist.gov/vuln/detail/CVE-2020-2023)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2025)/[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-2026)||
+|[cve-2020-27151](vulns_cn/kata-containers/cve-2020-27151.yaml)|kata-containers|container_escape|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-27151)||
 |[cap_dac_read_search-container](vulns_cn/configs/cap_dac_read_search-container.yaml)|config|container_escape|-|[link](writeups_cnv/config-cap_dac_read_search-container)|
 |[cap_sys_admin-container](vulns_cn/configs/cap_sys_admin-container.yaml)|config|container_escape|-||
 |[cap_sys_ptrace-container](vulns_cn/configs/cap_sys_ptrace-container.yaml)|config|container_escape|-||
@@ -503,4 +506,5 @@ Metarget is licensed under Apache License 2.0. See [LICENSE](LICENSE) for the fu
 
 - URL: https://landscape.cncf.io/?selected=metarget
 
-
+### KCD Shanghai 2024
+https://community.cncf.io/events/details/cncf-kcd-shanghai-presents-kcd-shanghai-2024/
