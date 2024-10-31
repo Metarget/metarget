@@ -1,0 +1,63 @@
+# 基于 Ubuntu 作为基础镜像
+FROM ubuntu:latest
+
+# 设置环境变量
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Shanghai
+
+# 更新并安装 QEMU、curl、cpio、和必要的工具
+RUN apt-get update && apt-get install -y \
+    qemu-system-x86 \
+    wget \
+    curl \
+    cpio \
+    build-essential \
+    genisoimage \
+    apt-transport-https \
+    ca-certificates \
+    software-properties-common \
+    && apt-get clean
+
+# 下载 BusyBox root filesystem (轻量根文件系统)
+RUN curl -LO https://busybox.net/downloads/binaries/1.31.1-i686/busybox \
+    && chmod +x busybox \
+    && mv busybox /usr/local/bin/
+
+# 创建一个简单的 initrd
+RUN mkdir -p /initrd-rootfs \
+    && echo -e '#!/bin/sh\n/usr/local/bin/busybox --install -s\nexec /bin/sh' > /initrd-rootfs/init \
+    && chmod +x /initrd-rootfs/init \
+    && (cd /initrd-rootfs && find . | cpio -H newc -o > /boot/initrd.img)
+
+# 检查 /boot 目录
+RUN ls -l /boot
+
+# 下载 Ubuntu Cloud 镜像
+RUN wget -O /root/ubuntu-cloud.img https://cloud-images.ubuntu.com/focal/current/focal-server-cloudimg-amd64.img
+
+# 创建 cloud-init 镜像，用于自动化安装 Docker 并设置登录用户名和密码
+RUN mkdir -p /root/cloud-init && \
+    echo '#cloud-config\n\
+    users:\n\
+      - name: ubuntu\n\
+        sudo: ALL=(ALL) NOPASSWD:ALL\n\
+        lock_passwd: false\n\
+        plain_text_passwd: ubuntu\n\
+    packages:\n\
+      - docker.io\n\
+    runcmd:\n\
+      - systemctl enable docker\n\
+      - systemctl start docker\n' > /root/cloud-init/user-data && \
+    touch /root/cloud-init/meta-data && \
+    genisoimage -output /root/cloud-init.iso -volid cidata -joliet -rock /root/cloud-init/user-data /root/cloud-init/meta-data
+
+# 启动容器时使用 QEMU 启动虚拟机并安装 Docker
+CMD ["qemu-system-x86_64", \
+     "-drive", "file=/root/ubuntu-cloud.img,format=qcow2,if=virtio", \
+     "-drive", "file=/root/cloud-init.iso,format=raw,if=virtio", \
+     "-m", "1G", \
+     "-nographic", \
+     "-net", "nic", \
+     "-net", "user", \
+     "-no-reboot"]
+
