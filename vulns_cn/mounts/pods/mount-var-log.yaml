@@ -38,7 +38,8 @@ spec:
   serviceAccountName: logger
   containers:
   - name: escaper
-    image: danielsagi/kube-pod-escape
+    image: ubuntu:latest
+    imagePullPolicy: IfNotPresent
     volumeMounts:
     - name: logs
       mountPath: /var/log/host
