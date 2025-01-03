@@ -66,10 +66,8 @@ class DockerInstaller(Installer):
         for gadget in gadgets:
             if not cls._install_one_gadget_by_version(
                     gadget['name'], gadget['version'], verbose=verbose):
-                color_print.warning(
-                    'docker seems to be installed, but some errors happened during installation')
-                # sometimes docker is installed but error occurs during installation
-                # so currently we just return true for it
+                color_print.error(
+                    'some errors happened during docker installation')
                 return True
         return True
 

@@ -10,7 +10,7 @@ from core.env_managers.docker_installer import DockerInstaller
 from core.env_managers.kubernetes_installer import KubernetesInstaller
 from core.env_managers.kernel_installer import KernelInstaller
 from core.env_managers.kata_containers_installer import KataContainersInstaller
-
+from packaging import version
 
 def install(args):
     """Install a cloud native gadget with specified version.
@@ -36,13 +36,28 @@ def install(args):
             install_version = config.docker_default_version
         else:
             install_version = args.version
-        temp_gadgets = [{
+        # add a check for docker gadgets by version
+        if version.parse(install_version) < version.parse('18.09.0'):
+            temp_gadgets = [{
+                'name': 'docker-ce',
+                'version': install_version,
+            }]
+        else:
+            temp_gadgets = [{
                 'name': 'docker-ce',
                 'version': install_version,
             }, {
                 'name': 'docker-ce-cli',
                 'version': install_version,
-            }]
+            }]  
+        # temp_gadgets = [{
+        #         'name': 'docker-ce',
+        #         'version': install_version,
+        #     }, {
+        #         'name': 'docker-ce-cli',
+        #         'version': install_version,
+        #     }]
+
         if checkers.docker_specified_installed(temp_gadgets):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
