@@ -202,6 +202,44 @@ def containerd_specified_installed(temp_gadgets, verbose=False):
         return False
 
 
+
+def runc_specified_installed(temp_gadgets, verbose=False):
+    """Check whether runc with specified version has been installed.
+
+    Args:
+        temp_gadgets: Docker gadgets (e.g. runc).
+        verbose: Verbose or not.
+
+    Returns:
+        If runc with specified version has been installed, return True,
+        else False.
+    """
+    _, stderr = verbose_func.verbose_output(verbose)
+    try:
+        # 执行 runc --version 命令
+        temp_cmd = 'runc --version'.split()
+        res = subprocess.run(
+            temp_cmd,
+            stdout=subprocess.PIPE,
+            stderr=stderr,
+            check=True)
+        
+        # 提取 runc 版本信息
+        version_string = res.stdout.decode('utf-8')
+        # 从输出中提取版本号
+        runc_version = re.search(r'runc version (\S+)', version_string).group(1)
+        
+        # 获取传入的指定版本
+        temp_version = _get_gadget_version_from_gadgets(gadgets=temp_gadgets, name='runc')
+        
+        # 检查版本是否匹配
+        if temp_version and runc_version.startswith(temp_version):
+            return True
+        return False
+    except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
+        return False
+
+
 def _get_gadget_version_from_gadgets(gadgets, name, verbose=False):
     for gadget in gadgets:
         if gadget['name'] == name:

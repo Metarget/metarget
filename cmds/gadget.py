@@ -123,6 +123,35 @@ def install(args):
                 '{gadget} with version {version} successfully installed'.format(
                     gadget=args.gadget, version=install_version))
 
+    if args.gadget == 'runc':                                                                 
+        if args.default_version:
+            install_version = config.runc_default_version
+        else:
+            install_version = args.version
+
+        if not checkers.whether_docker_newer_than_18_09(verbose=args.verbose):
+            color_print.error_and_exit(
+                'To install runc, Docker >=18.09 is required')
+        
+        temp_gadgets = [
+            {'name': 'runc', 'version': install_version}
+        ]
+        if checkers.runc_specified_installed(
+                temp_gadgets, verbose=args.verbose):
+            color_print.debug(
+                '{gadget} with version {version} already installed'.format(
+                    gadget=args.gadget, version=install_version))
+            return
+        
+        # if runc is  already installed with different version, we download the asked runc version from github and replace the old runc
+        if DockerInstaller.install_runc(install_version, verbose=args.verbose):
+            color_print.debug('runc with version {version} successfully installed'.format(
+            version=install_version))
+        else:
+            color_print.error('failed to install runc with version {version}'.format(
+            version=install_version))
+
+
 
 
 
