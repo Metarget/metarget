@@ -11,13 +11,14 @@ from core.env_managers.installer import Installer
 
 
 class DockerInstaller(Installer):
+    # _docker_gadgets is only for uninstall process
     _docker_gadgets = [
         'docker-ce',
         'docker-ce-cli',
         'docker',
         'docker-engine',
         'docker.io',
-        'containerd',
+        'containerd.io',
         'runc',
     ]
     _docker_requirements = [
@@ -47,6 +48,27 @@ class DockerInstaller(Installer):
                 stderr=stderr,
                 check=False
             )
+            
+    #uninstall_containerd_only
+    @classmethod
+    def uninstall_containerd_only(cls, verbose=False):
+        """Uninstall containerd only.
+
+        Args:
+            verbose: Verbose or not.
+
+        Returns:
+            None.
+        """
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        temp_cmd = copy.copy(cls.cmd_apt_uninstall)
+        temp_cmd.append('containerd.io')
+        subprocess.run(
+            temp_cmd,
+            stdout=stdout,
+            stderr=stderr,
+            check=False
+        )        # uninstall containerd only
 
     @classmethod
     def install_by_version(cls, gadgets, context=None, verbose=False):

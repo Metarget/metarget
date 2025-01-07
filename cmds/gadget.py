@@ -91,6 +91,45 @@ def install(args):
                 '{gadget} with version {version} successfully installed'.format(
                     gadget=args.gadget, version=install_version))
 
+    if args.gadget == 'containerd':                                                                 
+        if args.default_version:
+            install_version = config.containerd_default_version
+        else:
+            install_version = args.version
+
+        if not checkers.whether_docker_newer_than_18_09(verbose=args.verbose):
+            color_print.error_and_exit(
+                'To install containerd, Docker >=18.09 is required')
+        
+        temp_gadgets = [
+            {'name': 'containerd', 'version': install_version}
+        ]
+        if checkers.containerd_specified_installed(
+                temp_gadgets, verbose=args.verbose):
+            color_print.debug(
+                '{gadget} with version {version} already installed'.format(
+                    gadget=args.gadget, version=install_version))
+            return
+        # if containerd is  already installed with different version, we can simply apt-get -y --allow-downgrades to install it.
+        # we can directly use DockerInstaller.install_by_version to install containerd
+        if not DockerInstaller.install_by_version(
+                [{'name': 'containerd.io', 'version': install_version}],
+                verbose=args.verbose):
+            color_print.error(
+                'failed to install {gadget}'.format(
+                    gadget=args.gadget))
+        else:
+            color_print.debug(
+                '{gadget} with version {version} successfully installed'.format(
+                    gadget=args.gadget, version=install_version))
+
+
+
+
+
+
+
+
     if args.gadget == 'k8s':
         if args.default_version:
             install_version = config.k8s_default_version
@@ -205,6 +244,11 @@ def remove(args):
     """
     if args.gadget == 'docker':
         DockerInstaller.uninstall(verbose=args.verbose)
+        color_print.debug(
+            '{gadget} successfully removed'.format(
+                gadget=args.gadget))
+    if args.gadget == 'containerd':
+        DockerInstaller.uninstall_containerd_only(verbose=args.verbose)
         color_print.debug(
             '{gadget} successfully removed'.format(
                 gadget=args.gadget))

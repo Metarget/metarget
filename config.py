@@ -12,12 +12,16 @@ gadgets_supported = [
     'k8s',
     'kata',
     'kernel',
+    'containerd',
+    'runc',
 ]
 
 docker_default_version = '20.10.14'
 k8s_default_version = '1.22.2'
 kata_default_version = '2.0.0'
 kernel_default_version = '4.15.0-151-generic'
+containerd_default_version = '1.2.6'
+runc_default_version = '1.0.0-rc8'
 
 vuln_cn_dir_wildcard = "vulns_cn/*"
 vuln_app_dir_wildcard = "vulns_app/*/*"

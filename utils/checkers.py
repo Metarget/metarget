@@ -8,7 +8,7 @@ import re
 import utils.color_print as color_print
 import utils.verbose as verbose_func
 import config
-
+from packaging import version
 
 def docker_kubernetes_installed(verbose=False):
     """Check whether Docker AND Kubernetes have been installed.
@@ -140,6 +140,34 @@ def docker_specified_installed(temp_gadgets, verbose=False):
         return False
     except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
         return False
+
+def whether_docker_newer_than_18_09(verbose=False):
+    """Check whether Docker is newer than 18.09.
+
+    Args:
+        verbose: Verbose or not.
+
+    Returns:
+        If Docker >=18.09, return True, else False.
+    """
+    _, stderr = verbose_func.verbose_output(verbose)
+    try:
+        temp_cmd = 'docker version'.split()
+        res = subprocess.run(
+            temp_cmd,
+            stdout=subprocess.PIPE,
+            stderr=stderr,
+            check=True)
+        server_string = res.stdout.decode('utf-8').split('Server')[1]
+        server_version = re.search(
+            r'Version: *([\d]+\.[\d]+\.[\d]+)',
+            server_string).group(1)
+        if version.parse(server_version) >= version.parse('18.09'):
+            return True
+        return False
+    except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
+        return False
+
 
 
 def containerd_specified_installed(temp_gadgets, verbose=False):
