@@ -194,7 +194,7 @@ def containerd_specified_installed(temp_gadgets, verbose=False):
             r'Version:\s*(.*)\s+',
             server_string).group(1)
         temp_version = _get_gadget_version_from_gadgets(
-            gadgets=temp_gadgets, name='containerd')
+            gadgets=temp_gadgets, name='containerd.io')
         if temp_version and server_version.startswith(temp_version):
             return True
         return False

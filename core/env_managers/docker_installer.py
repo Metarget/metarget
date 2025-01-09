@@ -103,7 +103,7 @@ class DockerInstaller(Installer):
         """Install Docker with specified version.
 
         Args:
-            gadgets: Docker gadgets (e.g. docker-ce).
+            gadgets: Docker gadgets (e.g. docker-ce/docker-ce-cli/containerd, but no runc).
             context: Currently not used.
             verbose: Verbose or not.
 
