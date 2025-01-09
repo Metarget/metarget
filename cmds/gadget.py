@@ -281,6 +281,11 @@ def remove(args):
         color_print.debug(
             '{gadget} successfully removed'.format(
                 gadget=args.gadget))
+    if args.gadget == 'runc':
+        DockerInstaller.uninstall_runc(verbose=args.verbose)
+        color_print.debug(
+            '{gadget} successfully removed'.format(
+                gadget=args.gadget))
     if args.gadget == 'k8s':
         KubernetesInstaller.uninstall(verbose=args.verbose)
         color_print.debug(

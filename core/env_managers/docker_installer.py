@@ -70,6 +70,34 @@ class DockerInstaller(Installer):
             check=False
         )        # uninstall containerd only
 
+    #DockerInstaller.uninstall_runc(verbose=args.verbose)
+    @classmethod
+    def uninstall_runc(cls, verbose=False):
+        """Uninstall runc.
+
+        Args:
+            verbose: Verbose or not.
+
+        Returns:
+            None.
+        """
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        color_print.debug('uninstalling runc')
+        # currently we just remove the runc binary
+        runc_commands = [
+                'rm /usr/bin/runc',
+                'systemctl daemon-reload',
+                'systemctl restart docker'            # 重启 docker 服务
+            ]
+        for command in runc_commands:
+            subprocess.run(
+                command,
+                stdout=stdout,
+                stderr=stderr,
+                check=True
+            )
+        
+
     @classmethod
     def install_by_version(cls, gadgets, context=None, verbose=False):
         """Install Docker with specified version.
