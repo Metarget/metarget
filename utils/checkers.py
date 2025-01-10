@@ -8,7 +8,7 @@ import re
 import utils.color_print as color_print
 import utils.verbose as verbose_func
 import config
-
+from packaging import version
 
 def docker_kubernetes_installed(verbose=False):
     """Check whether Docker AND Kubernetes have been installed.
@@ -141,6 +141,34 @@ def docker_specified_installed(temp_gadgets, verbose=False):
     except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
         return False
 
+def whether_docker_newer_than_18_09(verbose=False):
+    """Check whether Docker is newer than 18.09.
+
+    Args:
+        verbose: Verbose or not.
+
+    Returns:
+        If Docker >=18.09, return True, else False.
+    """
+    _, stderr = verbose_func.verbose_output(verbose)
+    try:
+        temp_cmd = 'docker version'.split()
+        res = subprocess.run(
+            temp_cmd,
+            stdout=subprocess.PIPE,
+            stderr=stderr,
+            check=True)
+        server_string = res.stdout.decode('utf-8').split('Server')[1]
+        server_version = re.search(
+            r'Version: *([\d]+\.[\d]+\.[\d]+)',
+            server_string).group(1)
+        if version.parse(server_version) >= version.parse('18.09'):
+            return True
+        return False
+    except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
+        return False
+
+
 
 def containerd_specified_installed(temp_gadgets, verbose=False):
     """Check whether Containerd with specified version has been installed.
@@ -168,6 +196,44 @@ def containerd_specified_installed(temp_gadgets, verbose=False):
         temp_version = _get_gadget_version_from_gadgets(
             gadgets=temp_gadgets, name='containerd')
         if temp_version and server_version.startswith(temp_version):
+            return True
+        return False
+    except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
+        return False
+
+
+
+def runc_specified_installed(temp_gadgets, verbose=False):
+    """Check whether runc with specified version has been installed.
+
+    Args:
+        temp_gadgets: Docker gadgets (e.g. runc).
+        verbose: Verbose or not.
+
+    Returns:
+        If runc with specified version has been installed, return True,
+        else False.
+    """
+    _, stderr = verbose_func.verbose_output(verbose)
+    try:
+        # 执行 runc --version 命令
+        temp_cmd = 'runc --version'.split()
+        res = subprocess.run(
+            temp_cmd,
+            stdout=subprocess.PIPE,
+            stderr=stderr,
+            check=True)
+        
+        # 提取 runc 版本信息
+        version_string = res.stdout.decode('utf-8')
+        # 从输出中提取版本号
+        runc_version = re.search(r'runc version (\S+)', version_string).group(1)
+        
+        # 获取传入的指定版本
+        temp_version = _get_gadget_version_from_gadgets(gadgets=temp_gadgets, name='runc')
+        
+        # 检查版本是否匹配
+        if temp_version and runc_version.startswith(temp_version):
             return True
         return False
     except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):

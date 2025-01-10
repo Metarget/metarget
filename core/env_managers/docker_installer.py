@@ -11,13 +11,14 @@ from core.env_managers.installer import Installer
 
 
 class DockerInstaller(Installer):
+    # _docker_gadgets is only for uninstall process
     _docker_gadgets = [
         'docker-ce',
         'docker-ce-cli',
         'docker',
         'docker-engine',
         'docker.io',
-        'containerd',
+        'containerd.io',
         'runc',
     ]
     _docker_requirements = [
@@ -47,6 +48,55 @@ class DockerInstaller(Installer):
                 stderr=stderr,
                 check=False
             )
+            
+    #uninstall_containerd_only
+    @classmethod
+    def uninstall_containerd_only(cls, verbose=False):
+        """Uninstall containerd only.
+
+        Args:
+            verbose: Verbose or not.
+
+        Returns:
+            None.
+        """
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        temp_cmd = copy.copy(cls.cmd_apt_uninstall)
+        temp_cmd.append('containerd.io')
+        subprocess.run(
+            temp_cmd,
+            stdout=stdout,
+            stderr=stderr,
+            check=False
+        )        # uninstall containerd only
+
+    #DockerInstaller.uninstall_runc(verbose=args.verbose)
+    @classmethod
+    def uninstall_runc(cls, verbose=False):
+        """Uninstall runc.
+
+        Args:
+            verbose: Verbose or not.
+
+        Returns:
+            None.
+        """
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        color_print.debug('uninstalling runc')
+        # currently we just remove the runc binary
+        runc_commands = [
+                'rm /usr/bin/runc',
+                'systemctl daemon-reload',
+                'systemctl restart docker'            # 重启 docker 服务
+            ]
+        for command in runc_commands:
+            subprocess.run(
+                command,
+                stdout=stdout,
+                stderr=stderr,
+                check=True
+            )
+        
 
     @classmethod
     def install_by_version(cls, gadgets, context=None, verbose=False):
@@ -96,6 +146,50 @@ class DockerInstaller(Installer):
 
         return True
 
+    #DockerInstaller.install_runc(install_version, verbose=args.verbose)
+    @classmethod
+    def install_runc(cls, install_version, verbose=False):
+        """Install runc.
+
+        Args:
+            install_version: Version of runc.
+            verbose: Verbose or not.
+
+        Returns:
+            Boolean indicating whether runc is successfully installed or not.
+        commands needed:
+        runc_commands=[]
+        url='https://github.com/opencontainers/runc/releases/download/v'+install_version+'/runc.amd64'
+        runc_commands.append('sudo mv /usr/bin/runc /usr/bin/runc.bak')
+        runc_commands.append('curl -L -o /usr/bin/runc  '+url)
+        runc_commands.append('chmod +x /usr/bin/runc')
+        runc_commands.append('systemctl daemon-reload')
+        runc_commands.append('systemctl restart docker')
+        """
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        color_print.debug('installing runc with version {version}'.format(
+            version=install_version))
+        try:
+            # 构造下载 URL
+            url = f'https://github.com/opencontainers/runc/releases/download/v{install_version}/runc.amd64'
+            # 构建更新命令
+            runc_commands = [
+                'sudo mv /usr/bin/runc /usr/bin/runc.bak',  # 备份当前的 runc
+                f'curl -L -o /usr/bin/runc {url}',          # 下载指定版本的 runc
+                'chmod +x /usr/bin/runc',                   # 添加执行权限
+                'systemctl daemon-reload',                  # 重载 systemd 守护进程
+                'systemctl restart docker'                  # 重启 docker 服务
+            ]
+            for command in runc_commands:
+                subprocess.run(
+                    command,
+                    stdout=stdout,
+                    stderr=stderr,
+                    check=True
+                )
+        except subprocess.CalledProcessError:
+            return False
+        return True
 
 if __name__ == "__main__":
     DockerInstaller.uninstall()
