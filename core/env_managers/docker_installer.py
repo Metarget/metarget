@@ -7,6 +7,7 @@ import subprocess
 import utils.color_print as color_print
 import utils.verbose as verbose_func
 import config
+import utils.checkers as checkers
 from core.env_managers.installer import Installer
 
 
@@ -85,13 +86,11 @@ class DockerInstaller(Installer):
         color_print.debug('uninstalling runc')
         # currently we just remove the runc binary
         runc_commands = [
-                'rm /usr/bin/runc',
-                'systemctl daemon-reload',
-                'systemctl restart docker'            # 重启 docker 服务
+                'rm /usr/bin/runc'        # 重启 docker 服务
             ]
         for command in runc_commands:
             subprocess.run(
-                command,
+                command.split(),
                 stdout=stdout,
                 stderr=stderr,
                 check=True
@@ -157,39 +156,58 @@ class DockerInstaller(Installer):
 
         Returns:
             Boolean indicating whether runc is successfully installed or not.
-        commands needed:
-        runc_commands=[]
-        url='https://github.com/opencontainers/runc/releases/download/v'+install_version+'/runc.amd64'
-        runc_commands.append('sudo mv /usr/bin/runc /usr/bin/runc.bak')
-        runc_commands.append('curl -L -o /usr/bin/runc  '+url)
-        runc_commands.append('chmod +x /usr/bin/runc')
-        runc_commands.append('systemctl daemon-reload')
-        runc_commands.append('systemctl restart docker')
         """
         stdout, stderr = verbose_func.verbose_output(verbose)
-        color_print.debug('installing runc with version {version}'.format(
-            version=install_version))
+        color_print.debug('installing runc with version {version}'.format(version=install_version))
+        
+        # 代理网址列表
+        proxy_urls = [
+            'https://github.moeyy.xyz',
+            'https://gh-proxy.com',
+            'https://ghproxy.net'
+        ]
+
+        url = f'https://github.com/opencontainers/runc/releases/download/v{install_version}/runc.amd64'
+
+        # 尝试每个代理网址
+        for proxy_url in proxy_urls:
+            download_url = f'{proxy_url}/{url}'
+            try:
+                # 构建更新命令
+                runc_commands = [
+                    'sudo mv /usr/bin/runc /usr/bin/runc.bak',  # 备份当前的 runc
+                    f'curl -L -o /usr/bin/runc {download_url}',  # 使用代理网址下载
+                    'chmod +x /usr/bin/runc',                   # 添加执行权限
+                    'systemctl daemon-reload',                  # 重载 systemd 守护进程
+                    'systemctl restart docker'                  # 重启 docker 服务
+                ]
+                color_print.warning(f'Attempting to download runc from {download_url}')
+                for command in runc_commands:
+                    subprocess.run(
+                        command.split(),
+                        stdout=stdout,
+                        stderr=stderr,
+                        check=True
+                    )
+                return True  # 如果下载和安装成功，则返回 True
+            except subprocess.CalledProcessError:
+                color_print.error(f'Failed to download runc from {download_url}. Trying next proxy...')
+                continue  # 如果当前代理下载失败，则尝试下一个代理
+        
+        # 如果所有代理都失败了
+        color_print.error('All download attempts failed. Restoring the original runc.')
         try:
-            # 构造下载 URL
-            url = f'https://github.com/opencontainers/runc/releases/download/v{install_version}/runc.amd64'
-            # 构建更新命令
-            runc_commands = [
-                'sudo mv /usr/bin/runc /usr/bin/runc.bak',  # 备份当前的 runc
-                f'curl -L -o /usr/bin/runc {url}',          # 下载指定版本的 runc
-                'chmod +x /usr/bin/runc',                   # 添加执行权限
-                'systemctl daemon-reload',                  # 重载 systemd 守护进程
-                'systemctl restart docker'                  # 重启 docker 服务
-            ]
-            for command in runc_commands:
-                subprocess.run(
-                    command,
-                    stdout=stdout,
-                    stderr=stderr,
-                    check=True
-                )
+            subprocess.run(
+                'sudo mv /usr/bin/runc.bak /usr/bin/runc'.split(),
+                stdout=stdout,
+                stderr=stderr,
+                check=True
+            )
+            checkers.runc_executable(verbose=verbose)
         except subprocess.CalledProcessError:
-            return False
-        return True
+            color_print.error('Failed to restore original runc.')
+        
+        return False
 
 if __name__ == "__main__":
     DockerInstaller.uninstall()

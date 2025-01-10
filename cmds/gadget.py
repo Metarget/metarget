@@ -136,6 +136,10 @@ def install(args):
         temp_gadgets = [
             {'name': 'runc', 'version': install_version}
         ]
+        # chmod +x /usr/bin/runc
+        checkers.runc_executable(verbose=args.verbose)
+
+
         if checkers.runc_specified_installed(
                 temp_gadgets, verbose=args.verbose):
             color_print.debug(

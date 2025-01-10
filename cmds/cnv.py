@@ -153,6 +153,7 @@ def install(args):
         for gadget in vuln['dependencies']:
             if gadget['name']=='runc':
                 runc_version=gadget['version']
+                checkers.runc_executable(verbose=args.verbose)
                 if DockerInstaller.install_runc(runc_version, verbose=args.verbose):
                     color_print.debug('runc with version {version} successfully installed'.format(
                     version=runc_version))
