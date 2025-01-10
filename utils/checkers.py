@@ -194,14 +194,25 @@ def containerd_specified_installed(temp_gadgets, verbose=False):
             r'Version:\s*(.*)\s+',
             server_string).group(1)
         temp_version = _get_gadget_version_from_gadgets(
-            gadgets=temp_gadgets, name='containerd')
+            gadgets=temp_gadgets, name='containerd.io')
         if temp_version and server_version.startswith(temp_version):
             return True
         return False
     except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
         return False
 
-
+def runc_executable(verbose=False):
+    _, stderr = verbose_func.verbose_output(verbose)
+    try:
+        # 执行 runc --version 命令
+        temp_cmd = 'chmod +x /usr/bin/runc'.split()
+        res = subprocess.run(
+            temp_cmd,
+            stdout=subprocess.PIPE,
+            stderr=stderr,
+            check=True)
+    except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
+        return False
 
 def runc_specified_installed(temp_gadgets, verbose=False):
     """Check whether runc with specified version has been installed.

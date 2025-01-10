@@ -17,7 +17,7 @@ from core.env_managers.docker_installer import DockerInstaller
 from core.env_managers.kubernetes_installer import KubernetesInstaller
 from core.env_managers.kernel_installer import KernelInstaller
 from core.env_managers.kata_containers_installer import KataContainersInstaller
-
+from packaging import version
 
 def install(args):
     """Install a cloud native vulnerability.
@@ -58,9 +58,22 @@ def install(args):
         installed_flag = True  # add a flag because more than one gadgets may be checked
         if checkers.docker_specified_installed(
                 vuln['dependencies'], verbose=args.verbose):
+            # if containerd.io is specified in the dependencies, check if it is installed
             if checkers.gadget_in_gadgets(
-                    vuln['dependencies'], name='containerd', verbose=args.verbose):
+                    vuln['dependencies'], name='containerd.io', verbose=args.verbose):
                 if not checkers.containerd_specified_installed(
+                        vuln['dependencies'], verbose=args.verbose):
+                    installed_flag = False
+            # if runc is specified in the dependencies, check if it is installed
+            if checkers.gadget_in_gadgets(
+                    vuln['dependencies'], name='runc', verbose=args.verbose):
+                if not checkers.runc_specified_installed(
+                        vuln['dependencies'], verbose=args.verbose):
+                    installed_flag = False
+            # if kernel is specified in the dependencies, check if it is installed
+            if checkers.gadget_in_gadgets(
+                    vuln['dependencies'], name='kernel', verbose=args.verbose):
+                if not checkers.kernel_specified_installed(
                         vuln['dependencies'], verbose=args.verbose):
                     installed_flag = False
             if installed_flag:
@@ -88,16 +101,95 @@ def install(args):
             else:
                 color_print.error('invalid input')
                 loop_count += 1
-            
-        if not DockerInstaller.install_by_version(
-                vuln['dependencies'], verbose=args.verbose):
-            color_print.error(
-                'failed to install {v}'.format(
-                    v=vuln['name']))
+        """
+        there ia an error below(the commented part):
+        the error is that "DockerInstaller.install_by_version" can only install docker-ce/docker-cli/containerd.io
+        but runc/kernel is also needed to be installed in some occasions(
+        temporarily cnvs dont have runc,runc is only for gadget installation,
+        but we still consider this situation anyway, of course for furture)
+        """
+        # if not DockerInstaller.install_by_version(
+        #         vuln['dependencies'], verbose=args.verbose):
+        #     color_print.error(
+        #         'failed to install {v}'.format(
+        #             v=vuln['name']))
+        # else:
+        #     color_print.debug(
+        #         '{v} successfully installed'.format(
+        #             v=vuln['name']))
+        success_flag=True # true only if all gadgets successfully installed
+        temp_gadgets=[]# gadgets only include docker/containerd,without runc/kernel
+        for gadget in vuln['dependencies']:
+            if gadget['name']=='docker-ce':
+                install_version=gadget['version']
+        if version.parse(install_version) < version.parse('18.09.0'):
+            temp_gadgets = [{
+                'name': 'docker-ce',
+                'version': install_version,
+            }]
         else:
+            temp_gadgets = [{
+                'name': 'docker-ce',
+                'version': install_version,
+            }, {
+                'name': 'docker-ce-cli',
+                'version': install_version,
+            }]  
+        for gadget in vuln['dependencies']:
+            if gadget['name']=='containerd.io':
+                temp_gadgets.append(gadget)
+        if not DockerInstaller.install_by_version(
+                temp_gadgets, verbose=args.verbose):
+            color_print.error(
+                'failed to install {v} during docker installation.'.format(
+                    v=vuln['name']))
+            success_flag=False
+        #else:
+            # color_print.debug(
+            #     '{v} successfully installed'.format(
+            #         v=vuln['name']))
+        kernel_flag=False # if kernel in gadget ,we use this flag to determine whether to reboot
+        # next we consider runc/kernel
+        for gadget in vuln['dependencies']:
+            if gadget['name']=='runc':
+                runc_version=gadget['version']
+                checkers.runc_executable(verbose=args.verbose)
+                if DockerInstaller.install_runc(runc_version, verbose=args.verbose):
+                    color_print.debug('runc with version {version} successfully installed'.format(
+                    version=runc_version))
+                else:
+                    color_print.error(
+                            'failed to install {v} during runc installation'.format(
+                                v=vuln['name']))
+                    success_flag=False
+            elif gadget['name']=='kernel':
+                kernel_flag=True
+                kernel_gadgets=[]
+                kernel_gadgets.append(gadget)
+                if checkers.kernel_specified_installed(
+                        kernel_gadgets, verbose=args.verbose):
+                    color_print.debug(
+                        'kernel already installed.')
+                    kernel_flag=False
+                else:
+                    color_print.debug(
+                        'kernel is going to be installed')
+                    if not KernelInstaller.install_by_version(
+                            kernel_gadgets, verbose=args.verbose):
+                        color_print.error(
+                            'failed to install {v} during kernel installation'.format(
+                                v=vuln['name']))
+                        success_flag=False
+        # right now all  installation finished
+        if success_flag==True:
             color_print.debug(
                 '{v} successfully installed'.format(
                     v=vuln['name']))
+        if kernel_flag==True:
+            reboot = color_print.debug_input('reboot system now? (y/n) ')
+            if reboot == 'y' or reboot == 'Y':
+                system_func.reboot_system(verbose=args.verbose)
+
 
     if vuln['class'] == 'kubernetes':
         if checkers.kubernetes_specified_installed(

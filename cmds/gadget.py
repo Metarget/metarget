@@ -102,7 +102,7 @@ def install(args):
                 'To install containerd, Docker >=18.09 is required')
         
         temp_gadgets = [
-            {'name': 'containerd', 'version': install_version}
+            {'name': 'containerd.io', 'version': install_version}
         ]
         if checkers.containerd_specified_installed(
                 temp_gadgets, verbose=args.verbose):
@@ -113,7 +113,7 @@ def install(args):
         # if containerd is  already installed with different version, we can simply apt-get -y --allow-downgrades to install it.
         # we can directly use DockerInstaller.install_by_version to install containerd
         if not DockerInstaller.install_by_version(
-                [{'name': 'containerd.io', 'version': install_version}],
+                temp_gadgets,
                 verbose=args.verbose):
             color_print.error(
                 'failed to install {gadget}'.format(
@@ -136,6 +136,10 @@ def install(args):
         temp_gadgets = [
             {'name': 'runc', 'version': install_version}
         ]
+        # chmod +x /usr/bin/runc
+        checkers.runc_executable(verbose=args.verbose)
+
+
         if checkers.runc_specified_installed(
                 temp_gadgets, verbose=args.verbose):
             color_print.debug(
@@ -150,13 +154,6 @@ def install(args):
         else:
             color_print.error('failed to install runc with version {version}'.format(
             version=install_version))
-
-
-
-
-
-
-
 
 
     if args.gadget == 'k8s':
