@@ -213,6 +213,7 @@ class KernelInstaller(Installer):
                     version = version.rstrip('.0') + '-'
                     debs = cls._fetch_package_list_by_version(
                         version, verbose=verbose)
+                    color_print.debug('oh! kernel package list found by another way~')
                     if not debs:
                         return
                 else:
