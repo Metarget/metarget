@@ -79,6 +79,7 @@ class KernelInstaller(Installer):
                     version = version.rstrip('.0') + '-'
                     debs = cls._fetch_package_list_by_version(
                         version, verbose=verbose)
+                    color_print.debug('oh! kernel package list found by another way~')
                     if not debs:
                         return
                 else:
@@ -167,39 +168,39 @@ class KernelInstaller(Installer):
         except subprocess.CalledProcessError:
             return False
 
-    @classmethod
-    def _install_by_version_with_build_sourcecode(cls, version, verbose=False):
-        color_print.debug('switching kernel version with building from source code')
-        stdout, stderr = verbose_func.verbose_output(verbose)
-        kernel_source_dir = f"/usr/src/linux-{kernel_version}"
-        try:
-            # download source code
-            color_print.debug('downloading kernel source code')
-            download_command = f"wget http://mirrors.163.com/kernel/v{version.split('.')[0]}.x/linux-{version}.tar.xz -P /tmp"
-            subprocess.run(download_command, shell=True)
-            extract_command = f"tar -xvf /tmp/linux-{version}.tar.xz -C /usr/src"
-            subprocess.run(extract_command, shell=True)
-            os.chdir(kernel_source_dir)
-            # build
-            color_print.debug('building kernel')
-            config_command = "make menuconfig"  # 使用 make menuconfig 来配置内核选项
-            subprocess.run(config_command, shell=True)
-            compile_command = "make"  # 使用 make 编译内核
-            subprocess.run(compile_command, shell=True)
-            # install
-            color_print.debug('installing kernel')
-            install_command = "make modules_install install"  # 安装内核和模块
-            subprocess.run(install_command, shell=True)
-            # update grub
-            color_print.debug('updating grub')
-            subprocess.run(
-                cls.cmd_update_grub,
-                stdout=stdout,
-                stderr=stderr,
-                check=True)
-            return True
-        except subprocess.CalledProcessError:
-            return False
+    # @classmethod
+    # def _install_by_version_with_build_sourcecode(cls, version, verbose=False):
+    #     color_print.debug('switching kernel version with building from source code')
+    #     stdout, stderr = verbose_func.verbose_output(verbose)
+    #     kernel_source_dir = f"/usr/src/linux-{kernel_version}"
+    #     try:
+    #         # download source code
+    #         color_print.debug('downloading kernel source code')
+    #         download_command = f"wget http://mirrors.163.com/kernel/v{version.split('.')[0]}.x/linux-{version}.tar.xz -P /tmp"
+    #         subprocess.run(download_command, shell=True)
+    #         extract_command = f"tar -xvf /tmp/linux-{version}.tar.xz -C /usr/src"
+    #         subprocess.run(extract_command, shell=True)
+    #         os.chdir(kernel_source_dir)
+    #         # build
+    #         color_print.debug('building kernel')
+    #         config_command = "make menuconfig"  # 使用 make menuconfig 来配置内核选项
+    #         subprocess.run(config_command, shell=True)
+    #         compile_command = "make"  # 使用 make 编译内核
+    #         subprocess.run(compile_command, shell=True)
+    #         # install
+    #         color_print.debug('installing kernel')
+    #         install_command = "make modules_install install"  # 安装内核和模块
+    #         subprocess.run(install_command, shell=True)
+    #         # update grub
+    #         color_print.debug('updating grub')
+    #         subprocess.run(
+    #             cls.cmd_update_grub,
+    #             stdout=stdout,
+    #             stderr=stderr,
+    #             check=True)
+    #         return True
+    #     except subprocess.CalledProcessError:
+    #         return False
 
     @classmethod
     def _install_by_version_with_download(cls, version, verbose=False):
