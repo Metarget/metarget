@@ -62,7 +62,7 @@ This project aims to provide vulnerable scenes for security research. The securi
 - Ubuntu 16.04 or **18.04 (recommended)**
     - for some cases (e.g. new kernel vulnerabilities) specific Ubuntu distributions are needed
     - you can read the note for specific vulnerabilities (prompted by an asterisk (\*)) for details
-- **Python >= 3.6** (Python 2.x is unsupported!)
+- **Python >= 3.7** (Python 2.x is unsupported!)
 - pip3
 
 ### 2.2 From Source
