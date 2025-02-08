@@ -331,4 +331,34 @@ def retrieve(args):
     Returns:
         None.
     """
-    print(' '.join(config.gadgets_supported))
+    #color_print.debug("tips: use 'metarget gadget list docker/k8s/runc/containerd/kernel' to list the versions of the specified gadget")
+    if args.component:
+        if args.component in config.gadgets_supported:
+            color_print.debug("List of all supported versions of {component}:".format(component=args.component))
+            if args.component == 'docker':
+                with open('tools/docker_versions_available.txt', 'r') as file:
+                    print('\n'.join(file.readlines()))
+                color_print.warning("data above is before 2025.2.8")
+                # tell the user the data ddl:2025.2.8
+                # developer should update the data ddl in the future
+            elif args.component == 'k8s':
+                with open('tools/k8s_versions_available.txt', 'r') as file:
+                    print('\n'.join(file.readlines()))
+                color_print.warning("data above is before 2025.2.8")
+                # tell the user the data ddl:2025.2.8
+                # developer should update the data ddl in the future
+            elif args.component == 'runc':
+                color_print.debug("visit https://github.com/opencontainers/runc/tags to get all versions of runc~")
+            elif args.component == 'containerd':
+                with open('tools/containerd_versions_available.txt', 'r') as file:
+                    print('\n'.join(file.readlines()))
+                color_print.warning("data above is before 2025.2.8")
+            elif args.component == 'kernel':
+                with open('tools/kernel_versions_available.txt', 'r') as file:
+                    print('\n'.join(file.readlines()))
+                color_print.warning("data above is before 2025.2.8")
+                color_print.debug("open metarget/yamls/kernel_packages_list.yaml for more details")
+    else:
+        color_print.debug("List of all supported components:")
+        print(' '.join(config.gadgets_supported))
+

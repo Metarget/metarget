@@ -46,6 +46,10 @@ def download_package_list():
     tr_all = version_table.find_all("tr")
     kernels = [tr.a.get_text()
                for tr in tr_all[4:-1] if tr.a.get_text().startswith('v')]
+    # 下面注释的代码用于将所有内核版本号写入文件
+    # with open('tools/kernel_versions_available.txt', 'w') as file:
+    #     # 将每个版本号写入新的一行
+    #     file.write("\n".join(kernels))
     packages = dict()
     for kernel in kernels:
         color_print.debug('downloading info for kernel %s' % kernel)
