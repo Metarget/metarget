@@ -65,9 +65,13 @@ def main():
     # sub-subcommand `gadget list`
     parser_gadget_list = subparsers_gadget.add_parser(
         'list', help='list supported gadgets')
+    # add fuction:you can also use 'metarget gadget list docker/k8s/runc/containerd/kernel' to list the versions of the specified gadget
+    parser_gadget_list.add_argument(
+    'component', nargs='?', choices=['docker', 'k8s', 'kernel', 'containerd', 'runc'],
+    help='Optional component to list supported versions'
+    )
     parser_gadget_list.set_defaults(func=cmds.gadget.retrieve)
 
-    # sub-subcommand `gadget install`
     parser_gadget_install = subparsers_gadget.add_parser(
         'install', help='install gadgets')
     parser_gadget_install.add_argument(
