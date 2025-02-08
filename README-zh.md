@@ -212,7 +212,7 @@ Kubernetes通常需要配置大量参数，Metarget项目提供了部分参数�
 #### 3.2.5 示例：安装指定版本containerd/runc
 
 执行以下命令：
-s
+
 ```bash
 ./metarget gadget install containerd --version 1.2.6
 ```

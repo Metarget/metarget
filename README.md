@@ -125,7 +125,7 @@ positional arguments:
 optional arguments:
   -h, --help  show this help message and exit
 ```
-
+> Run`./metarget gadget list docker/k8s/containerd/runc/kernel`to see cloud native components' supported versions currently.
 #### 3.2.1 Case: Install Docker with Specified Version
 
 Run:
@@ -195,6 +195,25 @@ Currently, Metarget installs kernels in 2 ways:
 2. if apt package is not available, download \*.deb remotely from Ubuntu and try to install
 
 After successful installation of kernel, reboot of system is needed. Metarget will prompt to reboot automatically.
+
+#### 3.2.5 Case: Install containerd/runc with Specified Version
+
+Run:
+
+```bash
+./metarget gadget install containerd --version 1.2.6
+```
+
+If the command above completes successfully, 1.2.6 containerd will be installed.
+
+Run:
+
+```bash
+./metarget gadget install runc --version 1.1.6
+```
+
+If the command above completes successfully, 1.1.6 runc will be installed.
+
 
 ### 3.3 Manage Vulnerable Scenes Related to Cloud Native Components
 
