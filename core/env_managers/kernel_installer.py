@@ -286,8 +286,9 @@ class KernelInstaller(Installer):
             f = open(config.kernel_packages_list, 'r')
         try:
             packages = yaml.load(f, Loader=yaml.SafeLoader)
-            for key in packages.keys():
-                if version in key:
+            for key in reversed(list(packages.keys())):
+                print(key)
+                if 'v'+version in key:
                     color_print.debug('kernel package list found:')
                     color_print.debug(json.dumps(packages[key]))
                     return packages[key]
