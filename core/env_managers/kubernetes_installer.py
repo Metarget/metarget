@@ -15,6 +15,7 @@ import config
 import utils.color_print as color_print
 import utils.verbose as verbose_func
 from core.env_managers.installer import Installer
+from core.env_managers.docker_installer import DockerInstaller
 from core.env_managers.cni_plugin_installer import CNIPluginInstaller
 
 
@@ -369,6 +370,8 @@ class KubernetesInstaller(Installer):
     def _pre_install(cls, mappings=None, verbose=False):
         color_print.debug('pre-installing')
         stdout, stderr = verbose_func.verbose_output(verbose)
+        # need to comment "https://download.docker.com/linux/ubuntu bionic stable" in following files before apt-get update
+        DockerInstaller._comment_source(verbose=verbose)
         # install requirements
         if not cls._apt_update(verbose=verbose):
             return False
