@@ -125,6 +125,7 @@ class Installer(object):
         color_print.debug('adding apt repository %s' % repo_entry)
         try:
             if gpg_url:
+                #eg:curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
                 cmd_curl_gpg = 'curl -fsSL {gpg_url}'.format(
                     gpg_url=gpg_url).split()
                 res = subprocess.run(

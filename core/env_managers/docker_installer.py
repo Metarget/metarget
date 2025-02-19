@@ -3,7 +3,7 @@ Docker Installer
 """
 import copy
 import subprocess
-
+import os
 import utils.color_print as color_print
 import utils.verbose as verbose_func
 import config
@@ -126,6 +126,8 @@ class DockerInstaller(Installer):
         # install requirements
         color_print.debug('installing prerequisites')
         try:
+            # need to comment "https://download.docker.com/linux/ubuntu bionic stable" in following files before apt-get update
+            cls._comment_source(verbose=verbose)
             if not cls._apt_update(verbose=verbose):
                 return False
             subprocess.run(
@@ -138,12 +140,38 @@ class DockerInstaller(Installer):
             return False
         cls._add_apt_repository(gpg_url=config.docker_apt_repo_gpg,
                                 repo_entry=config.docker_apt_repo_entry, verbose=verbose)
+        # add domestic docker apt repository
+        cls._add_apt_repository(gpg_url=config._docker_apt_repo_gpg_aliyun,
+                                repo_entry=config._docker_apt_repo_entry_aliyun, verbose=verbose)
         for repo in config.containerd_apt_repo_entries:
             cls._add_apt_repository(repo_entry=repo, verbose=verbose)
 
         cls._apt_update(verbose=verbose)
 
         return True
+
+
+    @classmethod
+    def _comment_source(cls, verbose=False):
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        for file in config.files_to_check:
+            if os.path.isfile(file):
+                print("file exists")
+                command = [
+                    'sed', '-i',
+                    f"s|.*download.docker.com.*|# &|",  # 匹配包含 "download.docker.com" 的任何行并在其前面加上 "#"
+                    file
+                ]
+                try:
+                    subprocess.run(
+                        command,
+                        stdout=stdout,
+                        stderr=stderr,
+                        check=True
+                    )
+                    color_print.debug(f"Successfully commented out repository URL in {file}")
+                except subprocess.CalledProcessError as e:
+                    color_print.error(f"Error while modifying {file}: {e}")
 
     #DockerInstaller.install_runc(install_version, verbose=args.verbose)
     @classmethod
