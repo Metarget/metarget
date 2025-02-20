@@ -15,6 +15,7 @@ import config
 import utils.color_print as color_print
 import utils.verbose as verbose_func
 from core.env_managers.installer import Installer
+from core.env_managers.docker_installer import DockerInstaller
 from core.env_managers.cni_plugin_installer import CNIPluginInstaller
 
 
@@ -31,8 +32,18 @@ class KubernetesInstaller(Installer):
     ]
     _cmd_modprobe = "modprobe br_netfilter".split()
     _cmd_swapoff = 'swapoff -a'.split()
+    # add 2 command:
+    # 1. sed -i "/\\/swapfile/s/^/#/" /etc/fstab
+    # 2. sed -i "/\\/swap.img/s/^/#/" /etc/fstab
+    #
+    #_cmd_swapoff_fstab = 'sed -i "/\\/swapfile/s/^/#/" /etc/fstab'.split()
+    _cmd_swapoff_fstab = ['sed', '-i', '/\\/swapfile/s/^/#/', '/etc/fstab']
+    _cmd_swapoff_fstab_img = ['sed', '-i', '/\\/swap.img/s/^/#/', '/etc/fstab']
+    #_cmd_swapoff_fstab_img = 'sed -i "/\\/swap.img/s/^/#/" /etc/fstab'.split()
     _cmd_kubeadm_list_image = 'kubeadm config images list'.split()
     _cmd_kubeadm_reset = 'kubeadm reset'.split()
+    # rm -rf $HOME/.kube  没有这个，有时候kubeadm reset后会报错
+    _cmd_rm_kube = 'rm -rf $HOME/.kube'.split()
     _cmd_enable_schedule_master = 'kubectl taint nodes --all node-role.kubernetes.io/master-'.split()
     _kubeadm_common_options = '--ignore-preflight-errors=NumCPU,cri,SystemVerification'
 
@@ -51,6 +62,12 @@ class KubernetesInstaller(Installer):
             subprocess.run(
                 cls._cmd_kubeadm_reset,
                 input='y\n'.encode('utf-8'),
+                stdout=stdout,
+                stderr=stderr,
+                check=False)
+            # rm -rf $HOME/.kube  没有这个，有时候kubeadm reset后会报错
+            subprocess.run(
+                cls._cmd_rm_kube,
                 stdout=stdout,
                 stderr=stderr,
                 check=False)
@@ -337,11 +354,24 @@ class KubernetesInstaller(Installer):
             stdout=stdout,
             stderr=stderr,
             check=True)
+        # forever turn off swap
+        subprocess.run(
+            cls._cmd_swapoff_fstab,
+            stdout=stdout,
+            stderr=stderr,
+            check=True)
+        subprocess.run(
+            cls._cmd_swapoff_fstab_img,
+            stdout=stdout,
+            stderr=stderr,
+            check=True)
 
     @classmethod
     def _pre_install(cls, mappings=None, verbose=False):
         color_print.debug('pre-installing')
         stdout, stderr = verbose_func.verbose_output(verbose)
+        # need to comment "https://download.docker.com/linux/ubuntu bionic stable" in following files before apt-get update
+        DockerInstaller._comment_source(verbose=verbose)
         # install requirements
         if not cls._apt_update(verbose=verbose):
             return False
@@ -449,3 +479,4 @@ if __name__ == "__main__":
         cni_plugin=test_cni_plugin,
         domestic=True,
         taint_master=False)
+

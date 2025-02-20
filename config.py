@@ -70,13 +70,30 @@ _k8s_apt_repo_entry_ustc = 'deb http://mirrors.ustc.edu.cn/kubernetes/apt kubern
 
 # docker apt repositories
 _docker_apt_repo_gpg_official = 'https://download.docker.com/linux/ubuntu/gpg'
-
+# add domestic docker apt repository
+#curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add
+#sudo add-apt-repository "deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
+_docker_apt_repo_gpg_aliyun = 'https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg'
 try:
     release = platform.dist()[2]
 except AttributeError:
     release = 'trusty'
 _docker_apt_repo_entry_official = 'deb [arch=amd64] https://download.docker.com/linux/ubuntu {release} stable'.format(
     release=release)
+try:
+    release = platform.dist()[2]
+except AttributeError:
+    release = 'trusty'
+_docker_apt_repo_entry_aliyun = 'deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu {release} stable'.format(
+    release=release)
+
+# need to comment https://download.docker.com/linux/ubuntu bionic stable in following files before apt-get update
+files_to_check = [
+    '/etc/apt/sources.list',
+    '/etc/apt/sources.list.save',
+    '/etc/apt/sources.list.d/docker.list',
+    '/etc/apt/sources.list.d/docker.list.save'
+]
 
 # kernel apt repositories
 _kernel_apt_repo_entry_trusty_official = 'deb http://security.ubuntu.com/ubuntu trusty-security main'
