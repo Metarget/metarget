@@ -310,7 +310,11 @@ class Installer(object):
             'downloading {url} to {dst}'.format(
                 url=url, dst=save_path))
         res = requests.get(url, stream=True, proxies=proxies)
-        total_length = int(int(res.headers.get('content-length')) / 1024) + 1
+        content_length = res.headers.get('content-length')
+        if content_length:
+            total_length = int(int(content_length) / 1024) + 1 
+        else:
+            print("error to get content-length,please check url or internet")
         dst = save_path
         with open(dst, 'wb') as f:
             bar = tqdm(
