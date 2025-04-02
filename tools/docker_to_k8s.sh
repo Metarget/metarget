@@ -12,6 +12,8 @@ for file in $(cat $1)
 do
 	file_backup=$file".backup"
 	cp $file $file_backup
+	# echo $file
+	# echo $file_backup
 
 	#Parsing file path
 	pre_path="vul_app"
@@ -21,6 +23,9 @@ do
 	cve=`echo $file_backup |awk -F '/' '{print $3}' | tr '[A-Z]' '[a-z]' | sed 's/\./'-'/g'`
 	cve2=`echo $file_backup |awk -F '/' '{print $3}' | sed 's/\./'-'/g'`
 	cve3=`echo $file_backup |awk -F '/' '{print $3}'`
+	# echo $cve
+	# echo $cve2
+	# echo $cve3
 	cve_path=$app_path"/"$cve2
 	# echo $cve_path
 
@@ -40,7 +45,11 @@ do
 	for k in ${srv_name[*]}
 	do
 		if [[ `grep $k $file_backup` ]];then
-			sed -i "s/$k/$cve"-"$k/g" $file_backup
+			# it works on linux:
+			sed -i "s/$k/${cve}-${k}/g" $file_backup
+			# on mac you need:
+			# an empty string tells `sed` not to create a backup file
+			# sed -i '' "s/$k/${cve}-${k}/g" $file_backup
 		fi
 	done
 
@@ -48,7 +57,12 @@ do
 	output_file=$cve_path"/"$cve".yaml"
 	home_path=`pwd`"/"
 	kompose convert -f $file_backup -o $output_file --volumes hostPath
+	
+	# it works on linux:
 	sed -i "s!$home_path!!g" $output_file
+	# on mac you need:
+	# an empty string tells `sed` not to create a backup file
+	# sed -i '' "s!$home_path!!g" $output_file
 
 	# Create desc.yaml
 	touch $outpath/desc.yaml
