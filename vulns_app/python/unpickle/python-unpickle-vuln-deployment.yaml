@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./unpickle/docker-compose.yml -o vul_app/python/unpickle/ --volumes hostPath
+    kompose.version: 1.35.0 (HEAD)
+  labels:
+    io.kompose.service: flask
+    app: flask
+    env: dev
+  name: flask
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: flask
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ./unpickle/docker-compose.yml -o vul_app/python/unpickle/ --volumes hostPath
+        kompose.version: 1.35.0 (HEAD)
+      labels:
+        io.kompose.service: flask
+    spec:
+      containers:
+        - args:
+            - -w
+            - "4"
+            - -b
+            - :8000
+            - -u
+            - www-data
+            - -g
+            - www-data
+            - --access-logfile
+            - '-'
+            - app:app
+          image: sufwkevin/python-unpickle-vuln:latest
+          name: flask
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          imagePullPolicy: Always
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+      restartPolicy: Always
+

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./unpickle/docker-compose.yml -o vul_app/python/unpickle/ --volumes hostPath
+    kompose.version: 1.35.0 (HEAD)
+    description: "This service exposes the Flask app running in a container."
+  labels:
+    io.kompose.service: flask
+  name: flask
+spec:
+  ports:
+    - name: "8000"
+      port: 8000
+      targetPort: 8000
+  selector:
+    io.kompose.service: flask
+  type: ClusterIP
+  sessionAffinity: ClientIP
