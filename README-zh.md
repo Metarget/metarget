@@ -74,7 +74,7 @@ RCE、容器逃逸、横向移动、隐蔽持久化，统统打包送给你。
 拉取仓库，安装必要库文件：
 
 ```bash
-git clone https://github.com/brant-ruan/metarget.git
+git clone https://github.com/Metarget/metarget.git
 cd metarget/
 pip3 install -r requirements.txt
 ```

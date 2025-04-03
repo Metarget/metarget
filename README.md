@@ -70,7 +70,7 @@ This project aims to provide vulnerable scenes for security research. The securi
 Clone the repository and install requirements:
 
 ```bash
-git clone https://github.com/brant-ruan/metarget.git
+git clone https://github.com/Metarget/metarget.git
 cd metarget/
 pip3 install -r requirements.txt
 ```
