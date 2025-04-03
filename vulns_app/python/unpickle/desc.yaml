@@ -1,0 +1,22 @@
+name:  python-unpickle-vuln
+class:  unpickle
+type:  rce
+description: |
+  Python's pickle module is a popular serialization/deserialization tool that converts Python objects into byte streams and vice versa. However, when untrusted data is deserialized using pickle, it can lead to arbitrary code execution.
+  This vulnerability occurs when an application deserializes user-controlled data using the pickle module without proper validation. An attacker can craft a malicious serialized object that, when deserialized, executes arbitrary commands on the target system.
+
+tags:
+  - python
+  - unpickle
+
+dependencies:
+  yamls:
+    - python-unpickle-deployment.yaml
+    - python-unpickle-service.yaml
+
+links:
+  - https://github.com/vulhub/vulhub/tree/master/python/unpickle/README.md
+  - http://rickgray.me/2015/09/12/django-command-execution-analysis.html
+  - https://www.leavesongs.com/PENETRATION/zhangyue-python-web-code-execute.html
+  - https://docs.python.org/3/library/pickle.html#pickle.loads
+  - https://intoli.com/blog/dangerous-pickles/
