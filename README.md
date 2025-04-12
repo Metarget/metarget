@@ -374,7 +374,7 @@ If there is an asterisk (\*) following the name of one vulnerable scene, you nee
 |[cve-2022-0185](vulns_cn/kernel/cve-2022-0185.yaml)|kernel|container_escape|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2022-0185)||
 |[cve-2022-0492](vulns_cn/kernel/cve-2022-0492.yaml)|kernel|container_escape|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0492)|[link](writeups_cnv/kernel-cve-2022-0492)|
 |[cve-2022-0847](vulns_cn/kernel/cve-2022-0847.yaml)|kernel|container_escape|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847)|[link](writeups_cnv/kernel-cve-2022-0847)|
-|[cve-2022-0995\*](vulns_cn/kernel/cve-2022-0995.yaml)|kernel|privilege_escalation|[7.1](https://nvd.nist.gov/vuln/detail/CVE-2022-0995)||
+|[cve-2022-0995\*](vulns_cn/kernel/cve-2022-0995.yaml)|kernel|privilege_escalation|[7.1](https://nvd.nist.gov/vuln/detail/CVE-2022-0995)||[link](writeups_cnv/kernel-cve-2022-0995)
 |[cve-2022-25636\*](vulns_cn/kernel/cve-2022-25636.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-25636)||
 |[cve-2022-23222](vulns_cn/kernel/cve-2022-23222.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-23222)||
 |[cve-2022-27666\*](vulns_cn/kernel/cve-2022-27666.yaml)|kernel|privilege_escalation|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-27666)||

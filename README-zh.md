@@ -394,7 +394,7 @@ docker run vuln-XXX
 |[cve-2022-0185](vulns_cn/kernel/cve-2022-0185.yaml)|kernel|容器逃逸|[8.4](https://nvd.nist.gov/vuln/detail/CVE-2022-0185)||
 |[cve-2022-0492](vulns_cn/kernel/cve-2022-0492.yaml)|kernel|容器逃逸|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0492)|[链接](writeups_cnv/kernel-cve-2022-0492)|
 |[cve-2022-0847](vulns_cn/kernel/cve-2022-0847.yaml)|kernel|容器逃逸|[7.8](https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847)|[链接](writeups_cnv/kernel-cve-2022-0847)|权限提升/通过漏洞利用实现权限提升<br>防御绕过/清除入侵痕迹
-|[cve-2022-0995\*](vulns_cn/kernel/cve-2022-0995.yaml)|kernel|权限提升|[7.1](https://nvd.nist.gov/vuln/detail/CVE-2022-0995)||
+|[cve-2022-0995\*](vulns_cn/kernel/cve-2022-0995.yaml)|kernel|权限提升|[7.1](https://nvd.nist.gov/vuln/detail/CVE-2022-0995)||[链接](writeups_cnv/kernel-cve-2022-0995)
 |[cve-2022-25636\*](vulns_cn/kernel/cve-2022-25636.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-25636)||
 |[cve-2022-23222](vulns_cn/kernel/cve-2022-23222.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-23222)||
 |[cve-2022-27666\*](vulns_cn/kernel/cve-2022-27666.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2022-27666)||
