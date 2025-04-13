@@ -380,6 +380,7 @@ docker run vuln-XXX
 |[cve-2020-8558](vulns_cn/kubernetes/cve-2020-8558.yaml)|k8s|服务暴露|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8558)||
 |[cve-2020-8559](vulns_cn/kubernetes/cve-2020-8559.yaml)|k8s|权限提升|[6.8](https://nvd.nist.gov/vuln/detail/CVE-2020-8559)||
 |[cve-2021-25741](vulns_cn/kubernetes/cve-2021-25741.yaml)|k8s|容器逃逸|[8.1](https://nvd.nist.gov/vuln/detail/CVE-2021-25741)||
+|[cve-2022-0811](vulns_cn/kubernetes/cve-2022-0811.yaml)|k8s|容器逃逸|[8.8](https://nvd.nist.gov/vuln/detail/CVE-2022-0811)|[链接](writeups_cnv/kubernetes-cve-2022-0811)|
 |[cve-2016-5195](vulns_cn/kernel/cve-2016-5195.yaml)|kernel|容器逃逸|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-5195)||
 |[cve-2016-8655](vulns_cn/kernel/cve-2016-8655.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2016-8655)||
 |[cve-2017-6074](vulns_cn/kernel/cve-2017-6074.yaml)|kernel|权限提升|[7.8](https://nvd.nist.gov/vuln/detail/CVE-2017-6074)||
