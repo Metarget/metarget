@@ -1,0 +1,10 @@
+name:  php-php_xxe
+class:  php
+type:  rce
+hostPath: true
+dependencies:
+  yamls:
+    - php_xxe-web-deployment.yaml
+    - php_xxe-web-service.yaml
+links:
+  - https://github.com/vulhub/vulhub/tree/master/php/php_xxe
