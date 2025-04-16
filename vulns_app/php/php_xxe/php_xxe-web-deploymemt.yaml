@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./php/php_xxe/docker-compose.yml.backup -o vul_app/php/php_xxe/php_xxe.yaml --volumes hostPath
+    kompose.version: 1.35.0 (9532ceef3)
+  labels:
+    io.kompose.service: php-xxe-web
+  name: php-xxe-web
+  namespace: metarget
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: php-xxe-web
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -f ./php/php_xxe/docker-compose.yml.backup -o vul_app/php/php_xxe/php_xxe.yaml --volumes hostPath
+        kompose.version: 1.35.0 (9532ceef3)
+      labels:
+        io.kompose.service: php-xxe-web
+    spec:
+      containers:
+        - image: vulhub/php_xxe-php:7.0.30
+          name: php-xxe-web
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: php-xxe-web-hostpath0
+      restartPolicy: Always
+      volumes:
+        - hostPath:
+            path: php/php_xxe/www
+          name: php-xxe-web-hostpath0
+

@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -f ./php/php_xxe/docker-compose.yml.backup -o vul_app/php/php_xxe/php_xxe.yaml --volumes hostPath
+    kompose.version: 1.35.0 (9532ceef3)
+  labels:
+    io.kompose.service: php-xxe-web
+  name: php-xxe-web
+  namespace: metarget
+spec:
+  ports:
+    - name: "8080"
+      port: 8080
+      targetPort: 80
+  selector:
+    io.kompose.service: php-xxe-web
