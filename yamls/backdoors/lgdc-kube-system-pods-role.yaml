@@ -1,0 +1,79 @@
+# lgdc-kube-system-pods-role
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: lgdc-kube-system-pods
+  namespace: kube-system
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: lgdc-kube-system-pods
+  namespace: kube-system
+
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  verbs:
+  - list
+  - get
+  - delete
+  - create
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: lgdc-kube-system-pods
+  namespace: kube-system
+
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: lgdc-kube-system-pods
+subjects:
+- kind: ServiceAccount
+  name: lgdc-kube-system-pods
+  namespace: kube-system
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: lgdc-kube-system-pods-role
+  name: lgdc-kube-system-pods-role
+  namespace: kube-system
+
+spec:
+  containers:
+  - args:
+    - -c
+    - sleep 10000;
+    command:
+    - /bin/sh
+    image: ubuntu:18.04
+    imagePullPolicy: IfNotPresent
+    name: lgdc-kube-system-pods-role
+    resources:
+      limits:
+        cpu: 100m
+        memory: 500Mi
+      requests:
+        cpu: 80m
+        memory: 50Mi
+
+  serviceAccountName: lgdc-kube-system-pods
+  terminationGracePeriodSeconds: 600
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
+    operator: Exists
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+    operator: Exists
