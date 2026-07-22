@@ -46,7 +46,7 @@ class CNIPluginInstaller(Installer):
         # https://github.com/coreos/flannel#getting-started-on-kubernetes
         color_print.debug('installing flannel')
         k8s_version = version.parse(k8s_version)
-        if version.parse('1.6') <= k8s_version <= version.parse('1.15'):
+        if version.parse('1.6') <= k8s_version < version.parse('1.16'):
             cls._pull_quay_image(
                 config.flannel_image_k8s_1_6_to_1_15,
                 domestic=context.get(
@@ -60,19 +60,28 @@ class CNIPluginInstaller(Installer):
             cls._create_k8s_resources(
                 config.flannel_yaml_k8s_1_6_to_1_15,
                 verbose=verbose)
-        else:
+        elif k8s_version.minor == version.parse(
+                '1.16').minor and k8s_version.major == version.parse('1.16').major:
             cls._pull_quay_image(
                 config.flannel_image_k8s_from_1_16,
-                domestic=context.get(
-                    'domestic',
-                    False),
+                domestic=context.get('domestic', False),
                 mappings=mappings,
                 verbose=verbose)
-            if k8s_version.minor == version.parse(
-                    '1.16').minor and k8s_version.major == version.parse('1.16').major:
+            cls._create_k8s_resources(
+                config.flannel_yaml_k8s_16, verbose=verbose)
+        else:
+            # k8s >= 1.17: new flannel with flannel-cni-plugin initContainer
+            domestic = context.get('domestic', False)
+            cls._pull_ghcr_image(
+                config.flannel_image_k8s_from_1_17,
+                domestic=domestic, mappings=mappings, verbose=verbose)
+            cls._pull_ghcr_image(
+                config.flannel_cni_plugin_image,
+                domestic=domestic, mappings=mappings, verbose=verbose)
+            if k8s_version >= version.parse('1.25'):
                 cls._create_k8s_resources(
-                    config.flannel_yaml_k8s_16, verbose=verbose)
-            elif k8s_version > version.parse('1.16'):
+                    config.flannel_yaml_k8s_from_1_25, verbose=verbose)
+            else:
                 cls._create_k8s_resources(
                     config.flannel_yaml_k8s_over_16, verbose=verbose)
 

@@ -5,6 +5,8 @@ Basic Installer
 """
 
 import copy
+import os
+import shutil
 import subprocess
 import docker
 import socket
@@ -15,9 +17,11 @@ import config
 import utils.system as system_func
 import utils.verbose as verbose_func
 import utils.color_print as color_print
+import utils.docker_env as docker_env
 
 
 class Installer(object):
+    _docker_pull_hint_shown = False
     cmd_apt_uninstall = "apt-get -y remove".split()
     cmd_apt_update = "apt-get update".split()
     cmd_apt_install = 'apt-get -y --allow-downgrades install'.split()
@@ -120,6 +124,59 @@ class Installer(object):
             return False
 
     @classmethod
+    def _probe_url(cls, url, timeout=10, verbose=False):
+        _, stderr = verbose_func.verbose_output(verbose)
+        try:
+            subprocess.run(
+                ['curl', '-fsSL', '--connect-timeout', str(timeout),
+                 '--max-time', str(timeout), '-o', '/dev/null', url],
+                stdout=subprocess.DEVNULL,
+                stderr=stderr,
+                check=True)
+            return True
+        except subprocess.CalledProcessError:
+            return False
+
+    @classmethod
+    def _domestic_mirror_image(cls, image, ori_prefix, new_prefix):
+        temp_image = image.replace(ori_prefix, new_prefix)
+        if 'coredns/coredns:v' in temp_image:
+            temp_image = temp_image.replace('coredns/coredns:v', 'coredns:')
+        return temp_image
+
+    @classmethod
+    def _build_k8s_domestic_mirror_candidates(cls, image, ori_prefix):
+        """Accel prefixes first: curl may reach a registry while docker cannot."""
+        candidates = []
+        seen = set()
+        for accel in config.k8s_images_accel_prefix_candidates:
+            mirrored = accel + image
+            if mirrored not in seen:
+                seen.add(mirrored)
+                candidates.append(mirrored)
+        for prefix in config.k8s_images_prefix_candidates:
+            mirrored = cls._domestic_mirror_image(image, ori_prefix, prefix)
+            if mirrored not in seen:
+                seen.add(mirrored)
+                candidates.append(mirrored)
+        return candidates
+
+    @classmethod
+    def _add_k8s_apt_repository(cls, verbose=False):
+        reachable = [
+            (gpg_url, repo_entry)
+            for gpg_url, repo_entry in config.k8s_apt_repo_candidates
+            if cls._probe_url(gpg_url, verbose=verbose)]
+        candidates = reachable or list(config.k8s_apt_repo_candidates)
+        for gpg_url, repo_entry in candidates:
+            if cls._add_apt_repository(
+                    gpg_url=gpg_url, repo_entry=repo_entry, verbose=verbose):
+                color_print.debug(
+                    'using k8s apt repository %s' % repo_entry)
+                return gpg_url, repo_entry
+        return None, None
+
+    @classmethod
     def _add_apt_repository(cls, repo_entry, gpg_url=None, verbose=False):
         stdout, stderr = verbose_func.verbose_output(verbose)
         color_print.debug('adding apt repository %s' % repo_entry)
@@ -154,63 +211,134 @@ class Installer(object):
             return False
 
     @classmethod
-    def _pull_images(cls, images, mappings=None, verbose=False):
-        for image in images:
-            cls._pull_image(image, mappings, verbose)
+    def _add_apt_repository_signed_by(cls, gpg_url, keyring_file, repo_entry,
+                                      sources_file, verbose=False):
+        """Add apt repository using gpg --dearmor + signed-by (new pkgs.k8s.io format)."""
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        color_print.debug('adding signed-by apt repository %s' % repo_entry)
+        try:
+            os.makedirs(os.path.dirname(keyring_file), exist_ok=True)
+            res = subprocess.run(
+                ['curl', '-fsSL', gpg_url],
+                stdout=subprocess.PIPE, stderr=stderr, check=True)
+            subprocess.run(
+                ['gpg', '--yes', '--dearmor', '-o', keyring_file],
+                input=res.stdout, stdout=stdout, stderr=stderr, check=True)
+            with open(sources_file, 'w') as f:
+                f.write(repo_entry + '\n')
+            return True
+        except subprocess.CalledProcessError:
+            return False
 
     @classmethod
-    def _pull_image(cls, image, mappings=None, verbose=False):
+    def _pull_images(cls, images, mappings=None, env=None, verbose=False):
+        for image in images:
+            if not cls._pull_image(image, mappings, env=env, verbose=verbose):
+                return False
+        return True
+
+    @classmethod
+    def _warn_docker_pull_network(cls, env=None):
+        if cls._docker_pull_hint_shown:
+            return
+        hint = docker_env.docker_daemon_proxy_hint()
+        if hint:
+            color_print.warning(hint)
+        if not docker_env.user_env_has_proxy(env) and not hint:
+            color_print.debug(
+                'tip: if docker pull times out, check systemd proxy for docker')
+        cls._docker_pull_hint_shown = True
+
+    @classmethod
+    def _pull_image_skopeo(cls, image, env=None, verbose=False):
+        if not shutil.which('skopeo'):
+            return False
         stdout, stderr = verbose_func.verbose_output(verbose)
-        if mappings:
+        skopeo_env = docker_env.registry_pull_env(env)
+        repo, tag = image.rsplit(':', 1)
+        try:
+            subprocess.run(
+                ['skopeo', 'copy', '--retry-times', '3',
+                 'docker://' + image,
+                 'docker-daemon:' + repo + ':' + tag],
+                stdout=stdout,
+                stderr=stderr,
+                check=True,
+                env=skopeo_env)
+            return True
+        except subprocess.CalledProcessError:
+            return False
+
+    @classmethod
+    def _pull_image(cls, image, mappings=None, env=None, verbose=False,
+                    pull_timeout=300):
+        stdout, stderr = verbose_func.verbose_output(verbose)
+        if mappings is not None:
             mappings[image] = None
         if not cls._image_exist(image):
             color_print.debug('pulling %s' % image)
-            temp_cmd = 'docker pull {image}'.format(image=image).split()
+            temp_cmd = ['timeout', str(pull_timeout), 'docker', 'pull', image]
             try:
                 subprocess.run(
                     temp_cmd,
                     stdout=stdout,
                     stderr=stderr,
-                    check=True)
+                    check=True,
+                    env=env or os.environ)
                 return True
             except subprocess.CalledProcessError:
+                color_print.debug(
+                    'docker pull failed for %s, trying skopeo' % image)
+                if cls._pull_image_skopeo(image, env=env, verbose=verbose):
+                    return True
+                cls._warn_docker_pull_network(env)
                 return False
         else:
             color_print.debug('%s already pulled' % image)
+            return True
 
     @classmethod
     def _pull_domestic_images(cls, images, ori_prefix,
-                              new_prefix, mappings=None, verbose=False):
-        # print(images)
-        # print(ori_prefix)
-        # print(new_prefix)
+                              mappings=None, env=None, verbose=False):
         for image in images:
-            cls._pull_domestic_image(
-                image,
-                ori_prefix,
-                new_prefix,
-                mappings,
-                verbose=verbose)
+            if not cls._pull_domestic_image(
+                    image, ori_prefix,
+                    mappings=mappings, env=env, verbose=verbose):
+                return False
+        return True
 
     @classmethod
     def _pull_domestic_image(cls, image, ori_prefix,
-                             new_prefix, mappings=None, verbose=False):
-        print(ori_prefix)
-        print(new_prefix)
-        temp_image = image.replace(ori_prefix, new_prefix)
-        # 从阿里云pull镜像coredns时，coredns/coredns:v路径会被替换成coredns:
-        if 'coredns/coredns:v' in temp_image:
-            temp_image = temp_image.replace('coredns/coredns:v', 'coredns:')
-        print(temp_image)
-        print("****\n")
-        print(image)
-        if mappings:
-            mappings[temp_image] = image
-        if not cls._image_exist(image):
-            cls._pull_image(temp_image, verbose=verbose)
-            cls._tag_image(temp_image, image)
-        else:
+                             prefix_order=None, mappings=None, env=None,
+                             verbose=False, fallback_official=True):
+        if cls._image_exist(image):
             color_print.debug('%s already pulled' % image)
+            return True
+        if prefix_order is None:
+            mirror_order = cls._build_k8s_domestic_mirror_candidates(
+                image, ori_prefix)
+        else:
+            mirror_order = []
+            for new_prefix in prefix_order:
+                mirror_order.append(
+                    cls._domestic_mirror_image(image, ori_prefix, new_prefix))
+        for temp_image in mirror_order:
+            color_print.debug(
+                'pulling %s via %s' % (image, temp_image))
+            if mappings is not None:
+                mappings[temp_image] = image
+            if cls._pull_image(temp_image, env=env, verbose=verbose):
+                cls._tag_image(temp_image, image)
+                return True
+        if fallback_official:
+            color_print.debug(
+                'domestic mirrors failed for %s, trying official registry' %
+                image)
+            if cls._pull_image(image, env=env, verbose=verbose):
+                return True
+        cls._warn_docker_pull_network(env)
+        color_print.error('failed to pull %s' % image)
+        return False
 
     @classmethod
     def _tag_images(cls, old_names, new_names):
@@ -260,7 +388,7 @@ class Installer(object):
             cls._pull_domestic_image(
                 image,
                 ori_prefix=config.quay_images_prefix_official,
-                new_prefix=config.quay_images_prefix_candidate,
+                prefix_order=[config.quay_images_prefix_candidate],
                 mappings=mappings,
                 verbose=verbose)
         else:
@@ -273,7 +401,21 @@ class Installer(object):
             cls._pull_domestic_image(
                 image,
                 ori_prefix=config.docker_images_prefix_official,
-                new_prefix=config.docker_image_prefix_candidate,
+                prefix_order=[config.docker_image_prefix_candidate],
+                mappings=mappings,
+                verbose=verbose
+            )
+        else:
+            cls._pull_image(image, mappings=mappings, verbose=verbose)
+
+    @classmethod
+    def _pull_ghcr_image(cls, image, domestic=False,
+                         mappings=None, verbose=False):
+        if domestic:
+            cls._pull_domestic_image(
+                image,
+                ori_prefix=config.ghcr_images_prefix_official,
+                prefix_order=[config.ghcr_images_prefix_candidate],
                 mappings=mappings,
                 verbose=verbose
             )

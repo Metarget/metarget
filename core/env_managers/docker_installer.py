@@ -117,7 +117,7 @@ class DockerInstaller(Installer):
                     gadget['name'], gadget['version'], verbose=verbose):
                 color_print.error(
                     'some errors happened during docker installation')
-                return True
+                return False
         return True
 
     @classmethod
@@ -138,13 +138,19 @@ class DockerInstaller(Installer):
                 check=True)
         except subprocess.CalledProcessError:
             return False
-        cls._add_apt_repository(gpg_url=config.docker_apt_repo_gpg,
-                                repo_entry=config.docker_apt_repo_entry, verbose=verbose)
-        # add domestic docker apt repository
-        cls._add_apt_repository(gpg_url=config._docker_apt_repo_gpg_aliyun,
-                                repo_entry=config._docker_apt_repo_entry_aliyun, verbose=verbose)
-        for repo in config.containerd_apt_repo_entries:
-            cls._add_apt_repository(repo_entry=repo, verbose=verbose)
+        # Add ONE Docker apt source — probe both candidates and pick the first reachable one
+        # to avoid having two simultaneous sources (which causes apt-get update to fail if
+        # one mirror has a temporary sync issue).
+        _docker_apt_candidates = [
+            (config.docker_apt_repo_gpg, config.docker_apt_repo_entry),
+            (config._docker_apt_repo_gpg_aliyun, config._docker_apt_repo_entry_aliyun),
+        ]
+        _reachable = [
+            (g, e) for g, e in _docker_apt_candidates if cls._probe_url(g, verbose=verbose)
+        ]
+        for _gpg_url, _repo_entry in (_reachable or _docker_apt_candidates[:1]):
+            if cls._add_apt_repository(gpg_url=_gpg_url, repo_entry=_repo_entry, verbose=verbose):
+                break
 
         cls._apt_update(verbose=verbose)
 
@@ -156,7 +162,7 @@ class DockerInstaller(Installer):
         stdout, stderr = verbose_func.verbose_output(verbose)
         for file in config.files_to_check:
             if os.path.isfile(file):
-                print("file exists")
+                color_print.debug('commenting docker source in %s' % file)
                 command = [
                     'sed', '-i',
                     f"s|.*download.docker.com.*|# &|",  # 匹配包含 "download.docker.com" 的任何行并在其前面加上 "#"
@@ -203,11 +209,11 @@ class DockerInstaller(Installer):
             try:
                 # 构建更新命令
                 runc_commands = [
-                    'sudo mv /usr/bin/runc /usr/bin/runc.bak',  # 备份当前的 runc
-                    f'curl -L -o /usr/bin/runc {download_url}',  # 使用代理网址下载
-                    'chmod +x /usr/bin/runc',                   # 添加执行权限
-                    'systemctl daemon-reload',                  # 重载 systemd 守护进程
-                    'systemctl restart docker'                  # 重启 docker 服务
+                    'mv /usr/bin/runc /usr/bin/runc.bak',
+                    f'curl -L -o /usr/bin/runc {download_url}',
+                    'chmod +x /usr/bin/runc',
+                    'systemctl daemon-reload',
+                    'systemctl restart docker',
                 ]
                 color_print.warning(f'Attempting to download runc from {download_url}')
                 for command in runc_commands:
@@ -226,7 +232,7 @@ class DockerInstaller(Installer):
         color_print.error('All download attempts failed. Restoring the original runc.')
         try:
             subprocess.run(
-                'sudo mv /usr/bin/runc.bak /usr/bin/runc'.split(),
+                'mv /usr/bin/runc.bak /usr/bin/runc'.split(),
                 stdout=stdout,
                 stderr=stderr,
                 check=True

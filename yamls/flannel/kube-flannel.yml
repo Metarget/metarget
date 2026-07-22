@@ -19,32 +19,35 @@ spec:
   - pathPrefix: "/etc/cni/net.d"
   - pathPrefix: "/etc/kube-flannel"
   - pathPrefix: "/run/flannel"
+  - pathPrefix: "/opt/cni/bin"
   readOnlyRootFilesystem: false
-  # Users and groups
   runAsUser:
     rule: RunAsAny
   supplementalGroups:
     rule: RunAsAny
   fsGroup:
     rule: RunAsAny
-  # Privilege Escalation
   allowPrivilegeEscalation: false
   defaultAllowPrivilegeEscalation: false
-  # Capabilities
   allowedCapabilities: ['NET_ADMIN', 'NET_RAW']
   defaultAddCapabilities: []
   requiredDropCapabilities: []
-  # Host namespaces
   hostPID: false
   hostIPC: false
   hostNetwork: true
   hostPorts:
   - min: 0
     max: 65535
-  # SELinux
   seLinux:
-    # SELinux is unused in CaaSP
     rule: 'RunAsAny'
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    k8s-app: flannel
+    pod-security.kubernetes.io/enforce: privileged
+  name: kube-flannel
 ---
 kind: ClusterRole
 apiVersion: rbac.authorization.k8s.io/v1
@@ -66,6 +69,7 @@ rules:
   resources:
   - nodes
   verbs:
+  - get
   - list
   - watch
 - apiGroups:
@@ -86,19 +90,19 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: flannel
-  namespace: kube-system
+  namespace: kube-flannel
 ---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: flannel
-  namespace: kube-system
+  namespace: kube-flannel
 ---
 kind: ConfigMap
 apiVersion: v1
 metadata:
   name: kube-flannel-cfg
-  namespace: kube-system
+  namespace: kube-flannel
   labels:
     tier: node
     app: flannel
@@ -126,6 +130,7 @@ data:
   net-conf.json: |
     {
       "Network": "10.244.0.0/16",
+      "EnableNFTables": false,
       "Backend": {
         "Type": "vxlan"
       }
@@ -135,7 +140,7 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: kube-flannel-ds
-  namespace: kube-system
+  namespace: kube-flannel
   labels:
     tier: node
     app: flannel
@@ -165,8 +170,19 @@ spec:
         effect: NoSchedule
       serviceAccountName: flannel
       initContainers:
+      - name: install-cni-plugin
+        image: ghcr.io/flannel-io/flannel-cni-plugin:v1.9.1-flannel1
+        command:
+        - cp
+        args:
+        - -f
+        - /flannel
+        - /opt/cni/bin/flannel
+        volumeMounts:
+        - name: cni-plugin
+          mountPath: /opt/cni/bin
       - name: install-cni
-        image: quay.io/coreos/flannel:v0.13.1-rc1
+        image: ghcr.io/flannel-io/flannel:v0.28.5
         command:
         - cp
         args:
@@ -180,7 +196,7 @@ spec:
           mountPath: /etc/kube-flannel/
       containers:
       - name: kube-flannel
-        image: quay.io/coreos/flannel:v0.13.1-rc1
+        image: ghcr.io/flannel-io/flannel:v0.28.5
         command:
         - /opt/bin/flanneld
         args:
@@ -206,18 +222,29 @@ spec:
           valueFrom:
             fieldRef:
               fieldPath: metadata.namespace
+        - name: EVENT_QUEUE_DEPTH
+          value: "5000"
         volumeMounts:
         - name: run
           mountPath: /run/flannel
         - name: flannel-cfg
           mountPath: /etc/kube-flannel/
+        - name: xtables-lock
+          mountPath: /run/xtables.lock
       volumes:
       - name: run
         hostPath:
           path: /run/flannel
+      - name: cni-plugin
+        hostPath:
+          path: /opt/cni/bin
       - name: cni
         hostPath:
           path: /etc/cni/net.d
       - name: flannel-cfg
         configMap:
           name: kube-flannel-cfg
+      - name: xtables-lock
+        hostPath:
+          path: /run/xtables.lock
+          type: FileOrCreate

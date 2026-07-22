@@ -63,7 +63,7 @@ RCE、容器逃逸、横向移动、隐蔽持久化，统统打包送给你。
 
 ### 2.1 依赖项
 
-- Ubuntu 16.04或**18.04（推荐）**
+- Ubuntu **20.04 / 22.04 / 24.04（推荐）**，同时支持 18.04
     - 在某些情况下（例如，新的内核漏洞），需要使用特定的Ubuntu发行版
     - 可以阅读对应漏洞的提示来选择合适的发行版（后面列表中名字后面带星号的部分漏洞）
 - **Python >= 3.7** (不支持Python 2.x！)
@@ -150,6 +150,8 @@ optional arguments:
 
 执行成功后，版本为1.16.5的单节点Kubernetes将被安装在当前Linux系统上。
 
+目前支持的Kubernetes版本范围：**1.9 - 1.33**。
+
 注意：
 
 Kubernetes通常需要配置大量参数，Metarget项目提供了部分参数供指定：
@@ -157,13 +159,38 @@ Kubernetes通常需要配置大量参数，Metarget项目提供了部分参数�
 ```
   -v VERSION, --version VERSION
                         gadget version
+  --runtime {auto,docker,containerd}
+                        容器运行时（auto：k8s>=1.24自动使用containerd，否则docker）
+  --runtime-version RUNTIME_VERSION
+                        运行时版本（containerd时为containerd.io apt版本，如1.6.28；
+                        docker+k8s>=1.24时为cri-dockerd版本，如0.3.15；留空安装最新/默认版本）
   --cni-plugin CNI_PLUGIN
                         cni plugin, flannel by default
   --pod-network-cidr POD_NETWORK_CIDR
-                        pod network cidr, default cidr for each plugin by
-                        default
+                        pod network cidr, default cidr for each plugin by default
   --taint-master        taint master node or not
   --domestic            magic
+```
+
+**关于容器运行时：**
+
+- **k8s < 1.24**：默认使用Docker（需预先通过`metarget gadget install docker`安装），指定`--runtime containerd`可强制使用containerd。
+- **k8s >= 1.24**：默认（`--runtime auto`）自动安装并配置containerd作为CRI，无需手动安装Docker。
+- **k8s >= 1.24 + `--runtime docker`**：自动安装[cri-dockerd](https://github.com/Mirantis/cri-dockerd)作为CRI shim（需预先安装Docker），可通过`--runtime-version`指定cri-dockerd版本。
+
+示例：
+```bash
+# 安装k8s 1.28（自动使用containerd）
+./metarget gadget install k8s --version 1.28.4
+
+# 安装k8s 1.28，指定containerd版本
+./metarget gadget install k8s --version 1.28.4 --runtime containerd --runtime-version 1.6.28
+
+# 安装k8s 1.28，强制使用Docker+cri-dockerd（需预先安装Docker）
+./metarget gadget install k8s --version 1.28.4 --runtime docker
+
+# 安装k8s 1.20，强制使用containerd（旧版本）
+./metarget gadget install k8s --version 1.20.15 --runtime containerd
 ```
 
 **考虑到特殊的网络环境，国内的朋友如果无法访问Kubernetes官方镜像源，可以指定以下参数，以顺利完成Kubernetes的部署：**
@@ -214,10 +241,12 @@ Kubernetes通常需要配置大量参数，Metarget项目提供了部分参数�
 执行以下命令：
 
 ```bash
-./metarget gadget install containerd --version 1.2.6
+./metarget gadget install containerd --version 1.7.14
 ```
 
-执行成功后，版本为1.2.6的containerd将被安装在当前Linux系统上。
+执行成功后，版本为1.7.14的containerd将被安装在当前Linux系统上，并自动完成Kubernetes CRI配置（`SystemdCgroup = true`）。
+
+> **注意**：独立安装containerd会自动配置其作为Kubernetes CRI运行时，无需额外配置即可与`metarget gadget install k8s`配合使用。
 
 执行以下命令：
 

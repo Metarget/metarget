@@ -198,11 +198,18 @@ def install(args):
                 '{vuln} already installed'.format(
                     vuln=vuln['name']))
             return
-        if not checkers.docker_installed(verbose=args.verbose):
-            color_print.error(
-                'it seems docker is not installed or correctly configured')
-            color_print.error_and_exit(
-                'you can run `metarget gadget install docker --version 18.03.1` to install one')
+
+        k8s_version = vuln['dependencies'][0]['version']
+        if version.parse(k8s_version) >= version.parse(config.k8s_containerd_cutoff):
+            runtime = 'containerd'
+        else:
+            if not checkers.docker_installed(verbose=args.verbose):
+                color_print.error(
+                    'it seems docker is not installed or correctly configured')
+                color_print.error_and_exit(
+                    'you can run `metarget gadget install docker --version 18.03.1` to install one')
+            runtime = 'docker'
+
         color_print.debug(
             '{vuln} is going to be installed'.format(
                 vuln=vuln['name']))
@@ -220,6 +227,7 @@ def install(args):
                 http_proxy=args.http_proxy,
                 https_proxy=args.https_proxy,
                 no_proxy=args.no_proxy,
+                runtime=runtime,
                 verbose=args.verbose):
             color_print.error(
                 'failed to install {v}'.format(
