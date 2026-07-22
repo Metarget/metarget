@@ -10,26 +10,66 @@ import utils.verbose as verbose_func
 import config
 from packaging import version
 
-def docker_kubernetes_installed(verbose=False):
-    """Check whether Docker AND Kubernetes have been installed.
+def containerd_installed(verbose=False):
+    """Check whether containerd has been installed and is running.
+
+    Returns:
+        True if containerd service is active, else False.
+    """
+    _, stderr = verbose_func.verbose_output(verbose)
+    try:
+        temp_cmd = 'ctr version'.split()
+        subprocess.run(
+            temp_cmd,
+            stdout=subprocess.PIPE,
+            stderr=stderr,
+            check=True)
+        color_print.debug('containerd already installed')
+        return True
+    except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
+        return False
+
+
+def runtime_installed(runtime='docker', verbose=False):
+    """Check whether the specified container runtime is installed.
 
     Args:
+        runtime: 'docker' or 'containerd'.
         verbose: Verbose or not.
 
     Returns:
-        If Docker and Kubernetes have been both installed, return True, else False.
+        True if the runtime is installed, else False.
     """
-    if not docker_installed(verbose=verbose):
+    if runtime == 'containerd':
+        return containerd_installed(verbose=verbose)
+    return docker_installed(verbose=verbose)
+
+
+def docker_kubernetes_installed(verbose=False, runtime='docker'):
+    """Check whether a container runtime AND Kubernetes have been installed.
+
+    Args:
+        verbose: Verbose or not.
+        runtime: Container runtime to check ('docker' or 'containerd').
+
+    Returns:
+        If runtime and Kubernetes have been both installed, return True, else False.
+    """
+    if not runtime_installed(runtime=runtime, verbose=verbose):
         color_print.error(
-            'it seems docker is not installed or correctly configured')
-        color_print.error(
-            'you can run `metarget gadget install docker --version 18.03.1` to install one')
+            'it seems {runtime} is not installed or correctly configured'.format(runtime=runtime))
+        if runtime == 'containerd':
+            color_print.error(
+                'you can run `metarget gadget install k8s --version 1.28.4` (containerd is auto-installed)')
+        else:
+            color_print.error(
+                'you can run `metarget gadget install docker --version 18.03.1` to install one')
         return False
     if not kubernetes_installed(verbose=verbose):
         color_print.error(
             'it seems kubernetes is not installed or correctly configured')
         color_print.error(
-            'you can run `metarget gadget install k8s --version 1.16.5` to install one')
+            'you can run `metarget gadget install k8s --version 1.28.4` to install one')
         return False
     return True
 
@@ -45,9 +85,8 @@ def kubernetes_installed(verbose=False):
     """
     _, stderr = verbose_func.verbose_output(verbose)
     try:
-        temp_cmd = 'kubectl version'.split()
         subprocess.run(
-            temp_cmd,
+            ['kubectl', 'cluster-info'],
             stdout=subprocess.PIPE,
             stderr=stderr,
             check=True)
@@ -83,6 +122,9 @@ def docker_installed(verbose=False):
 def kubernetes_specified_installed(temp_gadget, verbose=False):
     """Check whether Kubernetes with specified version has been installed.
 
+    Uses kubelet --version (client-side, no API server connection needed) so
+    the check reliably returns True even when the cluster is not yet running.
+
     Args:
         temp_gadget: Kubernetes gadgets (e.g. kubelet, kubeadm).
         verbose: Verbose or not.
@@ -93,19 +135,20 @@ def kubernetes_specified_installed(temp_gadget, verbose=False):
     """
     _, stderr = verbose_func.verbose_output(verbose)
     try:
-        temp_cmd = 'kubectl version'.split()
         res = subprocess.run(
-            temp_cmd,
+            ['kubelet', '--version'],
             stdout=subprocess.PIPE,
             stderr=stderr,
             check=True)
-        server_string = res.stdout.decode('utf-8').split('\n')[1]
-        server_version = re.search(
-            r'GitVersion:".?([\d]+\.[\d]+\.[\d]+)"',
-            server_string).group(1)
-        if server_version == temp_gadget[0]['version']:
-            return True
-        return False
+        installed_version = re.search(
+            r'v([\d]+\.[\d]+\.[\d]+)',
+            res.stdout.decode('utf-8')).group(1)
+        requested = temp_gadget[0]['version'].lstrip('v')
+        # Minor-only input (e.g. '1.33') matches any installed patch of that minor
+        if requested.count('.') < 2:
+            installed_minor = '.'.join(installed_version.split('.')[:2])
+            return installed_minor == requested
+        return installed_version == requested
     except (FileNotFoundError, AttributeError, IndexError, subprocess.CalledProcessError):
         return False
 

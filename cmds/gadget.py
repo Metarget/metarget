@@ -10,6 +10,7 @@ from core.env_managers.docker_installer import DockerInstaller
 from core.env_managers.kubernetes_installer import KubernetesInstaller
 from core.env_managers.kernel_installer import KernelInstaller
 from core.env_managers.kata_containers_installer import KataContainersInstaller
+from core.env_managers.containerd_runtime_installer import ContainerdRuntimeInstaller
 from packaging import version
 
 def install(args):
@@ -91,36 +92,28 @@ def install(args):
                 '{gadget} with version {version} successfully installed'.format(
                     gadget=args.gadget, version=install_version))
 
-    if args.gadget == 'containerd':                                                                 
+    if args.gadget == 'containerd':
         if args.default_version:
             install_version = config.containerd_default_version
         else:
             install_version = args.version
 
-        if not checkers.whether_docker_newer_than_18_09(verbose=args.verbose):
-            color_print.error_and_exit(
-                'To install containerd, Docker >=18.09 is required')
-        
         temp_gadgets = [
             {'name': 'containerd.io', 'version': install_version}
         ]
-        if checkers.containerd_specified_installed(
-                temp_gadgets, verbose=args.verbose):
+        if checkers.containerd_specified_installed(temp_gadgets, verbose=args.verbose):
             color_print.debug(
                 '{gadget} with version {version} already installed'.format(
                     gadget=args.gadget, version=install_version))
             return
-        # if containerd is  already installed with different version, we can simply apt-get -y --allow-downgrades to install it.
-        # we can directly use DockerInstaller.install_by_version to install containerd
-        if not DockerInstaller.install_by_version(
-                temp_gadgets,
-                verbose=args.verbose):
+        # install containerd.io via Docker apt repo, then configure SystemdCgroup=true
+        if not ContainerdRuntimeInstaller.install_and_configure(
+                containerd_version=install_version, verbose=args.verbose):
             color_print.error(
-                'failed to install {gadget}'.format(
-                    gadget=args.gadget))
+                'failed to install {gadget}'.format(gadget=args.gadget))
         else:
             color_print.debug(
-                '{gadget} with version {version} successfully installed'.format(
+                '{gadget} with version {version} installed and configured (SystemdCgroup=true)'.format(
                     gadget=args.gadget, version=install_version))
 
     if args.gadget == 'runc':                                                                 
@@ -172,11 +165,38 @@ def install(args):
                 '{gadget} with version {version} already installed'.format(
                     gadget=args.gadget, version=install_version))
             return
-        if not checkers.docker_installed(verbose=args.verbose):
-            color_print.error(
-                'it seems docker is not installed or correctly configured')
-            color_print.error_and_exit(
-                'you can run `metarget gadget install docker --version 18.03.1` to install one')
+
+        # Determine runtime: 'auto' resolves to 'containerd' for k8s >= 1.24
+        runtime = getattr(args, 'runtime', 'auto')
+        effective_runtime = runtime
+        if runtime == 'auto':
+            if version.parse(install_version) >= version.parse(config.k8s_containerd_cutoff):
+                effective_runtime = 'containerd'
+            else:
+                effective_runtime = 'docker'
+
+        runtime_version = getattr(args, 'runtime_version', None)
+        needs_cri_dockerd = (
+            effective_runtime == 'docker'
+            and version.parse(install_version) >= version.parse(config.k8s_containerd_cutoff))
+
+        if effective_runtime == 'docker':
+            if not checkers.docker_installed(verbose=args.verbose):
+                color_print.error(
+                    'it seems docker is not installed or correctly configured')
+                color_print.error_and_exit(
+                    'you can run `metarget gadget install docker --version 18.03.1` to install one')
+            if needs_cri_dockerd:
+                cri_ver = runtime_version or config.cri_dockerd_default_version
+                color_print.debug(
+                    'k8s {v} + docker runtime: will install cri-dockerd {cv} as CRI shim'.format(
+                        v=install_version, cv=cri_ver))
+        else:
+            ctrd_ver = runtime_version or '(latest from apt)'
+            color_print.debug(
+                'using containerd {cv} as CRI runtime for k8s {v}'.format(
+                    cv=ctrd_ver, v=install_version))
+
         color_print.debug('uninstalling current kubernetes if applicable')
         KubernetesInstaller.uninstall(verbose=args.verbose)
         temp_pod_network_cidr = args.pod_network_cidr if args.pod_network_cidr else config.cni_plugin_cidrs[
@@ -189,6 +209,8 @@ def install(args):
                                                       http_proxy=args.http_proxy,
                                                       https_proxy=args.https_proxy,
                                                       no_proxy=args.no_proxy,
+                                                      runtime=runtime,
+                                                      runtime_version=runtime_version,
                                                       verbose=args.verbose):
             color_print.error(
                 'failed to install {gadget}'.format(

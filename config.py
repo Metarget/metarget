@@ -1,4 +1,4 @@
-import platform
+import subprocess
 
 
 # default CNI plugin
@@ -17,11 +17,19 @@ gadgets_supported = [
 ]
 
 docker_default_version = '20.10.14'
-k8s_default_version = '1.22.2'
+k8s_default_version = '1.28.4'
 kata_default_version = '2.0.0'
 kernel_default_version = '4.15.0-151-generic'
-containerd_default_version = '1.2.6'
+containerd_default_version = '1.7.14'
 runc_default_version = '1.0.0-rc8'
+
+# container runtime for k8s: 'docker' or 'containerd'
+# k8s >= 1.24 requires containerd (dockershim removed)
+k8s_containerd_cutoff = '1.24'
+containerd_cri_socket = 'unix:///run/containerd/containerd.sock'
+# cri-dockerd: shim allowing Docker to be CRI on k8s >= 1.24
+cri_dockerd_default_version = '0.3.15'
+cri_dockerd_cri_socket = 'unix:///var/run/cri-dockerd.sock'
 
 vuln_cn_dir_wildcard = "vulns_cn/*"
 vuln_app_dir_wildcard = "vulns_app/*/*"
@@ -37,6 +45,9 @@ k8s_metarget_namespace_file = 'yamls/k8s_metarget_namespace.yaml'
 
 # k8s worker
 k8s_worker_template = 'tools/install_k8s_worker_template.sh'
+k8s_worker_template_containerd = 'tools/install_k8s_worker_template_containerd.sh'
+k8s_worker_template_containerd_old_repo = 'tools/install_k8s_worker_template_containerd_old_repo.sh'
+k8s_worker_template_cridockerd = 'tools/install_k8s_worker_template_cridockerd.sh'
 k8s_worker_script = 'tools/install_k8s_worker.sh'
 k8s_hash_generator = 'tools/generate_hash.sh'
 
@@ -52,8 +63,25 @@ kata_static_url_prefix = 'https://github.com/kata-containers/runtime/releases/do
 kata_config_dir = '/etc/kata-containers/'
 
 # kubernetes components images sources
-_k8s_images_prefix_aliyun = "registry.cn-hangzhou.aliyuncs.com/google_containers/"
-_k8s_images_prefix_aliyun_2 = "registry.aliyuncs.com/google_containers/"
+# replace-style mirrors: k8s.gcr.io/foo -> <prefix>foo
+_k8s_images_prefix_aliyun = "registry.aliyuncs.com/google_containers/"
+_k8s_images_prefix_aliyun_hangzhou = "registry.cn-hangzhou.aliyuncs.com/google_containers/"
+_k8s_images_prefix_azure_cn = "gcr.azk8s.cn/google_containers/"
+_k8s_images_prefix_aliyun_2 = _k8s_images_prefix_aliyun
+
+# prepend-style accelerators: k8s.gcr.io/foo -> m.daocloud.io/k8s.gcr.io/foo
+_k8s_images_accel_daocloud = "m.daocloud.io/"
+
+# curl may reach a registry while docker cannot; docker pull is authoritative
+k8s_images_prefix_candidates = [
+    _k8s_images_prefix_azure_cn,
+    _k8s_images_prefix_aliyun,
+    _k8s_images_prefix_aliyun_hangzhou,
+]
+
+k8s_images_accel_prefix_candidates = [
+    _k8s_images_accel_daocloud,
+]
 
 # quay.io images sources
 _quay_images_prefix_ustc = "quay.mirrors.ustc.edu.cn/"
@@ -61,31 +89,64 @@ _quay_images_prefix_ustc = "quay.mirrors.ustc.edu.cn/"
 # docker.io images sources
 _docker_image_prefix_ustc = "docker.mirrors.ustc.edu.cn/"
 
+# ghcr.io images sources
+_ghcr_images_prefix_nju = "ghcr.nju.edu.cn/"
 
-# k8s apt repositories
+
+# k8s apt repositories (old format, for k8s < 1.24, kubernetes-xenial)
 _k8s_apt_repo_gpg_aliyun = "https://mirrors.aliyun.com/kubernetes/apt/doc/apt-key.gpg"
 _k8s_apt_repo_entry_aliyun = 'deb https://mirrors.aliyun.com/kubernetes/apt/ kubernetes-xenial main'
 
+_k8s_apt_repo_gpg_huaweicloud = "https://mirrors.huaweicloud.com/kubernetes/apt/doc/apt-key.gpg"
+_k8s_apt_repo_entry_huaweicloud = 'deb https://mirrors.huaweicloud.com/kubernetes/apt/ kubernetes-xenial main'
+
 _k8s_apt_repo_entry_ustc = 'deb http://mirrors.ustc.edu.cn/kubernetes/apt kubernetes-xenial main'
+
+# (gpg_url, repo_entry); installer probes and picks the first reachable source
+k8s_apt_repo_candidates = [
+    (_k8s_apt_repo_gpg_aliyun, _k8s_apt_repo_entry_aliyun),
+    (_k8s_apt_repo_gpg_huaweicloud, _k8s_apt_repo_entry_huaweicloud),
+]
+
+# New k8s apt repositories (pkgs.k8s.io format, for k8s >= 1.24, per-minor-version)
+# Uses GPG dearmor + signed-by approach
+k8s_new_apt_repo_cutoff = '1.24'
+k8s_new_apt_keyring_file = '/etc/apt/keyrings/kubernetes-apt-keyring.gpg'
+_k8s_new_apt_repo_gpg_aliyun_tpl = 'https://mirrors.aliyun.com/kubernetes-new/core/stable/v{minor}/deb/Release.key'
+_k8s_new_apt_repo_entry_aliyun_tpl = 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://mirrors.aliyun.com/kubernetes-new/core/stable/v{minor}/deb/ /'
+_k8s_new_apt_repo_gpg_official_tpl = 'https://pkgs.k8s.io/core:/stable:/v{minor}/deb/Release.key'
+_k8s_new_apt_repo_entry_official_tpl = 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v{minor}/deb/ /'
+
+# (gpg_tpl, entry_tpl) candidates for new-format repos; {minor} is substituted at runtime
+k8s_new_apt_repo_candidates = [
+    (_k8s_new_apt_repo_gpg_aliyun_tpl, _k8s_new_apt_repo_entry_aliyun_tpl),
+    (_k8s_new_apt_repo_gpg_official_tpl, _k8s_new_apt_repo_entry_official_tpl),
+]
 
 # docker apt repositories
 _docker_apt_repo_gpg_official = 'https://download.docker.com/linux/ubuntu/gpg'
-# add domestic docker apt repository
-#curl -fsSL https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg | sudo apt-key add
-#sudo add-apt-repository "deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu $(lsb_release -cs) stable"
-_docker_apt_repo_gpg_aliyun = 'https://mirrors.aliyun.com/docker-ce/linux/ubuntu/gpg'
-try:
-    release = platform.dist()[2]
-except AttributeError:
-    release = 'trusty'
+_docker_apt_repo_gpg_aliyun = 'https://mirrors.huaweicloud.com/docker-ce/linux/ubuntu/gpg'
+
+def _get_ubuntu_codename():
+    try:
+        return subprocess.check_output(
+            ['lsb_release', '-cs'], stderr=subprocess.DEVNULL, text=True).strip()
+    except Exception:
+        pass
+    try:
+        with open('/etc/os-release', 'r') as _f:
+            for _line in _f:
+                if _line.startswith('VERSION_CODENAME='):
+                    return _line.strip().split('=', 1)[1].strip('"\'')
+    except Exception:
+        pass
+    return 'focal'
+
+_ubuntu_release = _get_ubuntu_codename()
 _docker_apt_repo_entry_official = 'deb [arch=amd64] https://download.docker.com/linux/ubuntu {release} stable'.format(
-    release=release)
-try:
-    release = platform.dist()[2]
-except AttributeError:
-    release = 'trusty'
+    release=_ubuntu_release)
 _docker_apt_repo_entry_aliyun = 'deb [arch=amd64] https://mirrors.aliyun.com/docker-ce/linux/ubuntu {release} stable'.format(
-    release=release)
+    release=_ubuntu_release)
 
 # need to comment https://download.docker.com/linux/ubuntu bionic stable in following files before apt-get update
 files_to_check = [
@@ -108,7 +169,7 @@ _containerd_apt_repo_entry_bionic_official = 'deb http://archive.ubuntu.com/ubun
 k8s_images_prefix_official = "k8s.gcr.io/"
 k8s_images_prefix_official_9 = "gcr.io/google_containers/"
 k8s_images_prefix_official_22 = "registry.k8s.io/" ## 1.22版本之后的镜像源
-k8s_images_prefix_candidate = _k8s_images_prefix_aliyun
+k8s_images_prefix_candidate = k8s_images_prefix_candidates[0]
 
 # active quay images source
 quay_images_prefix_official = "quay.io/"
@@ -117,6 +178,10 @@ quay_images_prefix_candidate = _quay_images_prefix_ustc
 # docker images source
 docker_images_prefix_official = "docker.io/"
 docker_image_prefix_candidate = _docker_image_prefix_ustc
+
+# ghcr.io images source
+ghcr_images_prefix_official = "ghcr.io/"
+ghcr_images_prefix_candidate = _ghcr_images_prefix_nju
 
 # active k8s apt repository
 k8s_apt_repo_gpg = _k8s_apt_repo_gpg_aliyun
@@ -154,8 +219,12 @@ flannel_yaml_k8s_1_6_to_1_15_rbac = "yamls/flannel/kube-flannel-rbac.yml"
 flannel_yaml_k8s_1_6_to_1_15 = "yamls/flannel/kube-flannel-legacy.yml"
 flannel_yaml_k8s_16 = "yamls/flannel/kube-flannel-16.yml"
 flannel_yaml_k8s_over_16 = "yamls/flannel/kube-flannel.yml"
+flannel_yaml_k8s_from_1_25 = "yamls/flannel/kube-flannel-no-psp.yml"
 flannel_image_k8s_1_6_to_1_15 = "quay.io/coreos/flannel:v0.10.0-amd64"
 flannel_image_k8s_from_1_16 = "quay.io/coreos/flannel:v0.13.1-rc1"
+# new flannel images (v0.17+, with separate cni-plugin image)
+flannel_image_k8s_from_1_17 = "ghcr.io/flannel-io/flannel:v0.28.5"
+flannel_cni_plugin_image = "ghcr.io/flannel-io/flannel-cni-plugin:v1.9.1-flannel1"
 calico_yaml_below_1_14 = "yamls/calico/calico-below-14.yaml"
 calico_yaml_from_1_14 = "yamls/calico/calico-from-14.yaml"
 calico_images = [
@@ -220,46 +289,76 @@ k8s_stable_versions = {
     '1.23': 'v1.23.17',
     '1.24': 'v1.24.17',
     '1.25': 'v1.25.16',
-    '1.26': 'v1.26.11',
-    '1.27': 'v1.27.8',
-    '1.28': 'v1.28.4',
+    '1.26': 'v1.26.15',
+    '1.27': 'v1.27.16',
+    '1.28': 'v1.28.15',
+    '1.29': 'v1.29.12',
+    '1.30': 'v1.30.8',
+    '1.31': 'v1.31.4',
+    '1.32': 'v1.32.2',
+    '1.33': 'v1.33.13',
 }
 
 # 此处的版本号按照kubeadm config images list返回的对应k8s版本号
 k8s_images_extra = {
+    '1.33': [
+        'registry.k8s.io/pause:3.10',
+        'registry.k8s.io/etcd:3.5.21-0',
+        'registry.k8s.io/coredns/coredns:v1.12.0',
+    ],
+    '1.32': [
+        'registry.k8s.io/pause:3.10',
+        'registry.k8s.io/etcd:3.5.16-0',
+        'registry.k8s.io/coredns/coredns:v1.11.3',
+    ],
+    '1.31': [
+        'registry.k8s.io/pause:3.10',
+        'registry.k8s.io/etcd:3.5.15-0',
+        'registry.k8s.io/coredns/coredns:v1.11.3',
+    ],
+    '1.30': [
+        'registry.k8s.io/pause:3.9',
+        'registry.k8s.io/etcd:3.5.12-0',
+        'registry.k8s.io/coredns/coredns:v1.11.1',
+    ],
+    '1.29': [
+        'registry.k8s.io/pause:3.9',
+        'registry.k8s.io/etcd:3.5.10-0',
+        'registry.k8s.io/coredns/coredns:v1.11.1',
+    ],
     '1.28': [
         'registry.k8s.io/pause:3.9',
         'registry.k8s.io/etcd:3.5.9-0',
-        'registry.k8s.io/coredns/coredns:1.10.1',
+        'registry.k8s.io/coredns/coredns:v1.10.1',
     ],
     '1.27': [
-        'registry.k8s.io/pause:3.7',
-        'registry.k8s.io/etcd:3.5.6-0',
-        'registry.k8s.io/coredns:1.8.6',
+        'registry.k8s.io/pause:3.9',
+        'registry.k8s.io/etcd:3.5.7-0',
+        'registry.k8s.io/coredns/coredns:v1.10.1',
     ],
     '1.26': [
-        'registry.k8s.io/pause:3.7',
+        'registry.k8s.io/pause:3.9',
         'registry.k8s.io/etcd:3.5.6-0',
-        'registry.k8s.io/coredns/coredns:1.8.6',
+        'registry.k8s.io/coredns/coredns:v1.9.3',
     ],
-    '1.25': [ #apt源 apt list -a kubelet显示没有1.25.16版本
+    '1.25': [
         'registry.k8s.io/pause:3.8',
         'registry.k8s.io/etcd:3.5.4-0',
         'registry.k8s.io/coredns/coredns:v1.9.3',
     ],
-    '1.24': [ # image pull 没问题，但kubeadm init又去拉取了一遍，拉取超时
+    '1.24': [
         'registry.k8s.io/pause:3.7',
         'registry.k8s.io/etcd:3.5.6-0',
+        'registry.k8s.io/coredns/coredns:v1.9.3',
+    ],
+    '1.23': [
+        'registry.k8s.io/pause:3.6',
+        'registry.k8s.io/etcd:3.5.1-0',
         'registry.k8s.io/coredns/coredns:v1.8.6',
     ],
-    '1.23': [ #已解决 error:kubelet cgroup driver: \"systemd\" is different from docker cgroup driver: \"cgroupfs\""
-        'registry.k8s.io/pause:3.6',
-        'registry.k8s.io/etcd:3.5.6-0',
-        'registry.k8s.io/coredns:1.8.6',
-    ],
-    '1.22': [ #已解决 error:kubelet cgroup driver: \"systemd\" is different from docker cgroup driver: \"cgroupfs\""
+    '1.22': [
         'registry.k8s.io/pause:3.5',
-        'registry.k8s.io/etcd:3.5.6-0',
+        'registry.k8s.io/etcd:3.5.0-0',
         'registry.k8s.io/coredns/coredns:v1.8.4',
     ],
     '1.21': [ #ok

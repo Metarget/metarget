@@ -88,6 +88,21 @@ def main():
     
     # options for k8s
     parser_gadget_install.add_argument(
+        '--runtime',
+        dest='runtime',
+        default='auto',
+        choices=['auto', 'docker', 'containerd'],
+        help='container runtime for k8s (auto: containerd for k8s>=1.24, docker otherwise)')
+    parser_gadget_install.add_argument(
+        '--runtime-version',
+        dest='runtime_version',
+        default=None,
+        help=(
+            'version of the container runtime to install alongside k8s. '
+            'For --runtime containerd: containerd.io apt version (e.g. 1.6.28); '
+            'for --runtime docker with k8s>=1.24: cri-dockerd version (e.g. 0.3.15). '
+            'Omit to install the latest/default version.'))
+    parser_gadget_install.add_argument(
         '--cni-plugin',
         default=config.DEFAULT_CNI_PLUGIN,
         help='cni plugin, {default_cni_plugin} by default'.format(default_cni_plugin=config.DEFAULT_CNI_PLUGIN))

@@ -59,7 +59,7 @@ This project aims to provide vulnerable scenes for security research. The securi
 
 ### 2.1 Requirements
 
-- Ubuntu 16.04 or **18.04 (recommended)**
+- Ubuntu **20.04 / 22.04 / 24.04 (recommended)**, 18.04 also supported
     - for some cases (e.g. new kernel vulnerabilities) specific Ubuntu distributions are needed
     - you can read the note for specific vulnerabilities (prompted by an asterisk (\*)) for details
 - **Python >= 3.7** (Python 2.x is unsupported!)
@@ -141,24 +141,55 @@ If the command above completes successfully, 18.03.1 Docker will be installed.
 Run:
 
 ```bash
-./metarget gadget install k8s --version 1.16.5
+./metarget gadget install k8s --version 1.28.4
 ```
 
-If the command above completes successfully, 1.16.5 Kubernetes single-node cluster will be installed.
+If the command above completes successfully, a 1.28.4 Kubernetes single-node cluster will be installed.
+
+Supported Kubernetes version range: **1.9 – 1.33**.
 
 Note:
 
-Usually, lots of options need to be configured in Kubernetes. As a security research project, Metarget provides some options for installation of Kubernetes:
+Metarget provides the following options for Kubernetes installation:
 
 ```
   -v VERSION, --version VERSION
                         gadget version
+  --runtime {auto,docker,containerd}
+                        container runtime for k8s (auto: containerd for k8s>=1.24, docker otherwise)
+  --runtime-version RUNTIME_VERSION
+                        version of the container runtime to install alongside k8s.
+                        For --runtime containerd: containerd.io apt version (e.g. 1.6.28).
+                        For --runtime docker with k8s>=1.24: cri-dockerd version (e.g. 0.3.15).
+                        Omit to install the latest/default version.
   --cni-plugin CNI_PLUGIN
                         cni plugin, flannel by default
   --pod-network-cidr POD_NETWORK_CIDR
-                        pod network cidr, default cidr for each plugin by
-                        default
+                        pod network cidr, default cidr for each plugin by default
   --taint-master        taint master node or not
+  --domestic            use domestic (Aliyun) mirrors for k8s images
+```
+
+**Container runtime selection:**
+
+- **k8s < 1.24**: Uses Docker by default (must be pre-installed via `metarget gadget install docker`). Use `--runtime containerd` to force containerd.
+- **k8s >= 1.24**: containerd is automatically installed and configured as the CRI (`--runtime auto` default). No manual Docker installation needed.
+- **k8s >= 1.24 + `--runtime docker`**: Automatically installs [cri-dockerd](https://github.com/Mirantis/cri-dockerd) as the CRI shim (Docker must be pre-installed). Use `--runtime-version` to pin a specific cri-dockerd version.
+
+Examples:
+
+```bash
+# Install k8s 1.28 with containerd (auto-selected)
+./metarget gadget install k8s --version 1.28.4
+
+# Install k8s 1.28 with a specific containerd version
+./metarget gadget install k8s --version 1.28.4 --runtime containerd --runtime-version 1.6.28
+
+# Install k8s 1.28 with Docker + cri-dockerd (Docker must be pre-installed)
+./metarget gadget install k8s --version 1.28.4 --runtime docker
+
+# Install k8s 1.20 with containerd (forced on an older version)
+./metarget gadget install k8s --version 1.20.15 --runtime containerd
 ```
 
 **Metarget supports deployment of multi-node cluster. If you want to add more nodes into the cluster, you can copy `tools/install_k8s_worker.sh` script and run it on each worker nodes after the successful installation of single-node cluster.**
@@ -201,10 +232,10 @@ After successful installation of kernel, reboot of system is needed. Metarget wi
 Run:
 
 ```bash
-./metarget gadget install containerd --version 1.2.6
+./metarget gadget install containerd --version 1.7.14
 ```
 
-If the command above completes successfully, 1.2.6 containerd will be installed.
+If the command above completes successfully, 1.7.14 containerd will be installed and automatically configured as a Kubernetes CRI runtime (`SystemdCgroup = true`), ready to use with `metarget gadget install k8s`.
 
 Run:
 
