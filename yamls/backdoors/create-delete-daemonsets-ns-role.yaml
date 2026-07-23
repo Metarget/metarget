@@ -1,0 +1,87 @@
+# create-delete-daemonsets-ns-role.yaml
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: create-delete-daemonsets
+  namespace: kube-system
+
+
+---
+# 当server版本为1或者大于16时候
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: create-delete-daemonsets
+  namespace: kube-system
+rules:
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  verbs:
+  - create
+  - delete
+- apiGroups:
+  - ""
+  resources:
+  - pods
+  - pods/log
+  verbs:
+  - get
+  - list
+
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: create-delete-daemonsets
+  namespace: kube-system
+
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: create-delete-daemonsets
+subjects:
+- kind: ServiceAccount
+  name: create-delete-daemonsets
+  namespace: kube-system
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  labels:
+    name: create-delete-daemonsets
+  name: create-delete-daemonsets
+  namespace: kube-system
+
+spec:
+  containers:
+  - args:
+    - -c
+    - sleep 10000;
+    command:
+    - /bin/sh
+    image: ubuntu:18.04
+    imagePullPolicy: IfNotPresent
+    name: create-delete-daemonsets
+    resources:
+      limits:
+        cpu: 100m
+        memory: 250Mi
+      requests:
+        cpu: 80m
+        memory: 50Mi
+
+  serviceAccountName: create-delete-daemonsets
+  terminationGracePeriodSeconds: 600
+  tolerations:
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/control-plane
+    operator: Exists
+  - effect: NoSchedule
+    key: node-role.kubernetes.io/master
+    operator: Exists
